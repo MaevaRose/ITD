@@ -62,9 +62,9 @@ int* setDataCarte(){
   		//ici ça marche
   		carteppm>>nb;
   		//cout<<"J'ai récupéré "<<nb<<endl;
-  		//ici ça marche pô
   		data[i]=nb;
   		//cout<<"J'ai mis dans data "<<data[i]<<endl;
+  		//est ce que ça push ?
   		carteppm.seekg(1, ios::cur);
   	}
 
