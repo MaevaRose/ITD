@@ -1,0 +1,219 @@
+#include <SDL/SDL.h>
+#include <SDL/SDL_image.h>
+#include <GL/gl.h>
+#include <GL/glu.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include <math.h>
+#include <time.h>
+#include <iostream>
+#include <fstream>
+#include <string>
+#include "tour.h"
+#include "carte.h"
+
+using namespace std;
+
+/* Dimensions initiales et titre de la fenetre */
+static const unsigned int WINDOW_WIDTH = 1860;
+static const unsigned int WINDOW_HEIGHT = 1046;
+static const char WINDOW_TITLE[] = "ITD - Premier Test";
+
+/* Nombre de bits par pixel de la fenetre */
+static const unsigned int BIT_PER_PIXEL = 32;
+
+/* Nombre minimal de millisecondes separant le rendu de deux images */
+static const Uint32 FRAMERATE_MILLISECONDS = 1000 / 60;
+
+void reshape(SDL_Surface** surface, unsigned int width, unsigned int height)
+{
+    SDL_Surface* surface_temp = SDL_SetVideoMode(   
+        width, height, BIT_PER_PIXEL,
+        SDL_OPENGL | SDL_GL_DOUBLEBUFFER | SDL_RESIZABLE);
+    if(NULL == surface_temp) 
+    {
+        fprintf(
+            stderr, 
+            "Erreur lors du redimensionnement de la fenetre.\n");
+        exit(EXIT_FAILURE);
+    }
+    *surface = surface_temp;
+
+    glViewport(0, 0, (*surface)->w, (*surface)->h);
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    gluOrtho2D(-20, 20, -20, 20);
+}
+
+void drawCircle(int full, float size){
+    if(full != 0 && full != 1) exit(EXIT_FAILURE);
+    if (full == 1){
+        glBegin(GL_POLYGON);
+    }
+    else {
+        glBegin(GL_LINE_STRIP);
+    }
+
+    glColor3ub(255, 255, 255);
+
+    for ( float i = 0 ; i < 10 ; i=i+0.1){
+        glVertex2f(cos(i)*size, sin(i)*size);
+    }
+
+    glEnd();
+}
+
+void drawSquare(int full, float width, float height){
+    if(full != 0 && full != 1) exit(EXIT_FAILURE);
+    if (full == 1){
+        glBegin(GL_QUADS);
+    }
+    else {
+        glBegin(GL_LINE_LOOP);
+    }
+    
+
+    glColor3ub(255, 255, 255);
+    glVertex2f(-0.5*width, -0.5*height);
+    glVertex2f(-0.5*width, 0.5*height);
+    glVertex2f(0.5*width, 0.5*height);
+    glVertex2f(0.5*width, -0.5*height);
+
+    glEnd();
+}
+
+int main()
+{   
+    /* Initialisation de la SDL */
+    if(-1 == SDL_Init(SDL_INIT_VIDEO)) 
+    {
+        fprintf(
+            stderr, 
+            "Impossible d'initialiser la SDL. Fin du programme.\n");
+        exit(EXIT_FAILURE);
+    }
+  
+    /* Ouverture d'une fenetre et creation d'un contexte OpenGL */
+    SDL_Surface* surface;
+    reshape(&surface, WINDOW_WIDTH, WINDOW_HEIGHT);
+    int mousex=0;
+    int mousey=0;
+
+    GLuint carte = setCarte();
+
+
+    // Création des tours
+    TourBleue bleu1;
+    PetitMonstre monstre1;
+
+    verifITD();
+    int* carteData=setDataCarte();
+
+    /* Initialisation du titre de la fenetre */
+    SDL_WM_SetCaption(WINDOW_TITLE, NULL);
+  
+    /* Boucle principale */
+    int loop = 1;
+    while(loop) 
+    {
+        /* Recuperation du temps au debut de la boucle */
+        Uint32 startTime = SDL_GetTicks();
+        
+        /* Placer ici le code de dessin */
+        glClear(GL_COLOR_BUFFER_BIT);
+
+        afficherCarte(carte, 20);
+
+        
+        /* Echange du front et du back buffer : mise a jour de la fenetre */
+        SDL_GL_SwapBuffers();
+        
+        /* Boucle traitant les evenements */
+        SDL_Event e;
+        while(SDL_PollEvent(&e)) 
+        {
+            /* L'utilisateur ferme la fenetre : */
+            if(e.type == SDL_QUIT) 
+            {
+                loop = 0;
+                break;
+            }
+
+            /* L'utilisateur ferme la fenetre : */
+            if(e.type == SDL_QUIT) 
+            {
+                loop = 0;
+                break;
+            }
+        
+            if( e.type == SDL_KEYDOWN 
+                && (e.key.keysym.sym == SDLK_q || e.key.keysym.sym == SDLK_ESCAPE))
+            {
+                loop = 0; 
+                break;
+            }
+            
+            /* Quelques exemples de traitement d'evenements : */
+            switch(e.type) 
+            {
+                /* Redimensionnement fenetre */
+                case SDL_VIDEORESIZE:
+                    reshape(&surface, e.resize.w, e.resize.h);
+                    break;
+
+                /* Clic souris */
+                case SDL_MOUSEBUTTONUP:
+                    //printf("clic en (%d, %d)\n", e.button.x, e.button.y);
+                    mousex = e.button.x;
+                    mousey = e.button.y;
+                    printf("clic en (%d, %d)\n", mousex, mousey);
+                    bleu1.attaquer(monstre1);
+                    cout << "Monstre1" << endl;
+                    monstre1.afficherEtat();
+
+                    returnColor(carteData, mousex, mousey, WINDOW_WIDTH, WINDOW_HEIGHT);
+
+                    
+                    break;
+                
+                /* Touche clavier */
+                case SDL_KEYDOWN:
+                    bleu1.afficherEtat();
+                    printf("touche pressee (code = %d)\n", e.key.keysym.sym);
+                    
+                    
+
+                break;
+                    
+                default:
+                    break;
+            }
+        }
+
+        /* Calcul du temps ecoule */
+        Uint32 elapsedTime = SDL_GetTicks() - startTime;
+        /* Si trop peu de temps s'est ecoule, on met en pause le programme */
+        if(elapsedTime < FRAMERATE_MILLISECONDS) 
+        {
+            SDL_Delay(FRAMERATE_MILLISECONDS - elapsedTime);
+        }
+    }
+
+    /* Liberation des ressources associees a la SDL */ 
+    SDL_Quit();
+    
+    return EXIT_SUCCESS;
+
+    // Création des tours
+    // Tour bleu1;
+    // Monstre monstre1;
+
+    // // Au combat !
+    // bleu1.attaquer(monstre1);
+    // cout << "Monstre1" << endl;
+    // monstre1.afficherEtat();
+    //  bleu1.attaquer(monstre1);
+    // cout << "Monstre1" << endl;
+    // monstre1.afficherEtat();
+
+}
