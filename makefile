@@ -2,7 +2,7 @@ CC     = g++
 CFLAGS = -Wall -Wextra -O2 -Wno-unused-result -g
 LDFLAGS	= -lSDL -lSDL_image -lGLU -lGL -lm
 LIB    = -lm
-OBJ    = main.o monstre.o tour.o carte.o image.o
+OBJ    = main.o monstre.o tour.o carte.o image.o sprites.o
 RM     = rm -f
 BIN    = ./testv1
 DIRNAME = $(shell basename $$PWD)
@@ -35,8 +35,13 @@ image.o : image.cpp image.h
 	$(CC) $(CFLAGS) -c $<  
 	@echo "done..."
 
+sprites.o : sprites.cpp sprites.h
+	@echo "compile sprites"
+	$(CC) $(CFLAGS) -c $<  
+	@echo "done..."
 
-main.o : main.cpp monstre.o tour.o carte.o image.o
+
+main.o : main.cpp monstre.o tour.o carte.o image.o sprites.o
 	@echo "compile main"
 	$(CC) $(CFLAGS) -c $<  
 	@echo "done..."

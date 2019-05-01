@@ -1,33 +1,51 @@
+#include <SDL/SDL.h>
+#include <SDL/SDL_image.h>
+#include <GL/gl.h>
+#include <GL/glu.h>
 #include <iostream>
 #include <string>
 #include <fstream>
 
 using namespace std;
 
-GLuint setCarte();
+class Carte{
+	public :
+	Carte();
 
-void afficherCarte(GLuint texture, int size);
+	GLuint setCarte();
 
-int* setDataCarte();
+	void afficherCarte(GLuint texture, int size);
 
-void returnColor(int* data, int x, int y, int width, int height);
+	void setDataCarte();
 
-bool verifITD();
+	void returnColor(int x, int y, int width);
 
-bool verifHeader(string const nomCarte);
+	bool verifITD();
 
-bool verifCarte(string const nomCarte);
+	bool verifHeader(string const nomCarte);
 
-bool verifEnergie(string const nomCarte);
+	bool verifCarte(string const nomCarte);
 
-bool verifChemin(string const nomCarte);
+	bool verifEnergie(string const nomCarte);
 
-bool verifNoeud(string const nomCarte);
+	bool verifCouleurs(string const nomCarte, string verifMot, int value[3]);
 
-bool verifIn(string const nomCarte);
+	bool verifNoeuds(string const nomCarte);
 
-bool verifOut(string const nomCarte);
+	bool isConstructible(int x, int y, int width);
+	bool isChemin(int x, int y, int width);
+	bool isIn(int x, int y, int width);
+	bool isOut(int x, int y, int width);
+	bool isNoeud(int x, int y, int width);
 
-bool verifCouleurs(string const nomCarte, string verifMot);
+	protected:
+	int* data; 
+	int energie;
+	int cheminColor[3];
+	int noeudColor[3];
+	int constructColor[3];
+	int outColor[3];
+	int inColor[3];
 
-bool verifNoeuds(string const nomCarte);
+};
+

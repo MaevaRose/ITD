@@ -10,13 +10,12 @@
 #include <fstream>
 #include <string>
 #include "tour.h"
-#include "carte.h"
 
 using namespace std;
 
 /* Dimensions initiales et titre de la fenetre */
-static const unsigned int WINDOW_WIDTH = 1860;
-static const unsigned int WINDOW_HEIGHT = 1046;
+static const unsigned int WINDOW_WIDTH = 1800;
+static const unsigned int WINDOW_HEIGHT = 1012;
 static const char WINDOW_TITLE[] = "ITD - Premier Test";
 
 /* Nombre de bits par pixel de la fenetre */
@@ -99,15 +98,15 @@ int main()
     int mousex=0;
     int mousey=0;
 
-    GLuint carte = setCarte();
-
+    Carte carte;
+    carte.verifITD();
+    carte.setDataCarte();
+    GLuint textCarte = carte.setCarte();
 
     // Création des tours
     TourBleue bleu1;
     PetitMonstre monstre1;
 
-    verifITD();
-    int* carteData=setDataCarte();
 
     /* Initialisation du titre de la fenetre */
     SDL_WM_SetCaption(WINDOW_TITLE, NULL);
@@ -122,7 +121,7 @@ int main()
         /* Placer ici le code de dessin */
         glClear(GL_COLOR_BUFFER_BIT);
 
-        afficherCarte(carte, 20);
+        carte.afficherCarte(textCarte, 20);
 
         
         /* Echange du front et du back buffer : mise a jour de la fenetre */
@@ -158,8 +157,14 @@ int main()
             {
                 /* Redimensionnement fenetre */
                 case SDL_VIDEORESIZE:
-                    reshape(&surface, e.resize.w, e.resize.h);
+                    //reshape(&surface, e.resize.w, e.resize.h);
                     break;
+
+                case SDL_MOUSEMOTION:
+                    /*mousex = e.motion.x;
+                    mousey = e.motion.y;*/
+                    break;
+
 
                 /* Clic souris */
                 case SDL_MOUSEBUTTONUP:
@@ -171,8 +176,10 @@ int main()
                     cout << "Monstre1" << endl;
                     monstre1.afficherEtat();
 
-                    returnColor(carteData, mousex, mousey, WINDOW_WIDTH, WINDOW_HEIGHT);
-
+                    carte.returnColor(mousex, mousey, WINDOW_WIDTH);
+                    carte.isConstructible(mousex, mousey, WINDOW_WIDTH);
+                    carte.isChemin(mousex, mousey, WINDOW_WIDTH);
+                    carte.isIn(mousex, mousey, WINDOW_WIDTH);
                     
                     break;
                 
@@ -204,16 +211,5 @@ int main()
     
     return EXIT_SUCCESS;
 
-    // Création des tours
-    // Tour bleu1;
-    // Monstre monstre1;
-
-    // // Au combat !
-    // bleu1.attaquer(monstre1);
-    // cout << "Monstre1" << endl;
-    // monstre1.afficherEtat();
-    //  bleu1.attaquer(monstre1);
-    // cout << "Monstre1" << endl;
-    // monstre1.afficherEtat();
 
 }

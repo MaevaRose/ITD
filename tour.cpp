@@ -2,6 +2,7 @@
 #include <string>
 #include "tour.h"
 
+
 using namespace std;
 
 Tour::Tour (int deg, int cad, int port, int prix, int lvl, int x_pos, int y_pos) : degats(deg), cadence(cad), portee(port), cout(prix), level(lvl), x_position(x_pos), y_position(y_pos) {};
@@ -13,11 +14,18 @@ TourVerte::TourVerte () : Tour(50, 100, 25, 10, 1, -1, -1) {};
 
 
 
-void Tour::poser(int x, int y) {
-	this->x_position = x;
-	this->y_position = y;
-	this->cout = this->cout/2;
-	//void addToListTour
+void Tour::poser(int x, int y, Carte &carte) {
+	bool isConstructible = carte.isConstructible(x, y, 1800);
+	if(isConstructible){
+		this->x_position = x;
+		this->y_position = y;
+		this->cout = this->cout/2;
+		//void addToListTour
+	}
+	else{
+		//fonction qui prévient que pas constructible
+	}
+	
 }
 
 

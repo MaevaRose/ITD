@@ -12,17 +12,19 @@ using namespace std;
 static const char CARTE[] = "./niveau1.ppm";
 static const string STRING_CARTE = "./niveau1.ppm";
 
-GLuint setCarte(){
+Carte::Carte(){};
+
+GLuint Carte::setCarte(){
 	GLuint texture = setTexture(CARTE);
 	return texture;
 }
 
-void afficherCarte(GLuint texture, int size){
+void Carte::afficherCarte(GLuint texture, int size){
 
 	drawTexture(texture, size);
 }
 
-int* setDataCarte(){
+void Carte::setDataCarte(){
 	int width;
 	int height;
 	string mot;
@@ -47,46 +49,40 @@ int* setDataCarte(){
     carteppm.seekg(1, ios::cur);
     carteppm>>height;
 
-    cout<< "La largeur est "<<width<<" et la longueur est "<<height<<endl;
+    cout<< "La largeur de la carte est "<<width<<" et sa longueur est "<<height<<endl;
 
 
-    //je veux enregistrer les données de l'image
-	int* data = (int*) malloc(sizeof(int) * 3 * width * height);
+    //allocation mémoire pour la carte
+	this->data = (int*) malloc(sizeof(int) * 3 * width * height);
 
-	if(data == NULL){
-    	cout<<"Carte : error bad memory allocation.\n"<<endl;
+	if(this->data == NULL){
+    	cout<<"Carte : erreur lors de l'allocation mémoire.\n"<<endl;
   	}
 
-
+  	//enregistrement de la carte dans un tableau de int
   	for(int i = 0 ; i<(width*height*3) ; i++){
-  		//ici ça marche
   		carteppm>>nb;
-  		//cout<<"J'ai récupéré "<<nb<<endl;
-  		data[i]=nb;
-  		//cout<<"J'ai mis dans data "<<data[i]<<endl;
-  		//est ce que ça push ?
+  		this->data[i]=nb;
   		carteppm.seekg(1, ios::cur);
   	}
 
   	carteppm.close();
-  	return data;
 
 }
 
-void returnColor(int* data, int x, int y, int width, int height){
+void Carte::returnColor(int x, int y, int width){
 
 	int position = width*3*(y-1)+x*3;
-	cout<<"R : "<<data[position+1]<<endl;
-	cout<<"G : "<<data[position+2]<<endl;
-	cout<<"B : "<<data[position+3]<<endl;
+	cout<<"R : "<<this->data[position+1]<<endl;
+	cout<<"G : "<<this->data[position+2]<<endl;
+	cout<<"B : "<<this->data[position+3]<<endl;
 
 }
 
 
-bool verifITD(){
+bool Carte::verifITD(){
 
 	// on ouvre le fichier .itd
-
 	string const nomCarte("./test.itd");
 	ifstream carte(nomCarte.c_str());
 
@@ -95,19 +91,23 @@ bool verifITD(){
 	bool header=verifHeader(nomCarte);
 	bool carteOk=verifCarte(nomCarte);
 	bool energie=verifEnergie(nomCarte);
-	bool chemin=verifCouleurs(nomCarte, "chemin");
-	bool noeud=verifCouleurs(nomCarte, "noeud");
-	bool construct=verifCouleurs(nomCarte, "construct");
-	bool out=verifCouleurs(nomCarte, "out");
-	bool in = verifCouleurs(nomCarte, "in");
+	bool chemin=verifCouleurs(nomCarte, "chemin", this->cheminColor);
+	bool noeud=verifCouleurs(nomCarte, "noeud", this->noeudColor);
+	bool construct=verifCouleurs(nomCarte, "construct", this->constructColor);
+	bool out=verifCouleurs(nomCarte, "out", this->outColor);
+	bool in = verifCouleurs(nomCarte, "in",this->inColor);
 	bool allnoeuds = verifNoeuds(nomCarte);
 
-
+	cout<<"L'énergie est de "<<this->energie<<endl;
 	carte.close();
 // vérifier au moins 1 zone entrée 1 zone sortie et 1 chiffre seul qui correspond au nb de lignes en dessous
 
 	//on vérifie si absolument tout est ok
-	if(header!=true || carteOk!=true || energie!=true || chemin!=true || construct!=true || noeud!=true || in!=true || out!=true){ exit(EXIT_FAILURE);}
+	if(header!=true || carteOk!=true || energie!=true || chemin!=true || construct!=true || noeud!=true || in!=true || out!=true || allnoeuds!=true )
+		{ 
+			cout<<"La carte n'est pas valide"<<endl;
+			exit(EXIT_FAILURE);
+		}
 	else {
 		cout<< "Carte validée"<<endl; 
 		return true;
@@ -115,7 +115,7 @@ bool verifITD(){
 
 }
 
-bool verifHeader(string const nomCarte){
+bool Carte::verifHeader(string const nomCarte){
 	string ligne;
     string mot;
     int nombre;
@@ -126,7 +126,7 @@ bool verifHeader(string const nomCarte){
         carte>>mot;
         if(mot!="@ITD") { return false;}
 
-         carte.seekg(1, ios::cur);
+        carte.seekg(1, ios::cur);
         carte>>nombre;
         if(!nombre) { return false;}
 
@@ -136,9 +136,10 @@ bool verifHeader(string const nomCarte){
 
     carte.close();
     return true;
+
 }
 
-bool verifCarte(string const nomCarte){
+bool Carte::verifCarte(string const nomCarte){
 	string ligne;
 	string mot;
 
@@ -150,9 +151,10 @@ bool verifCarte(string const nomCarte){
 	}
 	carte.close();
 	return false;
+
 }
 
-bool verifEnergie(string const nomCarte){
+bool Carte::verifEnergie(string const nomCarte){
 	string ligne;
 	string mot;
 
@@ -169,6 +171,7 @@ bool verifEnergie(string const nomCarte){
     			return false;
     		}
     		else {
+    			this->energie=nombre;
     			carte.close();
     			return true;
     		}
@@ -180,7 +183,7 @@ bool verifEnergie(string const nomCarte){
 }
 
 
-bool verifCouleurs(string const nomCarte, string verifMot){
+bool Carte::verifCouleurs(string const nomCarte, string verifMot, int value[3]){
 	string ligne;
 	string mot;
  
@@ -194,6 +197,7 @@ bool verifCouleurs(string const nomCarte, string verifMot){
     			carte.seekg(1, ios::cur);
     			carte>>nombre;
     			if(!nombre){printf("Erreur couleurs\n"); return false;}
+    			value[i]=nombre;
     		}
         	carte.close();
     		return true;
@@ -203,9 +207,11 @@ bool verifCouleurs(string const nomCarte, string verifMot){
 	return false;
 }
 
-bool verifNoeuds(string const nomCarte) {
+bool Carte::verifNoeuds(string const nomCarte) {
 	string ligne;
 	int nbNoeuds, type, nombre;
+	int x, y;
+	int width = 1800;
 
 	ifstream carte(nomCarte.c_str());
 
@@ -213,17 +219,18 @@ bool verifNoeuds(string const nomCarte) {
 	carte.seekg(0, ios::beg);
 
 	//On se déplace à la 10e ligne où se trouve le chiffre désiré
-	for(int i = 1 ; i <= 10; i++){
+	for(int i = 1 ; i < 10; i++){
 		getline(carte, ligne);
 	}
-/*
+
 	//on récupère la valeur
 	carte>>nbNoeuds;
-	cout<< "le nombre est " << nbNoeuds <<endl;
+	cout<< "le nombre de noeuds est de " << nbNoeuds <<endl;
 	if(!nbNoeuds){cout<< "Erreur dans le nombre de noeuds" <<endl; return false;}
 
 	carte.seekg(1, ios::cur);
-	for(int j = 0 ; j < nbNoeuds ; j++){
+	for(int j = 0 ; j < nbNoeuds ; j++)
+	{
 		carte>>nombre;
 		if(nombre!=j){cout<< "Erreur dans les noeuds" <<endl; return false;}
 
@@ -233,16 +240,25 @@ bool verifNoeuds(string const nomCarte) {
 
 		carte.seekg(1, ios::cur);
 		carte>>nombre;
-		if(!nombre){cout<< "Erreur dans la position du noeud "<< j <<endl; return false;}
+		if(!nombre || nombre<0 ){cout<< "Erreur dans la position du noeud "<< j <<endl; return false;}
+		x=nombre;
 
 		carte.seekg(1, ios::cur);
 		carte>>nombre;
-		if(!nombre){cout<< "Erreur dans la position du noeud "<< j <<endl; return false;}
+		if(!nombre || nombre<0 ){cout<< "Erreur dans la position du noeud "<< j <<endl; return false;}
+		y=nombre;
 
+		//cout<< "les noeuds sont à "<<x<<" "<<y<<endl;
 		if(type == 1 || type == 2){
 			carte.seekg(1, ios::cur);
 			carte>>nombre;
-			if(!nombre){printf("Erreur dans les noeuds\n"); return false;}
+			if(!nombre){cout<<"Erreur dans les noeuds"<<endl; return false;}
+
+			/*bool entree=isIn(700, 725, width);
+			bool sortie = isOut(x, y, width);
+			if(!entree && !sortie){
+				cout<<"Erreur : l'entrée ou la sortie indiqué.e ne correspond pas à la carte"<<endl; return false;
+			}*/
 		}
 
 		if(type == 3){
@@ -253,14 +269,78 @@ bool verifNoeuds(string const nomCarte) {
 			carte.seekg(1, ios::cur);
 			carte>>nombre;
 			if(!nombre){printf("Erreur dans les noeuds\n"); return false;}
-		}
 
-		
+			/*bool noeud = isNoeud(x, y, width);
+			if(!noeud){
+				cout<<"Erreur : le noeud indiqué ne correspond pas à la carte"<<endl; return false;
+			}*/
+
+		}
 
 		getline(carte, ligne);
 	}
-		*/
+		
 
 	carte.close();
+	return true;
+}
+
+bool Carte::isConstructible(int x, int y, int width){
+	int position = width*3*(y-1)+x*3;
+	for(int i=0; i<3; i++){
+		if(this->data[position+i+1]!=this->constructColor[i]){
+			cout<<"Cette zone n'est pas constructible"<<endl;
+			return false;
+		}
+	}
+	cout<<"Cette zone est constructible"<<endl;
+	return true;
+}
+
+bool Carte::isChemin(int x, int y, int width){
+	int position = width*3*(y-1)+x*3;
+	for(int i=0; i<3; i++){
+		if(this->data[position+i+1]!=this->cheminColor[i]){
+			cout<<"Cette zone n'est pas un chemin"<<endl;
+			return false;
+		}
+	}
+	cout<<"Cette zone est un chemin"<<endl;
+	return true;
+}
+
+bool Carte::isIn(int x, int y, int width){
+	int position = width*3*(y-1)+x*3;
+	for(int i=0; i<3; i++){
+		if(this->data[position+i+1]!=this->inColor[i]){
+			cout<<"Cette zone n'est pas une zone d'entrée"<<endl;
+			return false;
+		}
+	}
+	cout<<"Cette zone est une zone d'entrée"<<endl;
+	return true;
+}
+
+bool Carte::isOut(int x, int y, int width){
+	int position = width*3*(y-1)+x*3;
+	for(int i=0; i<3; i++){
+		if(this->data[position+i+1]!=this->outColor[i]){
+			cout<<"Cette zone n'est pas une zone de sortie"<<endl;
+			return false;
+		}
+	}
+	cout<<"Cette zone est une zone de sortie"<<endl;
+	return true;
+}
+
+bool Carte::isNoeud(int x, int y, int width){
+	int position = width*3*(y-1)+x*3;
+	for(int i=0; i<3; i++){
+		if(this->data[position+i+1]!=this->cheminColor[i]){
+			cout<<"Cette zone n'est pas un noeud"<<endl;
+			return false;
+		}
+	}
+	cout<<"Cette zone est un noeud"<<endl;
 	return true;
 }

@@ -13,7 +13,7 @@ class Batiment   {
 
 
 
-	void poser(int x, int y);				//OK
+	void poser(int x, int y, Carte &carte);				//OK
 
 	void suprimer();						//OK
 

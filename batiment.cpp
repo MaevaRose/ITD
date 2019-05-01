@@ -3,6 +3,7 @@
 #include "batiment.h"
 
 
+
 using namespace std;
 
 Batiment::Batiment (int prct, int port, int prix, int lvl, int x_pos, int y_pos) : pourcent(prct), portee(port), cout(prix), level(lvl), x_position(x_pos), y_position(y_pos) {};
@@ -13,11 +14,18 @@ StockMunition::StockMunition () : Batiment(25, 100, 70, 1, -1, -1) {};
 
 
 
-void Batiment::poser(int x, int y) {
-	this->x_position = x;
-	this->y_position = y;
-	this->cout = cout/2;
-	//void addToListBatiment
+void Batiment::poser(int x, int y, Carte &carte) {
+	bool isConstructible = carte.isConstructible(x, y, 1800);
+	if(isConstructible){
+		this->x_position = x;
+		this->y_position = y;
+		this->cout = cout/2;
+		//void addToListBatiment
+	}
+	else{
+		//void fonction qui prévient que ce n'est pas contructible
+	}
+	
 }
 
 
