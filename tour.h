@@ -1,7 +1,9 @@
 #include <iostream>
 #include <string>
+#include <vector>
 #include "monstre.h"
 #include "carte.h"
+
 
 class Tour {
 
@@ -14,7 +16,7 @@ class Tour {
 
 
 
-	void poser(int x, int y, Carte &carte);				//OK
+	//void poser(int x, int y, Carte &carte, vector<TourBleue> tabTourBleue);				//OK
 
 	void supprimer();						//OK
 
@@ -23,6 +25,8 @@ class Tour {
 	void afficherEtat();					//OK
 
 	//void afficherHallo(int portee);					//OPENGL
+
+	
 
 	void attaquer(Monstre &cible);			//OK
 
@@ -67,6 +71,9 @@ class TourBleue:public Tour {
 
 	public :
 	TourBleue();
+
+	void poser(int x, int y, Carte &carte, vector<TourBleue> tabTourBleue);
+	void draw(const unsigned int WINDOW_WIDTH, const unsigned int WINDOW_HEIGHT);
 };
 
 

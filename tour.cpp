@@ -1,6 +1,8 @@
 #include <iostream>
 #include <string>
-#include "tour.h"
+#include <vector>
+//#include "tour.h"
+#include "tableauTour.h"
 
 
 using namespace std;
@@ -14,18 +16,38 @@ TourVerte::TourVerte () : Tour(50, 100, 25, 10, 1, -1, -1) {};
 
 
 
-void Tour::poser(int x, int y, Carte &carte) {
+void TourBleue::poser(int x, int y, Carte &carte, vector<TourBleue> tabTourBleue) {
 	bool isConstructible = carte.isConstructible(x, y, 1800);
+	printf("!!!!!!!! Je pose ça là\n");
 	if(isConstructible){
 		this->x_position = x;
 		this->y_position = y;
 		this->cout = this->cout/2;
-		//void addToListTour
-	}
-	else{
-		//fonction qui prévient que pas constructible
+		addToTabTower(tabTourBleue, *this);
 	}
 	
+	
+}
+
+void TourBleue::draw(const unsigned int WINDOW_WIDTH, const unsigned int WINDOW_HEIGHT ) {
+
+	glPushMatrix();
+
+		float x = -1 + 2. * this->x_position / (float)WINDOW_WIDTH;
+		float y = -(-1 + 2. * this->y_position / (float)WINDOW_HEIGHT);
+		glTranslatef(x, y, 0);
+
+		glBegin(GL_QUADS);
+
+	    glColor3ub(0, 0, 0);
+	    glVertex2f(-0.5*2, -0.5*2);
+	    glVertex2f(-0.5*2, 0.5*2);
+	    glVertex2f(0.5*2, 0.5*2);
+	    glVertex2f(0.5*2, -0.5*2);
+
+	    glEnd();
+
+    glPopMatrix();
 }
 
 

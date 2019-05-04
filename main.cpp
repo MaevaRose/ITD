@@ -9,9 +9,11 @@
 #include <iostream>
 #include <fstream>
 #include <string>
-#include "tour.h"
+#include <vector>
+#include "tableauTour.h"
 #include "sprites.h"
 #include "image.h"
+
 
 using namespace std;
 
@@ -110,8 +112,9 @@ int main()
     GLuint textTestSprite = setTexture("./logo_imac.jpg");
 
     // Création des tours
-    TourBleue bleu1;
     PetitMonstre monstre1;
+    TourBleue tourbleue;
+    vector<TourBleue> tabTourBleue;
 
 
     /* Initialisation du titre de la fenetre */
@@ -128,7 +131,8 @@ int main()
         glClear(GL_COLOR_BUFFER_BIT);
 
         carte.afficherCarte(textCarte, 20);
-        testSprite.drawSprite(textTestSprite, 0, 0, 1);
+        //testSprite.drawSprite(textTestSprite, 0, 0, 1);
+        drawAllTower(tabTourBleue, WINDOW_WIDTH, WINDOW_HEIGHT);
 
         
         /* Echange du front et du back buffer : mise a jour de la fenetre */
@@ -179,20 +183,24 @@ int main()
                     mousex = e.button.x;
                     mousey = e.button.y;
                     printf("clic en (%d, %d)\n", mousex, mousey);
-                    bleu1.attaquer(monstre1);
-                    cout << "Monstre1" << endl;
-                    monstre1.afficherEtat();
+                    //bleu1.attaquer(monstre1);
+                    //cout << "Monstre1" << endl;
+                    //monstre1.afficherEtat();
 
-                    carte.returnColor(mousex, mousey, WINDOW_WIDTH);
+                    tourbleue.poser(mousex, mousey, carte, tabTourBleue);
+                    //printTab(tabTourBleue);
+
+                    //carte.returnColor(mousex, mousey, WINDOW_WIDTH);
                     carte.isConstructible(mousex, mousey, WINDOW_WIDTH);
-                    carte.isChemin(mousex, mousey, WINDOW_WIDTH);
-                    carte.isIn(mousex, mousey, WINDOW_WIDTH);
+                    // carte.isChemin(mousex, mousey, WINDOW_WIDTH);
+                    // carte.isIn(mousex, mousey, WINDOW_WIDTH);
+                    
                     
                     break;
                 
                 /* Touche clavier */
                 case SDL_KEYDOWN:
-                    bleu1.afficherEtat();
+                    //bleu1.afficherEtat();
                     printf("touche pressee (code = %d)\n", e.key.keysym.sym);
                     
                     
