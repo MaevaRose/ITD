@@ -10,6 +10,8 @@
 #include <fstream>
 #include <string>
 #include "tour.h"
+#include "sprites.h"
+#include "image.h"
 
 using namespace std;
 
@@ -103,6 +105,10 @@ int main()
     carte.setDataCarte();
     GLuint textCarte = carte.setCarte();
 
+    //test sprite
+    Sprites testSprite(400, 400, 50, 50);
+    GLuint textTestSprite = setTexture("./logo_imac.jpg");
+
     // Création des tours
     TourBleue bleu1;
     PetitMonstre monstre1;
@@ -122,6 +128,7 @@ int main()
         glClear(GL_COLOR_BUFFER_BIT);
 
         carte.afficherCarte(textCarte, 20);
+        testSprite.drawSprite(textTestSprite, 0, 0, 1);
 
         
         /* Echange du front et du back buffer : mise a jour de la fenetre */
@@ -156,9 +163,9 @@ int main()
             switch(e.type) 
             {
                 /* Redimensionnement fenetre */
-                case SDL_VIDEORESIZE:
+                //case SDL_VIDEORESIZE:
                     //reshape(&surface, e.resize.w, e.resize.h);
-                    break;
+                    //break;
 
                 case SDL_MOUSEMOTION:
                     /*mousex = e.motion.x;

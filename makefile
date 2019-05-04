@@ -40,7 +40,6 @@ sprites.o : sprites.cpp sprites.h
 	$(CC) $(CFLAGS) -c $<  
 	@echo "done..."
 
-
 main.o : main.cpp monstre.o tour.o carte.o image.o sprites.o
 	@echo "compile main"
 	$(CC) $(CFLAGS) -c $<  

@@ -1,17 +1,19 @@
 #include <iostream>
 #include <string>
 #include <fstream>
+#include <GL/gl.h>
+#include <GL/glu.h>
 
-class SpriteSheet {
-    int spriteWidth, spriteHeight;
-    int texWidth, texHeight;
+class Sprites {
 
-    int tex;
 
 public:
-    SpriteSheet(int t, int tW, int tH, int sW, int sH)
-    : tex(t), texWidth(tW), texHeight(tH), spriteWidth(sW), spriteHeight(sH)
-    {}
+    Sprites(int tW, int tH, int sW, int sH);
 
-    void drawSprite(float posX, float posY, int frameIndex);
+    GLuint initSprite(const char* imagePath);
+    void drawSprite(GLuint texture, float posX, float posY, int frameIndex);
+
+private:
+	int spriteWidth, spriteHeight;
+    int texWidth, texHeight;
 };
