@@ -5,8 +5,8 @@
 
 using namespace std;
 
-void addToTabTower(vector<TourBleue> tabTourBleue, TourBleue tour);
+void addToTabTower(vector<TourBleue*> tabTourBleue, TourBleue tour);
 
-void printTab(vector<TourBleue> tabTourBleue);
+void printTab(vector<TourBleue*> tabTourBleue);
 
-void drawAllTower(vector<TourBleue> tabTourBleue, const unsigned int WINDOW_WIDTH, const unsigned int WINDOW_HEIGHT );
+void drawAllTower(vector<TourBleue*> tabTourBleue, const unsigned int WINDOW_WIDTH, const unsigned int WINDOW_HEIGHT );

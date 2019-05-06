@@ -16,7 +16,7 @@ TourVerte::TourVerte () : Tour(50, 100, 25, 10, 1, -1, -1) {};
 
 
 
-void TourBleue::poser(int x, int y, Carte &carte, vector<TourBleue> tabTourBleue) {
+void TourBleue::poser(int x, int y, Carte &carte, vector<TourBleue*> tabTourBleue) {
 	bool isConstructible = carte.isConstructible(x, y, 1800);
 	printf("!!!!!!!! Je pose ça là\n");
 	if(isConstructible){

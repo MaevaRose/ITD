@@ -15,7 +15,7 @@ static const string STRING_CARTE = "./niveau1.ppm";
 Carte::Carte(){};
 
 GLuint Carte::setCarte(){
-	GLuint texture = setTexture(CARTE);
+	GLuint texture = setTexture(CARTE); 
 	return texture;
 }
 

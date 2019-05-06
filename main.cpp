@@ -57,7 +57,7 @@ void drawCircle(int full, float size){
         glBegin(GL_LINE_STRIP);
     }
 
-    glColor3ub(255, 255, 255);
+    glColor3ub(0, 0, 0);
 
     for ( float i = 0 ; i < 10 ; i=i+0.1){
         glVertex2f(cos(i)*size, sin(i)*size);
@@ -76,7 +76,7 @@ void drawSquare(int full, float width, float height){
     }
     
 
-    glColor3ub(255, 255, 255);
+    glColor3ub(0, 0, 0);
     glVertex2f(-0.5*width, -0.5*height);
     glVertex2f(-0.5*width, 0.5*height);
     glVertex2f(0.5*width, 0.5*height);
@@ -114,7 +114,7 @@ int main()
     // Création des tours
     PetitMonstre monstre1;
     TourBleue tourbleue;
-    vector<TourBleue> tabTourBleue;
+    vector<TourBleue*> tabTourBleue;
 
 
     /* Initialisation du titre de la fenetre */
@@ -130,10 +130,10 @@ int main()
         /* Placer ici le code de dessin */
         glClear(GL_COLOR_BUFFER_BIT);
 
-        carte.afficherCarte(textCarte, 20);
+        //carte.afficherCarte(textCarte, 20);
         //testSprite.drawSprite(textTestSprite, 0, 0, 1);
         drawAllTower(tabTourBleue, WINDOW_WIDTH, WINDOW_HEIGHT);
-
+        //drawSquare(1, 1, 1);
         
         /* Echange du front et du back buffer : mise a jour de la fenetre */
         SDL_GL_SwapBuffers();
@@ -184,11 +184,15 @@ int main()
                     mousey = e.button.y;
                     printf("clic en (%d, %d)\n", mousex, mousey);
                     //bleu1.attaquer(monstre1);
-                    //cout << "Monstre1" << endl;
+                    
                     //monstre1.afficherEtat();
 
                     tourbleue.poser(mousex, mousey, carte, tabTourBleue);
-                    //printTab(tabTourBleue);
+                   // printTab(tabTourBleue);
+                    //cout<<"euh"<<endl;
+
+                    //cout << tabTourBleue[0].getPositionX() << endl;
+
 
                     //carte.returnColor(mousex, mousey, WINDOW_WIDTH);
                     carte.isConstructible(mousex, mousey, WINDOW_WIDTH);

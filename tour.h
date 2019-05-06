@@ -72,7 +72,7 @@ class TourBleue:public Tour {
 	public :
 	TourBleue();
 
-	void poser(int x, int y, Carte &carte, vector<TourBleue> tabTourBleue);
+	void poser(int x, int y, Carte &carte, vector<TourBleue*> tabTourBleue);
 	void draw(const unsigned int WINDOW_WIDTH, const unsigned int WINDOW_HEIGHT);
 };
 
