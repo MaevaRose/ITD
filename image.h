@@ -8,4 +8,4 @@ using namespace std;
 
 GLuint setTexture(const char* imagePath);
 
-void drawTexture(GLuint texture, int size);
+void drawTexture(GLuint texture, float x, float y);

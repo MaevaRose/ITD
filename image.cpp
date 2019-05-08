@@ -21,9 +21,9 @@ GLuint setTexture(const char* imagePath) {
     glGenTextures(1, &texture);
     glBindTexture(GL_TEXTURE_2D, texture);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S,     GL_CLAMP_TO_EDGE);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T,     GL_CLAMP_TO_EDGE);
+    // glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    // glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S,     GL_CLAMP_TO_EDGE);
+    // glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T,     GL_CLAMP_TO_EDGE);
     glTexImage2D(
         GL_TEXTURE_2D, 0, GL_RGB, image->w, image->h, 0, GL_RGB, GL_UNSIGNED_BYTE, image->pixels);
     glBindTexture(GL_TEXTURE_2D, 0);
@@ -32,23 +32,24 @@ GLuint setTexture(const char* imagePath) {
 
 }
 
-void drawTexture(GLuint texture, int size){
+void drawTexture(GLuint texture, float x, float y){
+        glColor3ub(255, 255, 255);
         glEnable(GL_TEXTURE_2D);
         glBindTexture(GL_TEXTURE_2D, texture);
 
         glBegin(GL_QUADS);
 
         glTexCoord2f(0,1);
-        glVertex2f(-size, -size);
+        glVertex2f(-x, -y);
 
         glTexCoord2f(1,1);
-        glVertex2f(size, -size);
+        glVertex2f(x, -y);
 
         glTexCoord2f(1,0);
-        glVertex2f(size, size);
+        glVertex2f(x, y);
 
         glTexCoord2f(0,0);
-        glVertex2f(-size, size);
+        glVertex2f(-x, y);
 
         glEnd();
 

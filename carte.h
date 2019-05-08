@@ -14,7 +14,7 @@ class Carte{
 
 	GLuint setCarte();
 
-	void afficherCarte(GLuint texture, int size);
+	void afficherCarte(GLuint texture, float x, float y);
 
 	void setDataCarte();
 

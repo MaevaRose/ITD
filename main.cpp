@@ -45,7 +45,7 @@ void reshape(SDL_Surface** surface, unsigned int width, unsigned int height)
     glViewport(0, 0, (*surface)->w, (*surface)->h);
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    gluOrtho2D(-20, 20, -20, 20);
+    gluOrtho2D(-15, 15, -8.4, 8.4);
 }
 
 void drawCircle(int full, float size){
@@ -66,23 +66,31 @@ void drawCircle(int full, float size){
     glEnd();
 }
 
-void drawSquare(int full, float width, float height){
-    if(full != 0 && full != 1) exit(EXIT_FAILURE);
-    if (full == 1){
-        glBegin(GL_QUADS);
+void drawSquare(int mousex, int mousey, Carte carte){
+    float x = (-1 + 2. * mousex / 1800.)*15.;
+    float y = -(-1 + 2. * mousey / 1012.)*8.4;
+
+    if(carte.isConstructible(mousex, mousey, WINDOW_WIDTH)){
+        glColor3ub(0, 255, 0);
     }
-    else {
-        glBegin(GL_LINE_LOOP);
+    else{
+        glColor3ub(255, 0, 0);
     }
     
+    glPushMatrix();
 
-    glColor3ub(0, 0, 0);
-    glVertex2f(-0.5*width, -0.5*height);
-    glVertex2f(-0.5*width, 0.5*height);
-    glVertex2f(0.5*width, 0.5*height);
-    glVertex2f(0.5*width, -0.5*height);
+        glTranslatef(x, y, 0);
+
+        glBegin(GL_QUADS);
+        
+        
+        glVertex2f(-0.9, -0.9);
+        glVertex2f(-0.9, 0.9);
+        glVertex2f(0.9, 0.9);
+        glVertex2f(0.9, -0.9);
 
     glEnd();
+    glPopMatrix();
 }
 
 int main()
@@ -108,13 +116,13 @@ int main()
     GLuint textCarte = carte.setCarte();
 
     //test sprite
-    Sprites testSprite(400, 400, 50, 50);
-    GLuint textTestSprite = setTexture("./logo_imac.jpg");
+    //Sprites testSprite(400, 400, 50, 50);
+    //GLuint textTestSprite = setTexture("./logo_imac.jpg");
 
     // Création des tours
     PetitMonstre monstre1;
     TourBleue tourbleue;
-    vector<TourBleue*> tabTourBleue;
+    vector<TourBleue> tabTourBleue;
 
 
     /* Initialisation du titre de la fenetre */
@@ -130,10 +138,10 @@ int main()
         /* Placer ici le code de dessin */
         glClear(GL_COLOR_BUFFER_BIT);
 
-        //carte.afficherCarte(textCarte, 20);
+        carte.afficherCarte(textCarte, 15., 8.4);
         //testSprite.drawSprite(textTestSprite, 0, 0, 1);
         drawAllTower(tabTourBleue, WINDOW_WIDTH, WINDOW_HEIGHT);
-        //drawSquare(1, 1, 1);
+        drawSquare(mousex, mousey, carte);
         
         /* Echange du front et du back buffer : mise a jour de la fenetre */
         SDL_GL_SwapBuffers();
@@ -172,8 +180,8 @@ int main()
                     //break;
 
                 case SDL_MOUSEMOTION:
-                    /*mousex = e.motion.x;
-                    mousey = e.motion.y;*/
+                    mousex = e.motion.x;
+                    mousey = e.motion.y;
                     break;
 
 
@@ -198,6 +206,7 @@ int main()
                     carte.isConstructible(mousex, mousey, WINDOW_WIDTH);
                     // carte.isChemin(mousex, mousey, WINDOW_WIDTH);
                     // carte.isIn(mousex, mousey, WINDOW_WIDTH);
+                    printf("Il y a %d tours\n", tabTourBleue.size());
                     
                     
                     break;

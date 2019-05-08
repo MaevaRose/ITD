@@ -19,9 +19,9 @@ GLuint Carte::setCarte(){
 	return texture;
 }
 
-void Carte::afficherCarte(GLuint texture, int size){
+void Carte::afficherCarte(GLuint texture, float x, float y){
 
-	drawTexture(texture, size);
+	drawTexture(texture, x, y);
 }
 
 void Carte::setDataCarte(){
@@ -287,8 +287,16 @@ bool Carte::verifNoeuds(string const nomCarte) {
 
 bool Carte::isConstructible(int x, int y, int width){
 	int position = width*3*(y-1)+x*3;
+	int coin1 = width*3*((y+45)-1)+(x-45)*3;
+	int coin2 = width*3*((y-45)-1)+(x+45)*3;
+	int coin3 = width*3*((y-45)-1)+(x-45)*3;
+	int coin4 = width*3*((y+45)-1)+(x+45)*3;
 	for(int i=0; i<3; i++){
-		if(this->data[position+i+1]!=this->constructColor[i]){
+		if(this->data[position+i+1]!=this->constructColor[i] || 
+			this->data[coin1+i+1]!=this->constructColor[i] ||
+			this->data[coin2+i+1]!=this->constructColor[i]||
+			this->data[coin3+i+1]!=this->constructColor[i]||
+			this->data[coin4+i+1]!=this->constructColor[i]){
 			cout<<"Cette zone n'est pas constructible"<<endl;
 			return false;
 		}

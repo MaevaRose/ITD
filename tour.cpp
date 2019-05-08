@@ -1,8 +1,10 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <math.h>
 //#include "tour.h"
 #include "tableauTour.h"
+
 
 
 using namespace std;
@@ -16,7 +18,7 @@ TourVerte::TourVerte () : Tour(50, 100, 25, 10, 1, -1, -1) {};
 
 
 
-void TourBleue::poser(int x, int y, Carte &carte, vector<TourBleue*> tabTourBleue) {
+void TourBleue::poser(int x, int y, Carte &carte, vector<TourBleue> &tabTourBleue) {
 	bool isConstructible = carte.isConstructible(x, y, 1800);
 	printf("!!!!!!!! Je pose ça là\n");
 	if(isConstructible){
@@ -31,23 +33,21 @@ void TourBleue::poser(int x, int y, Carte &carte, vector<TourBleue*> tabTourBleu
 
 void TourBleue::draw(const unsigned int WINDOW_WIDTH, const unsigned int WINDOW_HEIGHT ) {
 
+	float x = (-1 + 2. * this->x_position / 1800.)*15.;
+	float y = -(-1 + 2. * this->y_position / 1012.)*8.4;
+
 	glPushMatrix();
+	
+	glTranslatef(x, y, 0);
+    glBegin(GL_LINE_LOOP);
+    glColor3ub(0, 0, 0);
+    glVertex2f(-0.9, -0.9);
+    glVertex2f(-0.9, 0.9);
+    glVertex2f(0.9, 0.9);
+    glVertex2f(0.9, -0.9);
 
-		float x = -1 + 2. * this->x_position / (float)WINDOW_WIDTH;
-		float y = -(-1 + 2. * this->y_position / (float)WINDOW_HEIGHT);
-		glTranslatef(x, y, 0);
-
-		glBegin(GL_QUADS);
-
-	    glColor3ub(0, 0, 0);
-	    glVertex2f(-0.5*2, -0.5*2);
-	    glVertex2f(-0.5*2, 0.5*2);
-	    glVertex2f(0.5*2, 0.5*2);
-	    glVertex2f(0.5*2, -0.5*2);
-
-	    glEnd();
-
-    glPopMatrix();
+    glEnd();
+   	glPopMatrix();
 }
 
 
