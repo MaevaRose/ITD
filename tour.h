@@ -88,6 +88,9 @@ class TourJaune:public Tour {
 
 	public :
 	TourJaune();
+
+	void poser(int x, int y, Carte &carte, vector<TourJaune> &tabTourJaune);
+	void draw(const unsigned int WINDOW_WIDTH, const unsigned int WINDOW_HEIGHT);
 };
 
 
@@ -99,6 +102,8 @@ class TourRouge:public Tour {
 
 	public :
 	TourRouge();
+	void poser(int x, int y, Carte &carte, vector<TourRouge> &tabTourRouge);
+	void draw(const unsigned int WINDOW_WIDTH, const unsigned int WINDOW_HEIGHT);
 };
 
 
@@ -110,4 +115,6 @@ class TourVerte:public Tour {
 
 	public :
 	TourVerte();
+	void poser(int x, int y, Carte &carte, vector<TourVerte> &tabTourVerte);
+	void draw(const unsigned int WINDOW_WIDTH, const unsigned int WINDOW_HEIGHT);
 };

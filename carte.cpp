@@ -67,6 +67,7 @@ void Carte::setDataCarte(){
   	}
 
   	carteppm.close();
+  	//free(this->data);
 
 }
 
@@ -85,7 +86,6 @@ bool Carte::verifITD(){
 	// on ouvre le fichier .itd
 	string const nomCarte("./test.itd");
 	ifstream carte(nomCarte.c_str());
-
 
 	//pour chaque partie de la carte, on returne si c'est bon ou non
 	bool header=verifHeader(nomCarte);
@@ -286,16 +286,17 @@ bool Carte::verifNoeuds(string const nomCarte) {
 }
 
 bool Carte::isConstructible(int x, int y, int width){
-	int position = width*3*(y-1)+x*3;
+	unsigned int position = width*3*(y-1)+x*3;
 	int coin1 = width*3*((y+45)-1)+(x-45)*3;
 	int coin2 = width*3*((y-45)-1)+(x+45)*3;
 	int coin3 = width*3*((y-45)-1)+(x-45)*3;
 	int coin4 = width*3*((y+45)-1)+(x+45)*3;
+
 	for(int i=0; i<3; i++){
 		if(this->data[position+i+1]!=this->constructColor[i] || 
 			this->data[coin1+i+1]!=this->constructColor[i] ||
-			this->data[coin2+i+1]!=this->constructColor[i]||
-			this->data[coin3+i+1]!=this->constructColor[i]||
+			this->data[coin2+i+1]!=this->constructColor[i] ||
+			this->data[coin3+i+1]!=this->constructColor[i] ||
 			this->data[coin4+i+1]!=this->constructColor[i]){
 			cout<<"Cette zone n'est pas constructible"<<endl;
 			return false;
@@ -309,11 +310,11 @@ bool Carte::isChemin(int x, int y, int width){
 	int position = width*3*(y-1)+x*3;
 	for(int i=0; i<3; i++){
 		if(this->data[position+i+1]!=this->cheminColor[i]){
-			cout<<"Cette zone n'est pas un chemin"<<endl;
+			//cout<<"Cette zone n'est pas un chemin"<<endl;
 			return false;
 		}
 	}
-	cout<<"Cette zone est un chemin"<<endl;
+	//cout<<"Cette zone est un chemin"<<endl;
 	return true;
 }
 
@@ -321,11 +322,11 @@ bool Carte::isIn(int x, int y, int width){
 	int position = width*3*(y-1)+x*3;
 	for(int i=0; i<3; i++){
 		if(this->data[position+i+1]!=this->inColor[i]){
-			cout<<"Cette zone n'est pas une zone d'entrée"<<endl;
+			//cout<<"Cette zone n'est pas une zone d'entrée"<<endl;
 			return false;
 		}
 	}
-	cout<<"Cette zone est une zone d'entrée"<<endl;
+	//cout<<"Cette zone est une zone d'entrée"<<endl;
 	return true;
 }
 

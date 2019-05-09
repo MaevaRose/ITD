@@ -66,22 +66,25 @@ void drawCircle(int full, float size){
     glEnd();
 }
 
-void drawSquare(int mousex, int mousey, Carte carte){
+void drawSquare(int mousex, int mousey, Carte &carte){
     float x = (-1 + 2. * mousex / 1800.)*15.;
     float y = -(-1 + 2. * mousey / 1012.)*8.4;
 
-    if(carte.isConstructible(mousex, mousey, WINDOW_WIDTH)){
+    bool isConstructible = carte.isIn(x, y, WINDOW_WIDTH);
+    if(isConstructible){
         glColor3ub(0, 255, 0);
     }
     else{
         glColor3ub(255, 0, 0);
     }
+
+   // glColor3ub(0, 0, 0);
     
     glPushMatrix();
 
         glTranslatef(x, y, 0);
 
-        glBegin(GL_QUADS);
+        glBegin(GL_LINE_LOOP);
         
         
         glVertex2f(-0.9, -0.9);
@@ -109,6 +112,7 @@ int main()
     reshape(&surface, WINDOW_WIDTH, WINDOW_HEIGHT);
     int mousex=0;
     int mousey=0;
+    int tourColor = 0;
 
     Carte carte;
     carte.verifITD();
@@ -121,8 +125,18 @@ int main()
 
     // Création des tours
     PetitMonstre monstre1;
+
     TourBleue tourbleue;
     vector<TourBleue> tabTourBleue;
+    
+    TourRouge tourrouge;
+    vector<TourRouge> tabTourRouge;
+    
+    TourJaune tourjaune;
+    vector<TourJaune> tabTourJaune;
+
+    TourVerte tourverte;
+    vector<TourVerte> tabTourVerte;
 
 
     /* Initialisation du titre de la fenetre */
@@ -140,7 +154,7 @@ int main()
 
         carte.afficherCarte(textCarte, 15., 8.4);
         //testSprite.drawSprite(textTestSprite, 0, 0, 1);
-        drawAllTower(tabTourBleue, WINDOW_WIDTH, WINDOW_HEIGHT);
+        drawAllTower(tabTourBleue, tabTourJaune, tabTourRouge, tabTourVerte, WINDOW_WIDTH, WINDOW_HEIGHT);
         drawSquare(mousex, mousey, carte);
         
         /* Echange du front et du back buffer : mise a jour de la fenetre */
@@ -195,7 +209,19 @@ int main()
                     
                     //monstre1.afficherEtat();
 
-                    tourbleue.poser(mousex, mousey, carte, tabTourBleue);
+                    if(tourColor==1){
+                        tourbleue.poser(mousex, mousey, carte, tabTourBleue);
+                    }
+                    if(tourColor==2){
+                        tourverte.poser(mousex, mousey, carte, tabTourVerte);
+                    }
+                    if(tourColor==3){
+                        tourjaune.poser(mousex, mousey, carte, tabTourJaune);
+                    }
+                    if(tourColor==4){
+                        tourrouge.poser(mousex, mousey, carte, tabTourRouge);
+                    }
+                    
                    // printTab(tabTourBleue);
                     //cout<<"euh"<<endl;
 
@@ -203,10 +229,10 @@ int main()
 
 
                     //carte.returnColor(mousex, mousey, WINDOW_WIDTH);
-                    carte.isConstructible(mousex, mousey, WINDOW_WIDTH);
-                    // carte.isChemin(mousex, mousey, WINDOW_WIDTH);
+                    //carte.isConstructible(mousex, mousey, WINDOW_WIDTH);
+                    //carte.isChemin(mousex, mousey, WINDOW_WIDTH);
                     // carte.isIn(mousex, mousey, WINDOW_WIDTH);
-                    printf("Il y a %d tours\n", tabTourBleue.size());
+                    //printf("Il y a %d tours bleue\n", tabTourBleue.size());
                     
                     
                     break;
@@ -215,6 +241,18 @@ int main()
                 case SDL_KEYDOWN:
                     //bleu1.afficherEtat();
                     printf("touche pressee (code = %d)\n", e.key.keysym.sym);
+                    if(e.key.keysym.sym == SDLK_b){
+                        tourColor = 1;
+                    }
+                    if(e.key.keysym.sym == SDLK_v){
+                        tourColor = 2;
+                    }
+                    if(e.key.keysym.sym == SDLK_j){
+                        tourColor = 3;
+                    }
+                    if(e.key.keysym.sym == SDLK_r){
+                        tourColor = 4;
+                    }
                     
                     
 
