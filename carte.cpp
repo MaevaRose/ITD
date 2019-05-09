@@ -62,7 +62,8 @@ void Carte::setDataCarte(){
   	//enregistrement de la carte dans un tableau de int
   	for(int i = 0 ; i<(width*height*3) ; i++){
   		carteppm>>nb;
-  		this->data[i]=nb;
+  		//this->data[i]=nb;
+  		data1.push_back(nb);
   		carteppm.seekg(1, ios::cur);
   	}
 
@@ -74,9 +75,9 @@ void Carte::setDataCarte(){
 void Carte::returnColor(int x, int y, int width){
 
 	int position = width*3*(y-1)+x*3;
-	cout<<"R : "<<this->data[position+1]<<endl;
-	cout<<"G : "<<this->data[position+2]<<endl;
-	cout<<"B : "<<this->data[position+3]<<endl;
+	cout<<"R : "<<this->data1[position+1]<<endl;
+	cout<<"G : "<<this->data1[position+2]<<endl;
+	cout<<"B : "<<this->data1[position+3]<<endl;
 
 }
 
@@ -285,31 +286,37 @@ bool Carte::verifNoeuds(string const nomCarte) {
 	return true;
 }
 
-bool Carte::isConstructible(int x, int y, int width){
-	unsigned int position = width*3*(y-1)+x*3;
-	int coin1 = width*3*((y+45)-1)+(x-45)*3;
-	int coin2 = width*3*((y-45)-1)+(x+45)*3;
-	int coin3 = width*3*((y-45)-1)+(x-45)*3;
-	int coin4 = width*3*((y+45)-1)+(x+45)*3;
-
-	for(int i=0; i<3; i++){
-		if(this->data[position+i+1]!=this->constructColor[i] || 
-			this->data[coin1+i+1]!=this->constructColor[i] ||
-			this->data[coin2+i+1]!=this->constructColor[i] ||
-			this->data[coin3+i+1]!=this->constructColor[i] ||
-			this->data[coin4+i+1]!=this->constructColor[i]){
-			cout<<"Cette zone n'est pas constructible"<<endl;
-			return false;
-		}
+bool Carte::isConstructible(int x, int y, int width, int height){
+	if (x<45 || y<45 || x+45>width || y+45>height){
+		//printf("Hors carte !\n");
+		return false;
 	}
-	cout<<"Cette zone est constructible"<<endl;
-	return true;
+	else{
+		int position = width*3*(y-1)+x*3;
+		int coin1 = width*3*((y+45)-1)+(x-45)*3;
+		int coin2 = width*3*((y-45)-1)+(x+45)*3;
+		int coin3 = width*3*((y-45)-1)+(x-45)*3;
+		int coin4 = width*3*((y+45)-1)+(x+45)*3;
+		for(int i=0; i<3; i++){
+		if(this->data1[position+i+1]!=this->constructColor[i] || 
+			this->data1[coin1+i+1]!=this->constructColor[i] ||
+			this->data1[coin2+i+1]!=this->constructColor[i] ||
+			this->data1[coin3+i+1]!=this->constructColor[i] ||
+			this->data1[coin4+i+1]!=this->constructColor[i]){
+				//cout<<"Cette zone n'est pas constructible"<<endl;
+				return false;
+			}
+		}
+		//cout<<"Cette zone est constructible"<<endl;
+		return true;
+	}
+	
 }
 
 bool Carte::isChemin(int x, int y, int width){
 	int position = width*3*(y-1)+x*3;
 	for(int i=0; i<3; i++){
-		if(this->data[position+i+1]!=this->cheminColor[i]){
+		if(this->data1[position+i+1]!=this->cheminColor[i]){
 			//cout<<"Cette zone n'est pas un chemin"<<endl;
 			return false;
 		}
@@ -321,7 +328,7 @@ bool Carte::isChemin(int x, int y, int width){
 bool Carte::isIn(int x, int y, int width){
 	int position = width*3*(y-1)+x*3;
 	for(int i=0; i<3; i++){
-		if(this->data[position+i+1]!=this->inColor[i]){
+		if(this->data1[position+i+1]!=this->inColor[i]){
 			//cout<<"Cette zone n'est pas une zone d'entrée"<<endl;
 			return false;
 		}
@@ -333,7 +340,7 @@ bool Carte::isIn(int x, int y, int width){
 bool Carte::isOut(int x, int y, int width){
 	int position = width*3*(y-1)+x*3;
 	for(int i=0; i<3; i++){
-		if(this->data[position+i+1]!=this->outColor[i]){
+		if(this->data1[position+i+1]!=this->outColor[i]){
 			cout<<"Cette zone n'est pas une zone de sortie"<<endl;
 			return false;
 		}
@@ -345,7 +352,7 @@ bool Carte::isOut(int x, int y, int width){
 bool Carte::isNoeud(int x, int y, int width){
 	int position = width*3*(y-1)+x*3;
 	for(int i=0; i<3; i++){
-		if(this->data[position+i+1]!=this->cheminColor[i]){
+		if(this->data1[position+i+1]!=this->cheminColor[i]){
 			cout<<"Cette zone n'est pas un noeud"<<endl;
 			return false;
 		}

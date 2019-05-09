@@ -5,6 +5,7 @@
 #include <iostream>
 #include <string>
 #include <fstream>
+#include <vector>
 
 using namespace std;
 
@@ -32,7 +33,7 @@ class Carte{
 
 	bool verifNoeuds(string const nomCarte);
 
-	bool isConstructible(int x, int y, int width);
+	bool isConstructible(int x, int y, int width, int height);
 	bool isChemin(int x, int y, int width);
 	bool isIn(int x, int y, int width);
 	bool isOut(int x, int y, int width);
@@ -40,6 +41,7 @@ class Carte{
 
 	protected:
 	int* data; 
+	vector<int> data1;
 	int energie;
 	int cheminColor[3];
 	int noeudColor[3];

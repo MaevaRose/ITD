@@ -70,7 +70,7 @@ void drawSquare(int mousex, int mousey, Carte &carte){
     float x = (-1 + 2. * mousex / 1800.)*15.;
     float y = -(-1 + 2. * mousey / 1012.)*8.4;
 
-    bool isConstructible = carte.isIn(x, y, WINDOW_WIDTH);
+    bool isConstructible = carte.isConstructible(mousex, mousey, WINDOW_WIDTH, WINDOW_HEIGHT);
     if(isConstructible){
         glColor3ub(0, 255, 0);
     }
@@ -78,7 +78,7 @@ void drawSquare(int mousex, int mousey, Carte &carte){
         glColor3ub(255, 0, 0);
     }
 
-   // glColor3ub(0, 0, 0);
+    //glColor3ub(0, 0, 0);
     
     glPushMatrix();
 
@@ -110,8 +110,8 @@ int main()
     /* Ouverture d'une fenetre et creation d'un contexte OpenGL */
     SDL_Surface* surface;
     reshape(&surface, WINDOW_WIDTH, WINDOW_HEIGHT);
-    int mousex=0;
-    int mousey=0;
+    int mousex=500;
+    int mousey=500;
     int tourColor = 0;
 
     Carte carte;
@@ -228,8 +228,8 @@ int main()
                     //cout << tabTourBleue[0].getPositionX() << endl;
 
 
-                    //carte.returnColor(mousex, mousey, WINDOW_WIDTH);
-                    //carte.isConstructible(mousex, mousey, WINDOW_WIDTH);
+                    carte.returnColor(mousex, mousey, WINDOW_WIDTH);
+                    carte.isConstructible(mousex, mousey, WINDOW_WIDTH, WINDOW_HEIGHT);
                     //carte.isChemin(mousex, mousey, WINDOW_WIDTH);
                     // carte.isIn(mousex, mousey, WINDOW_WIDTH);
                     //printf("Il y a %d tours bleue\n", tabTourBleue.size());
