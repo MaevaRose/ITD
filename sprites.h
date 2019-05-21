@@ -11,9 +11,11 @@ public:
     Sprites(int tW, int tH, int sW, int sH);
 
     GLuint initSprite(const char* imagePath);
-    void drawSprite(GLuint texture, float posX, float posY, int frameIndex);
+    void drawSprite(GLuint texture, float size, float posX, float posY, int frameIndex);
 
 private:
-	int spriteWidth, spriteHeight;
-    int texWidth, texHeight;
+	int spriteWidth; 
+	int spriteHeight;
+    int texWidth;
+    int texHeight;
 };

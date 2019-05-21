@@ -76,7 +76,8 @@ void Tour::augmenterPortee(int pourcent) {
 
 void TourBleue::poser(int x, int y, Carte &carte, vector<TourBleue> &tabTourBleue) {
 	bool isConstructible = carte.isConstructible(x, y, 1800, 1012);
-	printf("!!!!!!!! Je pose ça là\n");
+	//printf("!!!!!!!! Je pose ça là\n");
+	
 	if(isConstructible){
 		this->x_position = x;
 		this->y_position = y;
@@ -109,7 +110,7 @@ void TourBleue::draw(const unsigned int WINDOW_WIDTH, const unsigned int WINDOW_
 
 void TourJaune::poser(int x, int y, Carte &carte, vector<TourJaune> &tabTourJaune) {
 	bool isConstructible = carte.isConstructible(x, y, 1800, 1012);
-	printf("!!!!!!!! Je pose ça là\n");
+	//printf("!!!!!!!! Je pose ça là\n");
 	if(isConstructible){
 		this->x_position = x;
 		this->y_position = y;
@@ -142,7 +143,7 @@ void TourJaune::draw(const unsigned int WINDOW_WIDTH, const unsigned int WINDOW_
 
 void TourRouge::poser(int x, int y, Carte &carte, vector<TourRouge> &tabTourRouge) {
 	bool isConstructible = carte.isConstructible(x, y, 1800, 1012);
-	printf("!!!!!!!! Je pose ça là\n");
+	//printf("!!!!!!!! Je pose ça là\n");
 	if(isConstructible){
 		this->x_position = x;
 		this->y_position = y;
@@ -175,7 +176,7 @@ void TourRouge::draw(const unsigned int WINDOW_WIDTH, const unsigned int WINDOW_
 
 void TourVerte::poser(int x, int y, Carte &carte, vector<TourVerte> &tabTourVerte) {
 	bool isConstructible = carte.isConstructible(x, y, 1800, 1012);
-	printf("!!!!!!!! Je pose ça là\n");
+	//printf("!!!!!!!! Je pose ça là\n");
 	if(isConstructible){
 		this->x_position = x;
 		this->y_position = y;

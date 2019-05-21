@@ -4,7 +4,7 @@ carte test.ppm
 energie 100
 chemin 254 150 160
 noeud 253 238 1
-construct 255 255 255
+construct 255 255 fuck
 in 10 186 181
 out 212 115 212
 4

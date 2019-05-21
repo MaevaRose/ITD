@@ -48,14 +48,9 @@ void reshape(SDL_Surface** surface, unsigned int width, unsigned int height)
     gluOrtho2D(-15, 15, -8.4, 8.4);
 }
 
-void drawCircle(int full, float size){
-    if(full != 0 && full != 1) exit(EXIT_FAILURE);
-    if (full == 1){
-        glBegin(GL_POLYGON);
-    }
-    else {
-        glBegin(GL_LINE_STRIP);
-    }
+void drawCircle(float size, float x, float y){
+    
+    glBegin(GL_LINE_STRIP);
 
     glColor3ub(0, 0, 0);
 
@@ -96,6 +91,7 @@ void drawSquare(int mousex, int mousey, Carte &carte){
     glPopMatrix();
 }
 
+
 int main()
 {   
     /* Initialisation de la SDL */
@@ -110,6 +106,12 @@ int main()
     /* Ouverture d'une fenetre et creation d'un contexte OpenGL */
     SDL_Surface* surface;
     reshape(&surface, WINDOW_WIDTH, WINDOW_HEIGHT);
+
+    //temps
+    bool play = true;
+    cout<<"horloge"<<CLOCKS_PER_SEC<<endl;
+    double frame=1;
+
     int mousex=500;
     int mousey=500;
     int tourColor = 0;
@@ -120,8 +122,8 @@ int main()
     GLuint textCarte = carte.setCarte();
 
     //test sprite
-    //Sprites testSprite(400, 400, 50, 50);
-    //GLuint textTestSprite = setTexture("./logo_imac.jpg");
+    Sprites testSprite(300, 300, 100, 100);
+    GLuint textTestSprite = setTexture("./test_sprite.jpg");
 
     // Création des tours
     PetitMonstre monstre1;
@@ -138,6 +140,7 @@ int main()
     TourVerte tourverte;
     vector<TourVerte> tabTourVerte;
 
+    int frameIndex = 0;
 
     /* Initialisation du titre de la fenetre */
     SDL_WM_SetCaption(WINDOW_TITLE, NULL);
@@ -147,15 +150,21 @@ int main()
     while(loop) 
     {
         /* Recuperation du temps au debut de la boucle */
-        Uint32 startTime = SDL_GetTicks();
+        //Uint32 startTime = SDL_GetTicks();
         
+        Uint32 startTime = SDL_GetTicks();
+        Uint32 time = SDL_GetTicks()/1000;
+        frameIndex=SDL_GetTicks()/300;
         /* Placer ici le code de dessin */
         glClear(GL_COLOR_BUFFER_BIT);
 
         carte.afficherCarte(textCarte, 15., 8.4);
-        //testSprite.drawSprite(textTestSprite, 0, 0, 1);
+        testSprite.drawSprite(textTestSprite, 0.9, -5, 5, frameIndex);
+
         drawAllTower(tabTourBleue, tabTourJaune, tabTourRouge, tabTourVerte, WINDOW_WIDTH, WINDOW_HEIGHT);
         drawSquare(mousex, mousey, carte);
+
+        //drawSquare()
         
         /* Echange du front et du back buffer : mise a jour de la fenetre */
         SDL_GL_SwapBuffers();
@@ -205,9 +214,6 @@ int main()
                     mousex = e.button.x;
                     mousey = e.button.y;
                     printf("clic en (%d, %d)\n", mousex, mousey);
-                    //bleu1.attaquer(monstre1);
-                    
-                    //monstre1.afficherEtat();
 
                     if(tourColor==1){
                         tourbleue.poser(mousex, mousey, carte, tabTourBleue);
@@ -228,7 +234,7 @@ int main()
                     //cout << tabTourBleue[0].getPositionX() << endl;
 
 
-                    carte.returnColor(mousex, mousey, WINDOW_WIDTH);
+                    //carte.returnColor(mousex, mousey, WINDOW_WIDTH);
                     carte.isConstructible(mousex, mousey, WINDOW_WIDTH, WINDOW_HEIGHT);
                     //carte.isChemin(mousex, mousey, WINDOW_WIDTH);
                     // carte.isIn(mousex, mousey, WINDOW_WIDTH);

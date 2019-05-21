@@ -195,7 +195,7 @@ bool Carte::verifCouleurs(string const nomCarte, string verifMot, int value[3]){
     	if(mot==verifMot) { 
     		int nombre;
     		for(int i=0;i<3;i++){
-    			carte.seekg(1, ios::cur);
+    			//carte.seekg(1, ios::cur);
     			carte>>nombre;
     			if(!nombre){printf("Erreur couleurs\n"); return false;}
     			value[i]=nombre;
@@ -255,11 +255,7 @@ bool Carte::verifNoeuds(string const nomCarte) {
 			carte>>nombre;
 			if(!nombre){cout<<"Erreur dans les noeuds"<<endl; return false;}
 
-			/*bool entree=isIn(700, 725, width);
-			bool sortie = isOut(x, y, width);
-			if(!entree && !sortie){
-				cout<<"Erreur : l'entrée ou la sortie indiqué.e ne correspond pas à la carte"<<endl; return false;
-			}*/
+			//bool entree = isIn(x, y, width);
 		}
 
 		if(type == 3){
@@ -270,11 +266,6 @@ bool Carte::verifNoeuds(string const nomCarte) {
 			carte.seekg(1, ios::cur);
 			carte>>nombre;
 			if(!nombre){printf("Erreur dans les noeuds\n"); return false;}
-
-			/*bool noeud = isNoeud(x, y, width);
-			if(!noeud){
-				cout<<"Erreur : le noeud indiqué ne correspond pas à la carte"<<endl; return false;
-			}*/
 
 		}
 
@@ -287,16 +278,16 @@ bool Carte::verifNoeuds(string const nomCarte) {
 }
 
 bool Carte::isConstructible(int x, int y, int width, int height){
-	if (x<45 || y<45 || x+45>width || y+45>height){
+	if (x<50 || y<50 || x+50>width || y+50>height){
 		//printf("Hors carte !\n");
 		return false;
 	}
 	else{
 		int position = width*3*(y-1)+x*3;
-		int coin1 = width*3*((y+45)-1)+(x-45)*3;
-		int coin2 = width*3*((y-45)-1)+(x+45)*3;
-		int coin3 = width*3*((y-45)-1)+(x-45)*3;
-		int coin4 = width*3*((y+45)-1)+(x+45)*3;
+		int coin1 = width*3*((y+50)-1)+(x-50)*3;
+		int coin2 = width*3*((y-50)-1)+(x+50)*3;
+		int coin3 = width*3*((y-50)-1)+(x-50)*3;
+		int coin4 = width*3*((y+50)-1)+(x+50)*3;
 		for(int i=0; i<3; i++){
 		if(this->data1[position+i+1]!=this->constructColor[i] || 
 			this->data1[coin1+i+1]!=this->constructColor[i] ||
@@ -329,11 +320,11 @@ bool Carte::isIn(int x, int y, int width){
 	int position = width*3*(y-1)+x*3;
 	for(int i=0; i<3; i++){
 		if(this->data1[position+i+1]!=this->inColor[i]){
-			//cout<<"Cette zone n'est pas une zone d'entrée"<<endl;
+			cout<<"Cette zone n'est pas une zone d'entrée"<<endl;
 			return false;
 		}
 	}
-	//cout<<"Cette zone est une zone d'entrée"<<endl;
+	cout<<"Cette zone est une zone d'entrée"<<endl;
 	return true;
 }
 
