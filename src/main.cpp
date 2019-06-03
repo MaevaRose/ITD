@@ -152,7 +152,6 @@ int main(int argc, char* argv[])
     PetitMonstre monstre1;
     MoyenMonstre monstre2;
     GrosMonstre monstre3;
-    int indice = 0;
 
     vector<PetitMonstre> tabPetitMonstre;
     vector<MoyenMonstre> tabMoyenMonstre;
@@ -172,13 +171,24 @@ int main(int argc, char* argv[])
     constructGraphes (noeuds, grapheNoeuds, tabPoids, posNoeuds);
 
     //TEST DIJKSTRA
+
+    vector<Noeud> noeuds = carte.noeuds;
+    vector<vector<int>> grapheNoeuds;
+    vector<vector<int>> tabPoids;
+    vector<vector<int>> posNoeuds;
+    constructGraphes (noeuds, grapheNoeuds, tabPoids, posNoeuds);
+
     //printf("JE SUIS LA\n");
     //vector<vector<int>> grapheNoeuds = creerGrapheTest2();
     printf("il y a %d noeuds et le premier noeud est %d\n", grapheNoeuds.size(), grapheNoeuds[0][0]);
     //vector<vector<int>> tabPoids = creerTabTest2();
+<<<<<<< HEAD
     printf("il y a %d poids et le deuxieme poids est %d\n", tabPoids.size(), tabPoids[0][1]);
+=======
+    printf("il y a %d poids et le deuxieme poids est %d\n", tabPoids.size(), tabPoids[0][0]);
+>>>>>>> 7cf0a02567eb228855402ec1fbb6468b37724305
     int start = 0;
-    int end = 3;
+    int end = 13;
     vector<int> chemin = calculCheminMonstre(grapheNoeuds, tabPoids, start, end);
     afficheChemin(chemin);
     //vector<vector<int>> posNoeuds = creerPosNoeud();
@@ -203,9 +213,9 @@ int main(int argc, char* argv[])
             time = SDL_GetTicks()/1000;
             frameIndex=SDL_GetTicks()/300;
             attaqueAllTower(tabTourBleue, tabTourJaune, tabTourRouge, tabTourVerte, tabPetitMonstre, tabMoyenMonstre, tabGrosMonstre);
-            //printf("j'ai attaqué sans pb\n");
+        //printf("j'ai attaqué sans pb\n");
             tuerAllMonstre(tabPetitMonstre, tabMoyenMonstre, tabGrosMonstre);
-            //printf("apres premier if play\n");
+        //printf("apres premier if play\n");
         }
 
         
