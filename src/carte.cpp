@@ -393,10 +393,11 @@ bool Carte::verifChemin(string const nomCarte){
 	int width = 1800;
 
 	vector<Noeud>::iterator noeud = this->noeuds.begin();
+	bool isContructible;
 
 
 	//----------------------------------------------------------------------------------------------------
-	//    Ceci n'est pas Bresenham, mais étant donné qu'on n'a que des chemins en angle droit, 
+	//    Ceci n'est pas Bresenham, mais étant donné que l'on n'a que des chemins en angle droit, 
 	//	  il est plus simple pour nous de faire ainsi 
 	//----------------------------------------------------------------------------------------------------
 	for (int i = 0;  i < this->noeuds.size(); i++){
@@ -411,11 +412,11 @@ bool Carte::verifChemin(string const nomCarte){
 				int y0 = this->noeuds[i].getPositionY();
 				int y1 = this->noeuds[relations[j]].getPositionY();
 				if (y0 < y1) {sens = -1;}
-				//printf("Le noeud %d est lié au noeud %d et ils sont alignés en x\n", i, this->noeuds[relations[j]].getId());
-				bool isContructible = isConstructible(this->noeuds[i].getPositionX(), y1, 1800, 0);
+				printf("Le noeud %d est lié au noeud %d et ils sont alignés en x\n", i, this->noeuds[relations[j]].getId());
+				isContructible = isConstructible(this->noeuds[i].getPositionX(), y1, 1800, 0);
 				while(y1 != y0 && !isContructible){
 					y1 += 1*sens;
-					printf("Je vérifie le pixel %d, %d \n", this->noeuds[i].getPositionX(), y1);
+					//printf("Je vérifie le pixel %d, %d \n", this->noeuds[i].getPositionX(), y1);
 					isContructible = isConstructible(this->noeuds[i].getPositionX(), y1, 1800, 0);
 				}
 				if(y1 != y0){
@@ -432,10 +433,10 @@ bool Carte::verifChemin(string const nomCarte){
 				if (x0 < x1) {sens = -1;}
 				printf("Le noeud %d est lié au noeud %d et ils sont alignés en y\n", i, this->noeuds[relations[j]].getId());
 				//cout<<"Le noeud "<< i <<" est lié au noeud "<< this->noeuds[relations[j]] <<" et ils sont alignés en y"<<endl;
-				bool isContructible = isConstructible(x1, this->noeuds[i].getPositionY(), 1800, 0);
+				isContructible = isConstructible(x1, this->noeuds[i].getPositionY(), 1800, 0);
 				while(x1 != x0 && !isContructible){
 					x1 += 1*sens;
-					printf("Je vérifie le pixel %d, %d \n", x1, this->noeuds[i].getPositionY());
+					//printf("Je vérifie le pixel %d, %d \n", x1, this->noeuds[i].getPositionY());
 					isContructible = isConstructible(x1, this->noeuds[i].getPositionY(), 1800, 0);
 				}
 				if(x1 != x0){
