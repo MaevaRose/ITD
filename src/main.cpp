@@ -110,6 +110,11 @@ int main(int argc, char* argv[])
     SDL_Surface* surface;
     reshape(&surface, WINDOW_WIDTH, WINDOW_HEIGHT);
 
+    Interface interface;
+    interface.setAllTexture();
+    interface.select=0;
+    bool clicOnInterface=false;
+
     //temps
     bool play = true;
     //cout<<"horloge"<<CLOCKS_PER_SEC<<endl;
@@ -220,7 +225,7 @@ int main(int argc, char* argv[])
         glColor3ub(0,0,0);
         writeString(0, 0,  "Je test loul");
         glColor3ub(255,255,255);
-        drawInterface();
+        interface.drawInterface();
 
         if(play){
             updateAllMonstre(tabPetitMonstre, tabMoyenMonstre, tabGrosMonstre, chemin, posNoeuds, finPartie);
@@ -274,20 +279,29 @@ int main(int argc, char* argv[])
                     mousex = e.button.x;
                     mousey = e.button.y;
                     printf("clic en (%d, %d)\n", mousex, mousey);
-
-                    if(play){
-                        if(tourColor==1){
-                        tourbleue.poser(mousex, mousey, carte, tabTourBleue);
+                    clicOnInterface = interface.clicOnInterface(mousex, mousey);
+                    if(!clicOnInterface){
+                        if(play){
+                            if(interface.select==1){
+                                tourbleue.poser(mousex, mousey, carte, tabTourBleue);
+                                interface.select = 0;
+                            }
+                            if(interface.select==2){
+                                tourverte.poser(mousex, mousey, carte, tabTourVerte);
+                                interface.select = 0;
+                            }
+                            if(interface.select==3){
+                                tourjaune.poser(mousex, mousey, carte, tabTourJaune);
+                                interface.select = 0;
+                            }
+                            if(interface.select==4){
+                                tourrouge.poser(mousex, mousey, carte, tabTourRouge);
+                                interface.select = 0;
+                            }
                         }
-                        if(tourColor==2){
-                            tourverte.poser(mousex, mousey, carte, tabTourVerte);
-                        }
-                        if(tourColor==3){
-                            tourjaune.poser(mousex, mousey, carte, tabTourJaune);
-                        }
-                        if(tourColor==4){
-                            tourrouge.poser(mousex, mousey, carte, tabTourRouge);
-                        }
+                    }
+                    else{
+                        clicOnInterface = false;
                     }
                     
                     carte.isConstructible(mousex, mousey, WINDOW_WIDTH, WINDOW_HEIGHT);
