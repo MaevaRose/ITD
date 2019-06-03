@@ -1,10 +1,10 @@
 CC     = g++
 CFLAGS = -Wall -Wextra -O2 -Wno-unused-result -g
-LDFLAGS	= -lSDL -lSDL_image -lGLU -lGL -lm
+LDFLAGS	= -lSDL -lSDL_image -lGLU -lGL -lglut -lm
 LIB    = -lm
-OBJ    = main.o monstre.o tableauMonstre.o tour.o tableauTour.o carte.o image.o sprites.o
+OBJ    = main.o monstre.o tour.o carte.o foncOpenGL.o interface.o noeud.o chemin.o grapheNoeuds.o
 RM     = rm -f
-BIN    = ./testv1
+BIN    = ./bin/itd
 DIRNAME = $(shell basename $$PWD)
 BACKUP  = $(shell date +`basename $$PWD`-%m.%d.%H.%M.zip)
 STDNAME = $(DIRNAME).zip
@@ -15,42 +15,59 @@ all : $(OBJ)
 	@echo "            to execute type: $(BIN) "
 	@echo "--------------------------------------------------------------"
 
-monstre.o : monstre.cpp monstre.h
+foncOpenGL.o : src/foncOpenGL.cpp include/foncOpenGL.h
+	@echo "compile foncOpenGL"
+	$(CC) $(CFLAGS) -c $<  
+	@echo "done..."
+
+interface.o : src/interface.cpp include/interface.hpp
+	@echo "compile interface"
+	$(CC) $(CFLAGS) -c $<  
+	@echo "done..."
+
+monstre.o : src/monstre.cpp include/monstre.h
 	@echo "compile monstre"
 	$(CC) $(CFLAGS) -c $<  
 	@echo "done..."
 
-tableauMonstre.o : tableauMonstre.cpp tableauMonstre.h
-	@echo "compile tableauMonstre"
+noeud.o : src/noeud.cpp include/noeud.h
+	@echo "compile noeud"
 	$(CC) $(CFLAGS) -c $<  
 	@echo "done..."
 
-tour.o : tour.cpp tour.h
+chemin.o : src/chemin.cpp include/chemin.h
+	@echo "compile chemin"
+	$(CC) $(CFLAGS) -c $<  
+	@echo "done..."
+
+grapheNoeuds.o : src/grapheNoeuds.cpp include/grapheNoeuds.h
+	@echo "compile grapheNoeuds"
+	$(CC) $(CFLAGS) -c $<  
+	@echo "done..."
+
+tour.o : src/tour.cpp include/tour.h
 	@echo "compile tour"
 	$(CC) $(CFLAGS) -c $<  
 	@echo "done..."
 
-tableauTour.o : tableauTour.cpp tableauTour.h
-	@echo "compile tableauTour"
-	$(CC) $(CFLAGS) -c $<  
-	@echo "done..."
+# tableauTour.o : src/tableauTour.cpp include/tableauTour.h
+# 	@echo "compile tableauTour"
+# 	$(CC) $(CFLAGS) -c $<  
+# 	@echo "done..."
 
-carte.o : carte.cpp carte.h
+#batiment.o : batiment.cpp batiment.h
+#	@echo "compile batiment"
+#	$(CC) $(CFLAGS) -c $<  
+#	@echo "done..."
+
+carte.o : src/carte.cpp include/carte.h
 	@echo "compile carte"
 	$(CC) $(CFLAGS) -c $<  
 	@echo "done..."
 
-image.o : image.cpp image.h
-	@echo "compile image"
-	$(CC) $(CFLAGS) -c $<  
-	@echo "done..."
 
-sprites.o : sprites.cpp sprites.h
-	@echo "compile sprites"
-	$(CC) $(CFLAGS) -c $<  
-	@echo "done..."
 
-main.o : main.cpp monstre.o tableauMonstre.o tour.o tableauTour.o carte.o image.o sprites.o
+main.o : src/main.cpp monstre.o tour.o carte.o foncOpenGL.o interface.o noeud.o chemin.o grapheNoeuds.o
 	@echo "compile main"
 	$(CC) $(CFLAGS) -c $<  
 	@echo "done..."
