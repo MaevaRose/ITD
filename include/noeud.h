@@ -7,7 +7,7 @@ using namespace std;
 class Noeud {
 
 	public:
-	Noeud(int id, int type, int x, int y, vector<int> relations);
+	Noeud(int id, int type, int x, int y, vector<int> rel);
 
 	//méthodes
 	int getId ();
@@ -18,7 +18,7 @@ class Noeud {
 
 	int getType();
 
-	//void pushRel(int relation);
+	void pushRel(vector<int> rel);
 
 	vector<int> getRel();
 

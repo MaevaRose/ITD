@@ -176,7 +176,18 @@ GLuint setPNGTexture(const char* imagePath) {
 }
 
 
-void drawTexture(GLuint texture, float x, float y){
+void drawTexture(GLuint texture, int pos_x, int pos_y, int width_px, int height_px){
+    
+    float x = (-1 + 2. * pos_x / 1800.)*15.;
+    float y = -(-1 + 2. * pos_y / 1012.)*8.4;
+
+    float width = (-1 + 2. * width_px / 1800.)*15.;
+    float height = (-1 + 2. * height_px / 1800.)*15.;
+
+    glPushMatrix();
+
+        glTranslatef(x, y, 0);
+
         glColor3ub(255, 255, 255);
         glEnable(GL_TEXTURE_2D);
 
@@ -185,22 +196,23 @@ void drawTexture(GLuint texture, float x, float y){
         glBegin(GL_QUADS);
 
         glTexCoord2f(0,1);
-        glVertex2f(-x, -y);
+        glVertex2f(height/2, width/2);
 
         glTexCoord2f(1,1);
-        glVertex2f(x, -y);
+        glVertex2f(-height/2, width/2);
 
         glTexCoord2f(1,0);
-        glVertex2f(x, y);
+        glVertex2f(-height/2, -width/2);
 
         glTexCoord2f(0,0);
-        glVertex2f(-x, y);
+        glVertex2f(height/2, -width/2);
 
         glEnd();
 
         glBindTexture(GL_TEXTURE_2D, 0);
         glDisable(GL_TEXTURE_2D);
 
+    glPopMatrix();
 }
 
 

@@ -71,6 +71,11 @@ int Monstre::getPositionY() {
 }
 
 
+int Monstre::getVie() {
+	return this->pts_vie;
+}
+
+
 void Monstre::pushPosition(int x, int y) {
 	this -> x_position = x;
 	this -> y_position = y;
@@ -95,7 +100,7 @@ void MoyenMonstre::drawMoyenMonstre() {
 
 	glPushMatrix();
 		glTranslatef(x, y, 0);
-            glColor3ub(153,218,75);
+            glColor3ub(201,84,28);
             drawCircle(0.1,1);
     glPopMatrix();
 }
@@ -107,55 +112,73 @@ void GrosMonstre::drawGrosMonstre() {
 
 	glPushMatrix();
 		glTranslatef(x, y, 0);
-            glColor3ub(153,218,75);
+            glColor3ub(190,33,6);
             drawCircle(0.1,1);
     glPopMatrix();
 }
 
 
-void Monstre::getChemin(vector<vector<int>> &grapheNoeuds, vector<vector<int>> &tabPoids, int start, int end) {
+void Monstre::pushChemin(vector<vector<int>> &grapheNoeuds, vector<vector<int>> &tabPoids, int start, int end) {
 	this -> chemin = calculCheminMonstre(grapheNoeuds, tabPoids, start, end);
 }
 
 
-void Monstre::updatePos(vector<int> chemin, vector<vector<int>> posNoeuds, int &indice, int &finPartie) { 
+vector<int> Monstre::getChemin() {
+	return this -> chemin;
+}
+
+
+int Monstre::getIndice() {
+	return this->indiceChemin;
+}
+
+
+void Monstre::updateIndice() {
+	(this->indiceChemin)++;
+}
+
+
+void Monstre::updatePos(vector<int> chemin, vector<vector<int>> posNoeuds, int &finPartie) { 
 
 	int sens;
+	//printf("j'update la position\n");
 	//printf("positions avant update : x=%d, y=%d\n", this->x_position, this->y_position);
 
-	if (posNoeuds[chemin[indice]][0] == posNoeuds[chemin[indice+1]][0]) {
+	if (posNoeuds[chemin[this->indiceChemin]][0] == posNoeuds[chemin[this->indiceChemin+1]][0]) {
 		//printf("je suis dans if 1 \n");
-		if (posNoeuds[chemin[indice]][1] < posNoeuds[chemin[indice+1]][1]) {
+		if (posNoeuds[chemin[this->indiceChemin]][1] < posNoeuds[chemin[this->indiceChemin+1]][1]) {
 			sens = 1;
 		}
 		else {
 			sens = -1;
 		}
 
-		if (this -> y_position != posNoeuds[chemin[indice+1]][1]) {
+		if (this -> y_position != posNoeuds[chemin[this->indiceChemin+1]][1]) {
 			this -> y_position += sens*this->vitesse;
 		}
 		else {
-			indice += 1;
+			this->indiceChemin += 1;
+			printf("update indice y\n");
 		}
 	}
 
-	else if (posNoeuds[chemin[indice]][1] == posNoeuds[chemin[indice+1]][1]) {
+	else if (posNoeuds[chemin[this->indiceChemin]][1] == posNoeuds[chemin[this->indiceChemin+1]][1]) {
 		//printf("je suis dans else if 1\n");
-		if (posNoeuds[chemin[indice]][0] < posNoeuds[chemin[indice+1]][0]) {
+		if (posNoeuds[chemin[this->indiceChemin]][0] < posNoeuds[chemin[this->indiceChemin+1]][0]) {
 			sens = 1;
 		}
 		else {
 			sens = -1;
 		}
-		if (this -> x_position != posNoeuds[chemin[indice+1]][0]) {
+		if (this -> x_position != posNoeuds[chemin[this->indiceChemin+1]][0]) {
 			this -> x_position += sens*this->vitesse;
 		}
 		else {
-			indice += 1;
+			this->indiceChemin += 1;
+			printf("update indice x\n");
 		}
 	}
-	if (indice == chemin.size()) {
+	if (this->indiceChemin == chemin.size()) {
 		finPartie = 1;
 	}
 	//printf("positions apres update : x=%d, y=%d\n", this->x_position, this->y_position);
@@ -203,59 +226,64 @@ void popOfTabGrosMonstre(vector<GrosMonstre> &tabMonstre, vector<GrosMonstre>::i
 void tuerAllMonstre(vector<PetitMonstre> &tabPetitMonstre, vector<MoyenMonstre> &tabMoyenMonstre, vector<GrosMonstre> &tabGrosMonstre) {
 	int i = 0;
 	vector<PetitMonstre>::iterator iterator1;
-	printf("taille petit monstres : %d\n", tabPetitMonstre.size());
+	//printf("taille petit monstres : %d\n", tabPetitMonstre.size());
 	if (tabPetitMonstre.size() > 0) {
-		vector<PetitMonstre>::iterator iterator1 = tabPetitMonstre.begin();
-		//for(iterator1=tabPetitMonstre.begin(); iterator1!=tabPetitMonstre.end(); iterator1++) {
+		for(iterator1=tabPetitMonstre.begin(); iterator1!=tabPetitMonstre.end(); iterator1++) {
 			//printf("je suis dans tuer les monstres\n");
 
 			Monstre &cible = tabPetitMonstre[i]; 
 			if (!cible.estVivant()) {
-				printf("je suis dans le if pour voir si il est mort\n");
+				//printf("je suis dans le if pour voir si il est mort\n");
 				popOfTabPetitMonstre(tabPetitMonstre, iterator1);
-				printf("j'ai tué le petit monstre\n");
+				//printf("j'ai tué le petit monstre\n");
+				iterator1--;
+				i--;
 			}
 			i++;
-		//}
+		}
 	}
 	if (tabMoyenMonstre.size() > 0) {
 		i=0;
-		vector<MoyenMonstre>::iterator iterator2=tabMoyenMonstre.begin();
-
-		//for(iterator2=tabMoyenMonstre.begin(); iterator2!=tabMoyenMonstre.end(); iterator2++) {
+		vector<MoyenMonstre>::iterator iterator2;
+		for(iterator2=tabMoyenMonstre.begin(); iterator2!=tabMoyenMonstre.end(); iterator2++) {
 			Monstre &cible = tabMoyenMonstre[i]; 
 			if (!cible.estVivant()) {
 				popOfTabMoyenMonstre(tabMoyenMonstre, iterator2);
+				iterator2--;
+				i--;
 			}
 			i++;
-		//}
+		}
 	}
 	if (tabGrosMonstre.size() > 0) { 
 		i=0;
-		vector<GrosMonstre>::iterator iterator3 = tabGrosMonstre.begin();
-		//for(iterator3=tabGrosMonstre.begin(); iterator3!=tabGrosMonstre.end(); iterator3++) {
+		vector<GrosMonstre>::iterator iterator3;
+		for(iterator3=tabGrosMonstre.begin(); iterator3!=tabGrosMonstre.end(); iterator3++) {
 			Monstre &cible = tabGrosMonstre[i]; 
 			if (!cible.estVivant()) {
 				popOfTabGrosMonstre(tabGrosMonstre, iterator3);
+				iterator3--;
+				i--;
 			}
 			i++;
-		//}
+		}
 	}
 }
 
 
-void updateAllMonstre(vector<PetitMonstre> &tabPetitMonstre, vector<MoyenMonstre> &tabMoyenMonstre, vector<GrosMonstre> &tabGrosMonstre, vector<int> chemin, vector<vector<int>> posNoeuds, int &indice, int &finPartie) {
+void updateAllMonstre(vector<PetitMonstre> &tabPetitMonstre, vector<MoyenMonstre> &tabMoyenMonstre, vector<GrosMonstre> &tabGrosMonstre, vector<int> chemin, vector<vector<int>> posNoeuds, int &finPartie) {
+	//printf("update monstre begin\n");
 	for(int i=0; i<tabPetitMonstre.size(); i++) {
 		Monstre &cible = tabPetitMonstre[i]; 
-		cible.updatePos(chemin, posNoeuds, indice, finPartie);
+		cible.updatePos(chemin, posNoeuds, finPartie);
 	}
 	for(int i=0; i<tabMoyenMonstre.size(); i++) {
 		Monstre &cible = tabMoyenMonstre[i]; 
-		cible.updatePos(chemin, posNoeuds, indice, finPartie);
+		cible.updatePos(chemin, posNoeuds, finPartie);
 	}
 	for(int i=0; i<tabGrosMonstre.size(); i++) {
 		Monstre &cible = tabGrosMonstre[i]; 
-		cible.updatePos(chemin, posNoeuds, indice, finPartie);
+		cible.updatePos(chemin, posNoeuds, finPartie);
 	}
 }
 

@@ -8,7 +8,11 @@ using namespace std;
 
 void addConnexion (vector<vector<int>> &grapheNoeuds, int idNoeud1, int idNoeud2);
 
+void constructGraphes (vector<Noeud> noeuds, vector<vector<int>> &grapheNoeuds, vector<vector<int>> &tabPoids, vector<vector<int>> &posNoeuds);
+
 void visit(vector<vector<int>> &grapheNoeuds, int idNoeud, vector<bool> &seen, vector<int> &distances, vector<vector<int>> &tabPoids);
+
+int findMin(vector<bool> &seen, vector<int> &distances);
 
 int findMin(vector<bool> &seen, vector<int> &distances);
 

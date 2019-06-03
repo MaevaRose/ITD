@@ -8,10 +8,30 @@
 #include <math.h>
 #include <string>
 
+class Interface{
+	public :
+	Interface();
 
-void drawInterface();
+	int select;
 
-void drawMenuHaut();
+	bool clicOnInterface(int x, int y);
 
-void drawMenuTour();
+	void clicOnMenuBas(int x);
+
+	void setAllTexture();
+
+	void drawInterface();
+
+	void drawMenuHaut();
+
+	void drawMenuBas();
+
+	private :
+	GLuint texMenuBas;
+
+};
+
+
+
+
 

@@ -7,11 +7,11 @@
 
 using namespace std;
 
-Tour::Tour (int deg, int cad, float port, int prix, int lvl, int x_pos, int y_pos) : degats(deg), cadence(cad), portee(port), cout(prix), level(lvl), x_position(x_pos), y_position(y_pos) {};
-TourBleue::TourBleue () : Tour(100, 100, 130, 10, 1, -1, -1) {};
-TourRouge::TourRouge () : Tour(150, 500, 150., 20, 1, -1, -1) {};
-TourJaune::TourJaune () : Tour(20, 1000, 120, 5, 1, -1, -1) {};
-TourVerte::TourVerte () : Tour(50, 100, 130, 10, 1, -1, -1) {};
+Tour::Tour (int deg, int cad, float port, int prix, int lvl, int x_pos, int y_pos, int attaque) : degats(deg), cadence(cad), portee(port), cout(prix), level(lvl), x_position(x_pos), y_position(y_pos), attaque(attaque) {};
+TourBleue::TourBleue () : Tour(100, 100, 130, 10, 1, -1, -1, 0) {};
+TourRouge::TourRouge () : Tour(150, 500, 150., 20, 1, -1, -1, 0) {};
+TourJaune::TourJaune () : Tour(20, 1000, 120, 5, 1, -1, -1, 0) {};
+TourVerte::TourVerte () : Tour(50, 100, 130, 10, 1, -1, -1, 0) {};
 
 	int width = 1800;
 
@@ -55,26 +55,35 @@ bool Tour::aPortee(int x1, int y1){
 
 
 void Tour::attaquer(vector<PetitMonstre> &tabPetitMonstre, vector<MoyenMonstre> &tabMoyenMonstre, vector<GrosMonstre> &tabGrosMonstre) {
-	for(int i=0; i<tabPetitMonstre.size(); i++) {
-		Monstre &cible = tabPetitMonstre[i]; 
-		int x = cible.getPositionX();
-		printf("Sa position est %d\n", x);
-		if (aPortee(cible.getPositionX(), cible.getPositionY())){
-			//printf("Hello there\n");
-			cible.recevoirDegat(this->degats);
+	if (this->attaque == this->cadence) {
+
+		for(int i=0; i<tabPetitMonstre.size(); i++) {
+			Monstre &cible = tabPetitMonstre[i]; 
+			if (sqrt((((cible.getPositionX())-(this->x_position))*((cible.getPositionX())-(this->x_position)))+(((cible.getPositionY())-(this->y_position))*((cible.getPositionY())-(this->y_position))))) {
+				cible.recevoirDegat(this->degats);
+			}
+			printf("monstre 1 : %d pv \n", cible.getVie());
 		}
+		for(int i=0; i<tabMoyenMonstre.size(); i++) {
+			Monstre &cible = tabMoyenMonstre[i]; 
+			if (sqrt((((cible.getPositionX())-(this->x_position))*((cible.getPositionX())-(this->x_position)))+(((cible.getPositionY())-(this->y_position))*((cible.getPositionY())-(this->y_position))))) {
+				cible.recevoirDegat(this->degats);
+			}
+			printf("monstre 2 : %d pv \n", cible.getVie());
+		}
+		for(int i=0; i<tabGrosMonstre.size(); i++) {
+			Monstre &cible = tabGrosMonstre[i]; 
+			if (sqrt((((cible.getPositionX())-(this->x_position))*((cible.getPositionX())-(this->x_position)))+(((cible.getPositionY())-(this->y_position))*((cible.getPositionY())-(this->y_position))))) {
+				cible.recevoirDegat(this->degats);
+			}
+			printf("monstre 3 : %d pv \n", cible.getVie());
+
+		}
+
+	(this->attaque) = 0;
 	}
-	for(int i=0; i<tabMoyenMonstre.size(); i++) {
-		Monstre &cible = tabMoyenMonstre[i]; 
-		if (aPortee(cible.getPositionX(), cible.getPositionY())) {
-			cible.recevoirDegat(this->degats);
-		}
-	}
-	for(int i=0; i<tabGrosMonstre.size(); i++) {
-		Monstre &cible = tabGrosMonstre[i]; 
-		if (aPortee(cible.getPositionX(), cible.getPositionY())) {
-			cible.recevoirDegat(this->degats);
-		}
+	else {
+		(this->attaque)++;
 	}
 }
 

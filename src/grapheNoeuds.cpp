@@ -11,6 +11,26 @@ void addConnexion (vector<vector<int>> &grapheNoeuds, int idNoeud1, int idNoeud2
 	grapheNoeuds[idNoeud1].push_back(idNoeud2);
 }
 
+
+void constructGraphes (vector<Noeud> noeuds, vector<vector<int>> &grapheNoeuds, vector<vector<int>> &tabPoids, vector<vector<int>> &posNoeuds) {
+	for (int i=0; i<noeuds.size(); i++) {
+		grapheNoeuds.push_back(vector<int>(1,noeuds[i].getRel()[0]));
+		//printf("je remplis la premiere couche de poids\n");
+		tabPoids.push_back(vector<int>(1,0));
+		posNoeuds.push_back(vector<int>(1,noeuds[i].getPositionX()));
+		posNoeuds[i].push_back(noeuds[i].getPositionY());
+		//printf("posNoeuds : %d, %d\n", posNoeuds[i][0], posNoeuds[i][0]);
+
+		for (int j=1; j<noeuds[i].getRel().size(); j++) {
+			grapheNoeuds[i].push_back(noeuds[i].getRel()[j]);
+
+			//printf("je vais remplir poids\n");
+			tabPoids[i].push_back(0);
+		}
+	}
+}
+
+
 // void visit(vector<vector<int>> &grapheNoeuds, int idNoeud, vector<bool> &seen, vector<int> &distances, vector<vector<int>> &tabPoids) {
 // 	printf("Je visite\n");
 // 	seen[idNoeud]=true;
@@ -74,110 +94,110 @@ void addConnexion (vector<vector<int>> &grapheNoeuds, int idNoeud1, int idNoeud2
 // 	return min;
 // }
 
-vector<vector<int>> creerGrapheTest() {
+// vector<vector<int>> creerGrapheTest() {
 	
-	vector<vector<int>> grapheNoeuds;
+// 	vector<vector<int>> grapheNoeuds;
 
-	grapheNoeuds.push_back(vector<int>(1,1));
-	grapheNoeuds.push_back(vector<int>(1,0));
-	grapheNoeuds.push_back(vector<int>(1,0));
-	grapheNoeuds.push_back(vector<int>(1,0));
-	grapheNoeuds.push_back(vector<int>(1,2));
-	grapheNoeuds.push_back(vector<int>(1,2));
-	grapheNoeuds.push_back(vector<int>(1,3));
+// 	grapheNoeuds.push_back(vector<int>(1,1));
+// 	grapheNoeuds.push_back(vector<int>(1,0));
+// 	grapheNoeuds.push_back(vector<int>(1,0));
+// 	grapheNoeuds.push_back(vector<int>(1,0));
+// 	grapheNoeuds.push_back(vector<int>(1,2));
+// 	grapheNoeuds.push_back(vector<int>(1,2));
+// 	grapheNoeuds.push_back(vector<int>(1,3));
 
-	printf("J'ai mis la premiere couche\n");
+// 	printf("J'ai mis la premiere couche\n");
 
-	grapheNoeuds[0].push_back(2);
-	grapheNoeuds[0].push_back(3);
-	grapheNoeuds[2].push_back(4);
-	grapheNoeuds[2].push_back(5);
-	grapheNoeuds[3].push_back(6);
-	grapheNoeuds[4].push_back(6);
-	grapheNoeuds[5].push_back(6);
-	grapheNoeuds[6].push_back(4);
-	grapheNoeuds[6].push_back(5);
+// 	grapheNoeuds[0].push_back(2);
+// 	grapheNoeuds[0].push_back(3);
+// 	grapheNoeuds[2].push_back(4);
+// 	grapheNoeuds[2].push_back(5);
+// 	grapheNoeuds[3].push_back(6);
+// 	grapheNoeuds[4].push_back(6);
+// 	grapheNoeuds[5].push_back(6);
+// 	grapheNoeuds[6].push_back(4);
+// 	grapheNoeuds[6].push_back(5);
 
-	printf("J'ai finis de créer ton tableau\n");
-	return grapheNoeuds;
-}
-
-
-vector<vector<int>> creerTabTest() {
-	vector<vector<int>> tabPoids;
-
-	tabPoids.push_back(vector<int>(1,10));
-	tabPoids.push_back(vector<int>(1,10));   
-	tabPoids.push_back(vector<int>(1,2));   
-	tabPoids.push_back(vector<int>(1,4));   
-	tabPoids.push_back(vector<int>(1,6));   
-	tabPoids.push_back(vector<int>(1,1));   
-	tabPoids.push_back(vector<int>(1,10));  
-
-	tabPoids[0].push_back(2);
-	tabPoids[0].push_back(4);
-	tabPoids[2].push_back(6);
-	tabPoids[2].push_back(1);
-	tabPoids[3].push_back(10);
-	tabPoids[4].push_back(2);
-	tabPoids[5].push_back(4);
-	tabPoids[6].push_back(2);
-	tabPoids[6].push_back(4);
+// 	printf("J'ai finis de créer ton tableau\n");
+// 	return grapheNoeuds;
+// }
 
 
-	return tabPoids;
-}
+// vector<vector<int>> creerTabTest() {
+// 	vector<vector<int>> tabPoids;
+
+// 	tabPoids.push_back(vector<int>(1,10));
+// 	tabPoids.push_back(vector<int>(1,10));   
+// 	tabPoids.push_back(vector<int>(1,2));   
+// 	tabPoids.push_back(vector<int>(1,4));   
+// 	tabPoids.push_back(vector<int>(1,6));   
+// 	tabPoids.push_back(vector<int>(1,1));   
+// 	tabPoids.push_back(vector<int>(1,10));  
+
+// 	tabPoids[0].push_back(2);
+// 	tabPoids[0].push_back(4);
+// 	tabPoids[2].push_back(6);
+// 	tabPoids[2].push_back(1);
+// 	tabPoids[3].push_back(10);
+// 	tabPoids[4].push_back(2);
+// 	tabPoids[5].push_back(4);
+// 	tabPoids[6].push_back(2);
+// 	tabPoids[6].push_back(4);
 
 
-vector<vector<int>> creerGrapheTest2() {
+// 	return tabPoids;
+// }
+
+
+// vector<vector<int>> creerGrapheTest2() {
 	
-	vector<vector<int>> grapheNoeuds;
+// 	vector<vector<int>> grapheNoeuds;
 
-	grapheNoeuds.push_back(vector<int>(1,1));
-	grapheNoeuds.push_back(vector<int>(1,0));
-	grapheNoeuds.push_back(vector<int>(1,1));
-	grapheNoeuds.push_back(vector<int>(1,2));
-
-
-	printf("J'ai mis la premiere couche\n");
-
-	grapheNoeuds[1].push_back(2);
-	grapheNoeuds[2].push_back(3);
-
-	printf("J'ai finis de créer ton tableau\n");
-	return grapheNoeuds;
-}
+// 	grapheNoeuds.push_back(vector<int>(1,1));
+// 	grapheNoeuds.push_back(vector<int>(1,0));
+// 	grapheNoeuds.push_back(vector<int>(1,1));
+// 	grapheNoeuds.push_back(vector<int>(1,2));
 
 
-vector<vector<int>> creerTabTest2() {
-	vector<vector<int>> tabPoids;
+// 	printf("J'ai mis la premiere couche\n");
 
-	tabPoids.push_back(vector<int>(1,0));
-	tabPoids.push_back(vector<int>(2,0));   
-	tabPoids.push_back(vector<int>(2,0));   
-	tabPoids.push_back(vector<int>(1,0));   
+// 	grapheNoeuds[1].push_back(2);
+// 	grapheNoeuds[2].push_back(3);
+
+// 	printf("J'ai finis de créer ton tableau\n");
+// 	return grapheNoeuds;
+// }
+
+
+// vector<vector<int>> creerTabTest2() {
+// 	vector<vector<int>> tabPoids;
+
+// 	tabPoids.push_back(vector<int>(1,0));
+// 	tabPoids.push_back(vector<int>(2,0));   
+// 	tabPoids.push_back(vector<int>(2,0));   
+// 	tabPoids.push_back(vector<int>(1,0));   
  
 
-	return tabPoids;
-}
+// 	return tabPoids;
+// }
 
 
-vector<vector<int>> creerPosNoeud() {
-	vector<vector<int>> posNoeuds;
+// vector<vector<int>> creerPosNoeud() {
+// 	vector<vector<int>> posNoeuds;
 
-	posNoeuds.push_back(vector<int>(1,1625));
-	posNoeuds.push_back(vector<int>(1,825));   
-	posNoeuds.push_back(vector<int>(1,825));   
-	posNoeuds.push_back(vector<int>(1,225)); 
+// 	posNoeuds.push_back(vector<int>(1,1625));
+// 	posNoeuds.push_back(vector<int>(1,825));   
+// 	posNoeuds.push_back(vector<int>(1,825));   
+// 	posNoeuds.push_back(vector<int>(1,225)); 
 
-	posNoeuds[0].push_back(725);
-	posNoeuds[1].push_back(725);
-	posNoeuds[2].push_back(275);
-	posNoeuds[3].push_back(275);  
+// 	posNoeuds[0].push_back(725);
+// 	posNoeuds[1].push_back(725);
+// 	posNoeuds[2].push_back(275);
+// 	posNoeuds[3].push_back(275);  
  
 
-	return posNoeuds;
-}
+// 	return posNoeuds;
+// }
 
 
 // void afficheTabPoids(vector<vector<int>> tabPoids) {
@@ -202,7 +222,7 @@ int meilleurChemin(vector<vector<int>> &grapheNoeuds, vector<vector<int>> tabPoi
 		}
 
 		else if ((tabPoids[idNoeud][i] < min) && (utilise[grapheNoeuds[idNoeud][i]] == 0)) {
-			printf("je suis dans le if\n");
+			//printf("je suis dans le if\n");
 			min = tabPoids[idNoeud][i];
 			indice = i;
 		}
@@ -213,7 +233,7 @@ int meilleurChemin(vector<vector<int>> &grapheNoeuds, vector<vector<int>> tabPoi
 		return indice;
 	}
 	else {
-		printf("Le meilleur choix est %d\n", grapheNoeuds[idNoeud][indice]);
+		//printf("Le meilleur choix est %d\n", grapheNoeuds[idNoeud][indice]);
 		return grapheNoeuds[idNoeud][indice];
 	}
 }
@@ -249,7 +269,7 @@ vector<int> calculCheminMonstre (vector<vector<int>> &grapheNoeuds, vector<vecto
 		else {
 			int meilleurChoix = meilleurChemin(grapheNoeuds, tabPoids, utilise, i, end);
 			if (meilleurChoix == -1) {
-				printf("boucle entre %d \n", histoVisite[histoVisite.size()-1]);
+				//printf("boucle entre %d \n", histoVisite[histoVisite.size()-1]);
 				histoVisite.pop_back();
 				i = histoVisite[histoVisite.size()-1];
 				histoVisite.pop_back();
@@ -259,7 +279,7 @@ vector<int> calculCheminMonstre (vector<vector<int>> &grapheNoeuds, vector<vecto
 				i = meilleurChoix;
 				utilise[meilleurChoix] = 1;
 				chemin.push_back(meilleurChoix);
-				printf("j'ai lancé meilleurChemin et j'ai sortis la valeur %d\n", meilleurChoix);
+				//printf("j'ai lancé meilleurChemin et j'ai sortis la valeur %d\n", meilleurChoix);
 			}
 		}
 	}

@@ -25,13 +25,23 @@ class Monstre {
 
 	int getPositionY();							//OK	
 
+	int getVie();						
+
 	void pushPosition(int x, int y);			//OK
 
 	//void getAttributs() const;							//UTILITE A REVOIR
 
-	void getChemin(vector<vector<int>> &grapheNoeuds, vector<vector<int>> &tabPoids, int start, int end);
+	void pushChemin(vector<vector<int>> &grapheNoeuds, vector<vector<int>> &tabPoids, int start, int end);
 
-	void updatePos(vector<int> chemin, vector<vector<int>> posNoeuds, int &indice, int &finPartie);
+	void updatePos(vector<int> chemin, vector<vector<int>> posNoeuds, int &finPartie);
+
+	vector<int> getChemin();
+
+	int getIndice();
+
+	void updateIndice();
+
+
 
 
 	protected:
@@ -41,6 +51,7 @@ class Monstre {
 	int x_position;
 	int y_position;
 	vector<int> chemin;
+	int indiceChemin;
 	//rajouter quelque chose pour dire résistance à une tour particuliere
 };
 
@@ -94,7 +105,7 @@ class MoyenMonstre:public Monstre {
 
 void tuerAllMonstre(vector<PetitMonstre> &tabPetitMonstre, vector<MoyenMonstre> &tabMoyenMonstre, vector<GrosMonstre> &tabGrosMonstre);
 
-void updateAllMonstre(vector<PetitMonstre> &tabPetitMonstre, vector<MoyenMonstre> &tabMoyenMonstre, vector<GrosMonstre> &tabGrosMonstre, vector<int> chemin, vector<vector<int>> posNoeuds, int &indice, int &finPartie);
+void updateAllMonstre(vector<PetitMonstre> &tabPetitMonstre, vector<MoyenMonstre> &tabMoyenMonstre, vector<GrosMonstre> &tabGrosMonstre, vector<int> chemin, vector<vector<int>> posNoeuds, int &finPartie);
 
 void drawAllMonstres(vector<PetitMonstre> &tabPetitMonstre, vector<MoyenMonstre> &tabMoyenMonstre, vector<GrosMonstre> &tabGrosMonstre);
 

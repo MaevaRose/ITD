@@ -33,7 +33,7 @@ GLuint setTexture(const char* imagePath);
 
 GLuint setPNGTexture(const char* imagePath);
 
-void drawTexture(GLuint texture, float x, float y);
+void drawTexture(GLuint texture, int pos_x, int pos_y, int width, int height);
 
 void drawRedTower(float x, float y, int frameIndex);
 

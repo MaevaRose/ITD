@@ -28,9 +28,11 @@ int Noeud::getPositionY() {
 	return this -> y_position;
 }
 
-// void Noeud::pushRel(vector<int> relations){
-// 	this->relations = relations;
-// }
+
+void Noeud::pushRel(vector<int> rel) {
+	this->relations = rel;
+}
+
 
 vector<int> Noeud::getRel(){
 	return this->relations;

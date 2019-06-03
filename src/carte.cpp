@@ -9,8 +9,8 @@
 #include "../include/foncOpenGL.h"
 
 using namespace std;
-static const char CARTE[] = "./images/test_bis.ppm";
-static const string STRING_CARTE = "./images/test_bis.ppm";
+static const char CARTE[] = "./images/niveau2.ppm";
+static const string STRING_CARTE = "./images/niveau2.ppm";
 
 Carte::Carte(){};
 
@@ -21,7 +21,31 @@ GLuint Carte::setCarte(){
 
 void Carte::afficherCarte(GLuint texture, float x, float y){
 
-	drawTexture(texture, x, y);
+	//drawTexture(texture, x, y);
+	glColor3ub(255, 255, 255);
+    glEnable(GL_TEXTURE_2D);
+
+        glBindTexture(GL_TEXTURE_2D, texture);
+
+        glBegin(GL_QUADS);
+
+        glTexCoord2f(0,1);
+        glVertex2f(-x, -y);
+
+        glTexCoord2f(1,1);
+        glVertex2f(x, -y);
+
+        glTexCoord2f(1,0);
+        glVertex2f(x, y);
+
+        glTexCoord2f(0,0);
+        glVertex2f(-x, y);
+
+        glEnd();
+
+        glBindTexture(GL_TEXTURE_2D, 0);
+        glDisable(GL_TEXTURE_2D);
+
 }
 
 bool Carte::isConstructible(int x, int y, int width, int height){
@@ -58,7 +82,7 @@ void Carte::setDataCarte(){
 	int nb;
 
 	//j'ouvre le fichier ppm
-	string const nomCarteppm("./images/test_bis.ppm");
+	string const nomCarteppm("./images/niveau2.ppm");
 	ifstream carteppm(nomCarteppm.c_str(), ios::in);
 
 	if(!carteppm){cout<<"Non la carte ppm s'ouvre pas loul"<<endl;}
@@ -104,7 +128,7 @@ void Carte::returnColor(int x, int y, int width){
 bool Carte::verifITD(){
 
 	// on ouvre le fichier .itd
-	string const nomCarte("./data/test.itd");
+	string const nomCarte("./data/carte2.itd");
 	ifstream carte(nomCarte.c_str());
 
 	//pour chaque partie de la carte, on returne si c'est bon ou non
@@ -284,7 +308,7 @@ bool Carte::verifNoeuds(string const nomCarte) {
 		if(type == 1 || type == 2){
 			carte.seekg(1, ios::cur);
 			carte>>nombre;
-			if(nombre>4){cout<<"Erreur dans les noeuds"<<endl; return false;}
+			if(nombre>nbNoeuds){cout<<"Erreur dans les noeuds"<<endl; return false;}
 			relations.push_back(nombre);
 
 			carte.seekg(1, ios::cur);
@@ -296,12 +320,12 @@ bool Carte::verifNoeuds(string const nomCarte) {
 		if(type == 3){
 			carte.seekg(1, ios::cur);
 			carte>>nombre;
-			if(nombre>4 || nombre<0 ){printf("Erreur dans les noeudscligne %d\n", j); return false;}
+			if(nombre>nbNoeuds || nombre<0 ){printf("Erreur dans les noeudscligne %d\n", j); return false;}
 			relations.push_back(nombre);
 
 			carte.seekg(1, ios::cur);
 			carte>>nombre;
-			if(nombre>4 || nombre<0 ){printf("Erreur dans les noeuds ligne %d\n", j); return false;}
+			if(nombre>nbNoeuds || nombre<0 ){printf("Erreur dans les noeuds ligne %d\n", j); return false;}
 			relations.push_back(nombre);
 
 			carte.seekg(1, ios::cur);
@@ -309,7 +333,7 @@ bool Carte::verifNoeuds(string const nomCarte) {
 			if(mot!=";"){
 				
 				carte>>nombre;
-				if(nombre>4 || nombre<0 ){printf("Erreur dans les noeuds ligne %d\n", j); return false;}
+				if(nombre>nbNoeuds || nombre<0 ){printf("Erreur dans les noeuds ligne %d\n", j); return false;}
 
 				carte.seekg(1, ios::cur);
 				carte>>mot;
@@ -321,17 +345,17 @@ bool Carte::verifNoeuds(string const nomCarte) {
 		if(type == 4){
 			carte.seekg(1, ios::cur);
 			carte>>nombre;
-			if(nombre>4 || nombre<0 ){printf("Erreur dans les noeuds ligne %d\n", j); return false;}
+			if(nombre>nbNoeuds || nombre<0 ){printf("Erreur dans les noeuds ligne %d\n", j); return false;}
 			relations.push_back(nombre);
 
 			carte.seekg(1, ios::cur);
 			carte>>nombre;
-			if(nombre>4 || nombre<0 ){printf("Erreur dans les noeuds ligne %d\n", j); return false;}
+			if(nombre>nbNoeuds || nombre<0 ){printf("Erreur dans les noeuds ligne %d\n", j); return false;}
 			relations.push_back(nombre);
 
 			carte.seekg(1, ios::cur);
 			carte>>nombre;
-			if(nombre>4 || nombre<0 ){printf("Erreur dans les noeuds ligne %d\n", j); return false;}
+			if(nombre>nbNoeuds || nombre<0 ){printf("Erreur dans les noeuds ligne %d\n", j); return false;}
 			relations.push_back(nombre);
 
 			carte.seekg(1, ios::cur);
@@ -340,7 +364,7 @@ bool Carte::verifNoeuds(string const nomCarte) {
 				
 				carte.seekg(-1, ios::cur);
 				carte>>nombre;
-				if(nombre>4 || nombre<0 ){printf("Erreur dans les noeuds ligne %d\n", j); return false;}
+				if(nombre>nbNoeuds || nombre<0 ){printf("Erreur dans les noeuds ligne %d\n", j); return false;}
 
 				carte.seekg(1, ios::cur);
 				carte>>mot;

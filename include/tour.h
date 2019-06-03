@@ -12,7 +12,7 @@ using namespace std;
 class Tour {
 
 	public:
-	Tour(int deg, int cad, float port, int prix, int lvl, int x_pos, int y_pos);
+	Tour(int deg, int cad, float port, int prix, int lvl, int x_pos, int y_pos, int attaque);
 
 	//méthodes
 
@@ -63,6 +63,7 @@ class Tour {
 	int level;
 	int x_position;
 	int y_position;
+	int attaque;
 
 	//en bonus
 	int consommation;
