@@ -219,17 +219,20 @@ int main(int argc, char* argv[])
         carte.afficherCarte(textCarte, 15., 8.4);
         testSprite.drawSprite(textTestSprite, 0.9, -5, 5, frameIndex);
 
+
         drawAllTower(tabTourBleue, tabTourJaune, tabTourRouge, tabTourVerte, WINDOW_WIDTH, WINDOW_HEIGHT, frameIndex);
         attaqueAllTower(tabTourBleue, tabTourJaune, tabTourRouge, tabTourVerte, tabPetitMonstre, tabMoyenMonstre, tabGrosMonstre);
-        drawTourShape(mousex, mousey, carte);
+        drawTourShape(mousex, mousey, carte);        
         glColor3ub(0,0,0);
         writeString(0, 0,  "Je test loul");
         glColor3ub(255,255,255);
         interface.drawInterface();
 
+
         if(play){
             updateAllMonstre(tabPetitMonstre, tabMoyenMonstre, tabGrosMonstre, chemin, posNoeuds, finPartie);
-        
+        //printf("BOB\n");
+            
         }
         drawAllMonstres(tabPetitMonstre, tabMoyenMonstre, tabGrosMonstre);
 

@@ -7,7 +7,7 @@ using namespace std;
 class Monstre {
 
 	public:
-	Monstre(int pv, int vit, int x_pos, int y_pos);
+	Monstre(int pv, int vit, int x_pos, int y_pos, int indice);
 	
 	//méthodes
 

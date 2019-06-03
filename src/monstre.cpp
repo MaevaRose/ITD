@@ -1,16 +1,17 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include "../include/monstre.h"
+//#include "../include/tableauMonstre.h"
 #include "../include/foncOpenGL.h"
 #include "../include/grapheNoeuds.h"
+#include "../include/monstre.h"
 
 using namespace std;
 
-Monstre::Monstre(int pv, int vit, int x_pos, int y_pos) : pts_vie(pv), vitesse(vit), x_position(x_pos), y_position(y_pos) {};
-PetitMonstre::PetitMonstre() : Monstre(100, 3, -1, -1) {};
-MoyenMonstre::MoyenMonstre() : Monstre(150, 2, -1, -1) {};
-GrosMonstre::GrosMonstre() : Monstre(250, 1, -1, -1) {};
+Monstre::Monstre(int pv, int vit, int x_pos, int y_pos, int indice) : pts_vie(pv), vitesse(vit), x_position(x_pos), y_position(y_pos), indiceChemin(indice) {};
+PetitMonstre::PetitMonstre() : Monstre(100, 5, -1, -1, 0) {};
+MoyenMonstre::MoyenMonstre() : Monstre(250, 2, -1, -1, 0) {};
+GrosMonstre::GrosMonstre() : Monstre(500, 1, -1, -1, 0) {};
 
 
 
@@ -70,7 +71,6 @@ int Monstre::getPositionY() {
 	return this -> y_position;
 }
 
-
 int Monstre::getVie() {
 	return this->pts_vie;
 }
@@ -100,7 +100,7 @@ void MoyenMonstre::drawMoyenMonstre() {
 
 	glPushMatrix();
 		glTranslatef(x, y, 0);
-            glColor3ub(201,84,28);
+            glColor3ub(210,84,28);
             drawCircle(0.1,1);
     glPopMatrix();
 }
@@ -127,11 +127,9 @@ vector<int> Monstre::getChemin() {
 	return this -> chemin;
 }
 
-
 int Monstre::getIndice() {
 	return this->indiceChemin;
 }
-
 
 void Monstre::updateIndice() {
 	(this->indiceChemin)++;
@@ -196,10 +194,10 @@ void addToTabPetitMonstre(vector<PetitMonstre> &tabMonstre,  PetitMonstre monstr
  
 
 void popOfTabPetitMonstre(vector<PetitMonstre> &tabMonstre, vector<PetitMonstre>::iterator ptr) {
-	//printf("taille avant tuage %d\n", tabMonstre.size());
-	//printf("JE SUIS DANS TUER LE PETIT MONSTRE !!!\n");
+	// printf("taille avant tuage %d\n", tabMonstre.size());
+	// printf("JE SUIS DANS TUER LE PETIT MONSTRE !!!\n");
 	tabMonstre.erase(ptr);
-	//printf("taille tab monstre : %d\n", tabMonstre.size());
+	// printf("taille tab monstre : %d\n", tabMonstre.size());
 }
 
 
