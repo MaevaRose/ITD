@@ -142,3 +142,14 @@ void printTab(vector<TourBleue> &tabTourBleue);
 void attaqueAllTower(vector<TourBleue> &tabTourBleue, vector<TourJaune> &tabTourJaune, vector<TourRouge> &tabTourRouge, vector<TourVerte> &tabTourVerte, vector<PetitMonstre> &tabPetitMonstre, vector<MoyenMonstre> &tabMoyenMonstre, vector<GrosMonstre> &tabGrosMonstre);
 
 void drawAllTower(vector<TourBleue> &tabTourBleue, vector<TourJaune> &tabTourJaune, vector<TourRouge> &tabTourRouge, vector<TourVerte> &tabTourVerte, const unsigned int WINDOW_WIDTH, const unsigned int WINDOW_HEIGHT, int frameIndex );
+
+
+int clickOnTowers(int x, int y, Carte &carte);
+
+TourBleue getTourBleue(int x, int y, vector<TourBleue> &tabTourBleue);
+
+TourRouge getTourRouge(int x, int y, vector<TourRouge> &tabTourRouge);
+
+TourJaune getTourJaune(int x, int y, vector<TourJaune> &tabTourJaune);
+
+TourVerte getTourVerte(int x, int y, vector<TourVerte> &tabTourVerte);

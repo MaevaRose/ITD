@@ -123,6 +123,7 @@ int main(int argc, char* argv[])
     int mousex=500;
     int mousey=500;
     int tourColor = 0;
+    int tour_select = 0;
 
     Carte carte;
     carte.setDataCarte();
@@ -137,15 +138,19 @@ int main(int argc, char* argv[])
     int finPartie = 0;
 
     TourBleue tourbleue;
+    TourBleue select_blue;
     vector<TourBleue> tabTourBleue;
     
     TourRouge tourrouge;
+    TourRouge select_rouge;
     vector<TourRouge> tabTourRouge;
     
     TourJaune tourjaune;
+    TourJaune select_jaune;
     vector<TourJaune> tabTourJaune;
 
     TourVerte tourverte;
+    TourVerte select_verte;
     vector<TourVerte> tabTourVerte;
 
     //Création des monstres
@@ -305,6 +310,7 @@ int main(int argc, char* argv[])
                     }
                     else{
                         clicOnInterface = false;
+                        tour_select = clickOnTowers(mousex, mousey, carte);
                     }
                     
                     carte.isConstructible(mousex, mousey, WINDOW_WIDTH, WINDOW_HEIGHT);
