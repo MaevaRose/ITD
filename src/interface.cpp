@@ -60,6 +60,10 @@ void Interface::drawInterface() {
 
 void Interface::drawMenuHaut() {
 	drawSquare(1700, 150, 3., 5., 1, 0, 0, 255);
+	//convertir un int en string
+	//sprintf(machaine,"%d",interface->lvl);
+	glColor3ub(0,0,0);
+	writeString(14, 7,  "Tour :");
 	//printf("echo loul\n");
 }
 

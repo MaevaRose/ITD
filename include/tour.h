@@ -153,3 +153,5 @@ TourRouge getTourRouge(int x, int y, vector<TourRouge> &tabTourRouge);
 TourJaune getTourJaune(int x, int y, vector<TourJaune> &tabTourJaune);
 
 TourVerte getTourVerte(int x, int y, vector<TourVerte> &tabTourVerte);
+
+void afficherTourSelect(int x, int y, int select, vector<TourBleue> &tabTourBleue, vector<TourJaune> &tabTourJaune, vector<TourRouge> &tabTourRouge, vector<TourVerte> &tabTourVerte);

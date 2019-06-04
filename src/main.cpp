@@ -210,6 +210,7 @@ int main(int argc, char* argv[])
             attaqueAllTower(tabTourBleue, tabTourJaune, tabTourRouge, tabTourVerte, tabPetitMonstre, tabMoyenMonstre, tabGrosMonstre);
         //printf("j'ai attaqué sans pb\n");
             tuerAllMonstre(tabPetitMonstre, tabMoyenMonstre, tabGrosMonstre);
+
         //printf("apres premier if play\n");
         }
 
@@ -229,7 +230,7 @@ int main(int argc, char* argv[])
         attaqueAllTower(tabTourBleue, tabTourJaune, tabTourRouge, tabTourVerte, tabPetitMonstre, tabMoyenMonstre, tabGrosMonstre);
         drawTourShape(mousex, mousey, carte);        
         glColor3ub(0,0,0);
-        writeString(0, 0,  "Je test loul");
+        //writeString(0, 0,  "Je test loul");
         glColor3ub(255,255,255);
         interface.drawInterface();
 
@@ -306,11 +307,14 @@ int main(int argc, char* argv[])
                                 tourrouge.poser(mousex, mousey, carte, tabTourRouge);
                                 interface.select = 0;
                             }
+                            tour_select = clickOnTowers(mousex, mousey, carte);
+                            printf("%d\n", tour_select);
+                            afficherTourSelect(mousex, mousey, tour_select, tabTourBleue, tabTourJaune, tabTourRouge, tabTourVerte);
                         }
                     }
                     else{
                         clicOnInterface = false;
-                        tour_select = clickOnTowers(mousex, mousey, carte);
+
                     }
                     
                     carte.isConstructible(mousex, mousey, WINDOW_WIDTH, WINDOW_HEIGHT);

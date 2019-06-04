@@ -426,7 +426,7 @@ TourBleue getTourBleue(int x, int y, vector<TourBleue> &tabTourBleue){
 	if (tabTourBleue.size()>0) {
 		for (int i=0; i<tabTourBleue.size(); i++) {
 			int tour_x = tabTourBleue[i].getPositionX();
-			int tour_y = tabTourBleue[i].getPositionX();
+			int tour_y = tabTourBleue[i].getPositionY();
 			if(tour_y > y-60 && tour_y < y+60 && tour_x > x-60 && tour_x < x+60) {
 				return tabTourBleue[i];
 			}
@@ -438,7 +438,7 @@ TourRouge getTourRouge(int x, int y, vector<TourRouge> &tabTourRouge){
 	if (tabTourRouge.size()>0) {
 		for (int i=0; i<tabTourRouge.size(); i++) {
 			int tour_x = tabTourRouge[i].getPositionX();
-			int tour_y = tabTourRouge[i].getPositionX();
+			int tour_y = tabTourRouge[i].getPositionY();
 			if(tour_y > y-60 && tour_y < y+60 && tour_x > x-60 && tour_x < x+60) {
 				return tabTourRouge[i];
 			}
@@ -450,7 +450,7 @@ TourJaune getTourJaune(int x, int y, vector<TourJaune> &tabTourJaune){
 	if (tabTourJaune.size()>0) {
 		for (int i=0; i<tabTourJaune.size(); i++) {
 			int tour_x = tabTourJaune[i].getPositionX();
-			int tour_y = tabTourJaune[i].getPositionX();
+			int tour_y = tabTourJaune[i].getPositionY();
 			if(tour_y > y-60 && tour_y < y+60 && tour_x > x-60 && tour_x < x+60) {
 				return tabTourJaune[i];
 			}
@@ -462,7 +462,7 @@ TourVerte getTourVerte(int x, int y, vector<TourVerte> &tabTourVerte){
 	if (tabTourVerte.size()>0) {
 		for (int i=0; i<tabTourVerte.size(); i++) {
 			int tour_x = tabTourVerte[i].getPositionX();
-			int tour_y = tabTourVerte[i].getPositionX();
+			int tour_y = tabTourVerte[i].getPositionY();
 			if(tour_y > y-60 && tour_y < y+60 && tour_x > x-60 && tour_x < x+60) {
 				return tabTourVerte[i];
 			}
@@ -470,8 +470,21 @@ TourVerte getTourVerte(int x, int y, vector<TourVerte> &tabTourVerte){
 	}
 }
 
-void afficherTourSelect(int select){
+void afficherTourSelect(int x, int y, int select, vector<TourBleue> &tabTourBleue, vector<TourJaune> &tabTourJaune, vector<TourRouge> &tabTourRouge, vector<TourVerte> &tabTourVerte){
 	if(select == 1){
-		TourBleue tourbleue = getTourBleue
+		TourBleue tourbleue = getTourBleue(x, y, tabTourBleue);
+		tourbleue.afficherEtat();
+	}
+	if(select == 2){
+		TourVerte tourverte = getTourVerte(x, y, tabTourVerte);
+		tourverte.afficherEtat();
+	}
+	if(select == 3){
+		TourJaune tourjaune = getTourJaune(x, y, tabTourJaune);
+		tourjaune.afficherEtat();
+	}
+	if(select == 4){
+		TourRouge tourrouge = getTourRouge(x, y, tabTourRouge);
+		tourrouge.afficherEtat();
 	}
 }
