@@ -1,9 +1,11 @@
 #include <iostream>
 #include <string>
 #include <vector>
+
+
 #include "monstre.h"
 #include "carte.h"
-#include "../include/foncOpenGL.h"
+//#include "../include/foncOpenGL.h"
 //#include "sprites.h"
 
 using namespace std;

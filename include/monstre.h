@@ -2,12 +2,14 @@
 #include <string>
 #include <vector>
 
+#include "../include/foncOpenGL.h"
+
 using namespace std;
 
 class Monstre {
 
 	public:
-	Monstre(int pv, int vit, int x_pos, int y_pos, int indice);
+	Monstre(int pv, float vit, int x_pos, int y_pos, int indice, Sprites spriteMonstre);
 	
 	//méthodes
 
@@ -44,14 +46,21 @@ class Monstre {
 
 
 
+
+
 	protected:
 	//attributs
 	int pts_vie;
-	int vitesse;
+	float vitesse;
 	int x_position;
 	int y_position;
 	vector<int> chemin;
 	int indiceChemin;
+
+	Sprites spriteMonstre;
+	GLuint textMonstre;
+	
+
 	//rajouter quelque chose pour dire résistance à une tour particuliere
 };
 
@@ -67,7 +76,9 @@ class PetitMonstre:public Monstre {
 
 	void apparaitre(int x, int y, vector<PetitMonstre> &tabMonstre);
 
-	void drawPetitMonstre();
+	void drawPetitMonstre(int frameIndex);
+
+
 
 	//void tuerMonstre(vector<PetitMonstre> &tabMonstre);
 };
@@ -121,4 +132,4 @@ void addToTabGrosMonstre(vector<GrosMonstre> &tabMonstre,  GrosMonstre monstre);
 
 void popOfTabGrosMonstre(vector<GrosMonstre> &tabMonstre, vector<GrosMonstre>::iterator ptr);
 
-void drawAllMonstres(vector<PetitMonstre> &tabPetitMonstre, vector<MoyenMonstre> &tabMoyenMonstre, vector<GrosMonstre> &tabGrosMonstre);
+void drawAllMonstres(int frameIndex, vector<PetitMonstre> &tabPetitMonstre, vector<MoyenMonstre> &tabMoyenMonstre, vector<GrosMonstre> &tabGrosMonstre);
