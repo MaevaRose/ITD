@@ -207,6 +207,25 @@ void constructGraphes (vector<Noeud> noeuds, vector<vector<int>> &grapheNoeuds, 
 // }
 
 
+void ajoutePoidsChemin(int portee, int posX, int posY, int poid, vector<vector<int>> &tabPoids, vector<vector<int>> &grapheNoeud, vector<vector<int>> posNoeuds) {
+	for (int noeud1=0; noeud1<grapheNoeud.size(); noeud1++) {
+		for (int i=0; i<grapheNoeud[noeud1].size(); i++) {
+			int noeud2 = grapheNoeud[noeud1][i];
+			if (posNoeuds[noeud1][0] == posNoeuds[noeud2][0]) {
+				if (abs(posX-posNoeuds[noeud1][0]-15) < portee) {
+					tabPoids[noeud1][i] += poid;
+				}
+			}
+			else {
+				if (abs(posY-posNoeuds[noeud1][1]-15) < portee) {
+					tabPoids[noeud1][i] += poid;
+				}
+			}
+		}
+	}
+}
+
+
 int meilleurChemin(vector<vector<int>> &grapheNoeuds, vector<vector<int>> tabPoids, vector<int> &utilise, int idNoeud, int end) {
 	/*for (int i=0; i<utilise.size(); i++) {
 		printf("la vlaeur %d de Utilise est %d\n", i, utilise[i]);

@@ -13,7 +13,7 @@ TourRouge::TourRouge () : Tour(150, 500, 170., 20, 1, -1, -1, 0) {};
 TourJaune::TourJaune () : Tour(20, 150, 110., 5, 1, -1, -1, 0) {};
 TourVerte::TourVerte () : Tour(50, 100, 130., 15, 1, -1, -1, 0) {};
 
-	int width = 1800;
+int width = 1800;
 
 
 
@@ -35,6 +35,7 @@ void Tour::afficherEtat() {
 	//afficherHallo(this->portee);
     printf("Niveau : %d.\nDégats : %d.\nCadence : %d.\n", level, degats, cadence);
 }
+
 
 bool Tour::aPortee(int x1, int y1){
 	//positionTour = width*3*(this->y_position-1)+this->x_position*3;
@@ -80,8 +81,6 @@ void Tour::attaquer(vector<PetitMonstre> &tabPetitMonstre, vector<MoyenMonstre> 
 				cible.recevoirDegat(this->degats);
 				printf("gros monstre %d a : %d pv \n", i, cible.getVie());
 			}
-			
-
 		}
 
 		(this->attaque) = 0;
@@ -122,7 +121,7 @@ void Tour::augmenterPortee(int pourcent) {
 }
 
 
-void TourBleue::poser(int x, int y, Carte &carte, vector<TourBleue> &tabTourBleue) {
+void TourBleue::poser(int x, int y, Carte &carte, vector<TourBleue> &tabTourBleue, vector<vector<int>> &tabPoids, vector<vector<int>> &grapheNoeud, vector<vector<int>> &posNoeuds) {
 	bool isConstructible = carte.isConstructible(x, y, 1800, 1012);
 
 	if(isConstructible) {
@@ -139,10 +138,10 @@ void TourBleue::poser(int x, int y, Carte &carte, vector<TourBleue> &tabTourBleu
 			}
 		}
 
+		ajoutePoidsChemin(this->portee, this->x_position, this->y_position, 20, tabPoids, grapheNoeud, posNoeuds);
+
 		addToTabBlueTower(tabTourBleue, *this);
 	}
-	
-	
 }
 
 
@@ -230,8 +229,6 @@ void TourRouge::poser(int x, int y, Carte &carte, vector<TourRouge> &tabTourRoug
 
 		addToTabRedTower(tabTourRouge, *this);
 	}
-	
-	
 }
 
 
@@ -250,7 +247,6 @@ void TourRouge::draw(const unsigned int WINDOW_WIDTH, const unsigned int WINDOW_
 	glColor3ub(255, 255, 255);
 	
 	tours.drawSprite(textTourRouge, 0.9, x, y, frameIndex);
-
 }
 
 
@@ -294,7 +290,6 @@ void TourVerte::draw(const unsigned int WINDOW_WIDTH, const unsigned int WINDOW_
 
     glEnd();
    	glPopMatrix();
-   	
 }
 
 
@@ -377,40 +372,28 @@ void drawAllTower(vector<TourBleue> &tabTourBleue, vector<TourJaune> &tabTourJau
 		for (bleu = tabTourBleue.begin(); bleu < tabTourBleue.end(); bleu++){
 
 			(*bleu).draw(WINDOW_WIDTH, WINDOW_HEIGHT);
-
-			
 		}
 	}
 	if(tabTourRouge.size()>0){
 		for (rouge = tabTourRouge.begin(); rouge < tabTourRouge.end(); rouge++){
 
-			(*rouge).draw(WINDOW_WIDTH, WINDOW_HEIGHT, frameIndex, tours, textTourRouge);
-
-			
+			(*rouge).draw(WINDOW_WIDTH, WINDOW_HEIGHT, frameIndex, tours, textTourRouge);	
 		}
 	}
 	if(tabTourJaune.size()>0){
 		for (jaune = tabTourJaune.begin(); jaune < tabTourJaune.end(); jaune++){
 
 			(*jaune).draw(WINDOW_WIDTH, WINDOW_HEIGHT);
-
-			
 		}
 	}
 	if(tabTourVerte.size()>0){
 		for (vert = tabTourVerte.begin(); vert < tabTourVerte.end(); vert++){
 
-			(*vert).draw(WINDOW_WIDTH, WINDOW_HEIGHT);
-
-			
+			(*vert).draw(WINDOW_WIDTH, WINDOW_HEIGHT);	
 		}
-
-	}
-	else{
-
-	}
-	
+	}	
 }
+
 
 int clickOnTowers(int x, int y, Carte &carte){
 	int position = width*3*(y-1)+x*3;
@@ -431,6 +414,7 @@ int clickOnTowers(int x, int y, Carte &carte){
 	return -1;
 }
 
+
 int getTourBleue(int x, int y, vector<TourBleue> &tabTourBleue){
 	if (tabTourBleue.size()>0) {
 		for (int i=0; i<tabTourBleue.size(); i++) {
@@ -442,6 +426,7 @@ int getTourBleue(int x, int y, vector<TourBleue> &tabTourBleue){
 		}
 	}
 }
+
 
 int getTourRouge(int x, int y, vector<TourRouge> &tabTourRouge){
 	if (tabTourRouge.size()>0) {
@@ -455,6 +440,7 @@ int getTourRouge(int x, int y, vector<TourRouge> &tabTourRouge){
 	}
 }
 
+
 int getTourJaune(int x, int y, vector<TourJaune> &tabTourJaune){
 	if (tabTourJaune.size()>0) {
 		for (int i=0; i<tabTourJaune.size(); i++) {
@@ -467,6 +453,7 @@ int getTourJaune(int x, int y, vector<TourJaune> &tabTourJaune){
 	}
 }
 
+
 int getTourVerte(int x, int y, vector<TourVerte> &tabTourVerte){
 	if (tabTourVerte.size()>0) {
 		for (int i=0; i<tabTourVerte.size(); i++) {
@@ -478,6 +465,7 @@ int getTourVerte(int x, int y, vector<TourVerte> &tabTourVerte){
 		}
 	}
 }
+
 
 // void afficherTourSelect(int x, int y, int select, vector<TourBleue> &tabTourBleue, vector<TourJaune> &tabTourJaune, vector<TourRouge> &tabTourRouge, vector<TourVerte> &tabTourVerte){
 // 	if(select == 1){
