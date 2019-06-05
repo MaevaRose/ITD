@@ -24,7 +24,7 @@ class Tour {
 
 	void supprimer();						//OK
 
-	void ameliorer(int level);				//OK
+	void ameliorer();				//OK
 
 	void afficherEtat();					//OK
 
@@ -47,6 +47,10 @@ class Tour {
 	void augmenterPortee(int pourcent);		//OK
 
 	bool aPortee(int x1, int y1);
+
+	void buttonLevelUp();
+
+	void buttonDelete();
 
 	//void getAttributs() const;						//UTILITE A REVOIR
 
@@ -146,12 +150,12 @@ void drawAllTower(vector<TourBleue> &tabTourBleue, vector<TourJaune> &tabTourJau
 
 int clickOnTowers(int x, int y, Carte &carte);
 
-TourBleue getTourBleue(int x, int y, vector<TourBleue> &tabTourBleue);
+int getTourBleue(int x, int y, vector<TourBleue> &tabTourBleue);
 
-TourRouge getTourRouge(int x, int y, vector<TourRouge> &tabTourRouge);
+int getTourRouge(int x, int y, vector<TourRouge> &tabTourRouge);
 
-TourJaune getTourJaune(int x, int y, vector<TourJaune> &tabTourJaune);
+int getTourJaune(int x, int y, vector<TourJaune> &tabTourJaune);
 
-TourVerte getTourVerte(int x, int y, vector<TourVerte> &tabTourVerte);
+int getTourVerte(int x, int y, vector<TourVerte> &tabTourVerte);
 
 void afficherTourSelect(int x, int y, int select, vector<TourBleue> &tabTourBleue, vector<TourJaune> &tabTourJaune, vector<TourRouge> &tabTourRouge, vector<TourVerte> &tabTourVerte);

@@ -6,9 +6,14 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
+#include <iostream>
+#include <vector>
 #include <string>
 #include "../include/interface.hpp"
-#include "../include/foncOpenGL.h"
+//#include "../include/foncOpenGL.h"
+
+
+using namespace std;
 
 Interface::Interface(){};
 
@@ -17,14 +22,17 @@ bool Interface::clicOnInterface(int x, int y){
 
 	printf("suis je sur l'interface ?\n");
 	if(y>=850 && y<=950 && x>=400 && x<=1200){
-		clicOnMenuBas(x);
+		this->x = x;
+		this->y = y;
+		clicOnMenuBas();
 		return true;
 	}
 	return false;
 }
 
-void Interface::clicOnMenuBas(int x){
+void Interface::clicOnMenuBas(){
 	printf("Je suis dans le menu bas\n");
+	int x = this->x;
 	if(x>=400 && x<=500){
 		this->select = 1;
 	}
@@ -52,19 +60,52 @@ void Interface::setAllTexture(){
 	this->texMenuBas = setPNGTexture("./images/menubas.png");
 }
 
-void Interface::drawInterface() {
-	drawMenuHaut();
+void Interface::drawInterface(vector<TourBleue> &tabTourBleue, vector<TourJaune> &tabTourJaune, vector<TourRouge> &tabTourRouge, vector<TourVerte> &tabTourVerte) {
+	drawMenuHaut(tabTourBleue, tabTourJaune, tabTourRouge, tabTourVerte);
 	drawMenuBas();
 }
 
 
-void Interface::drawMenuHaut() {
+void Interface::drawMenuHaut(vector<TourBleue> &tabTourBleue, vector<TourJaune> &tabTourJaune, vector<TourRouge> &tabTourRouge, vector<TourVerte> &tabTourVerte) {
 	drawSquare(1700, 150, 3., 5., 1, 0, 0, 255);
 	//convertir un int en string
 	//sprintf(machaine,"%d",interface->lvl);
 	glColor3ub(0,0,0);
-	writeString(14, 7,  "Tour :");
+	writeString(13, 7,  "Tour :");
 	//printf("echo loul\n");
+	if(this->tour_select == 1){
+        int x = tabTourBleue[indice_tour].getPositionX();
+		char info[50];
+		char texte[50] = "La tour est à la position : ";
+		sprintf (info, "%d", x);
+		strcat (texte, info);
+		writeString(10, 6.9,  texte);
+
+    }
+    if(this->tour_select == 2){
+    	int x = tabTourVerte[indice_tour].getPositionX();
+		char info[50];
+		char texte[50] = "La tour est à la position : ";
+		sprintf (info, "%d", x);
+		strcat (texte, info);
+		writeString(10, 6.9,  texte);
+    }
+    if(this->tour_select == 3){
+        int x = tabTourJaune[indice_tour].getPositionX();
+		char info[50];
+		char texte[50] = "La tour est à la position : ";
+		sprintf (info, "%d", x);
+		strcat (texte, info);
+		writeString(10, 6.9,  texte);
+   	}
+    if(this->tour_select == 4){
+       int x = tabTourRouge[indice_tour].getPositionX();
+		char info[50];
+		char texte[50] = "La tour est à la position : ";
+		sprintf (info, "%d", x);
+		strcat (texte, info);
+		writeString(10, 6.9,  texte);
+    }
 }
 
 

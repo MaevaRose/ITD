@@ -8,10 +8,10 @@
 using namespace std;
 
 Tour::Tour (int deg, int cad, float port, int prix, int lvl, int x_pos, int y_pos, int attaque) : degats(deg), cadence(cad), portee(port), cout(prix), level(lvl), x_position(x_pos), y_position(y_pos), attaque(attaque) {};
-TourBleue::TourBleue () : Tour(100, 100, 130, 10, 1, -1, -1, 0) {};
-TourRouge::TourRouge () : Tour(150, 500, 150., 20, 1, -1, -1, 0) {};
-TourJaune::TourJaune () : Tour(20, 1000, 120, 5, 1, -1, -1, 0) {};
-TourVerte::TourVerte () : Tour(50, 100, 130, 10, 1, -1, -1, 0) {};
+TourBleue::TourBleue () : Tour(30, 75, 150., 10, 1, -1, -1, 0) {};
+TourRouge::TourRouge () : Tour(150, 500, 170., 20, 1, -1, -1, 0) {};
+TourJaune::TourJaune () : Tour(20, 150, 110., 5, 1, -1, -1, 0) {};
+TourVerte::TourVerte () : Tour(50, 100, 130., 15, 1, -1, -1, 0) {};
 
 	int width = 1800;
 
@@ -23,8 +23,8 @@ void Tour::supprimer() {
 }
 
 
-void Tour::ameliorer(int level) {
-	level += 1;
+void Tour::ameliorer() {
+	this->level += 1;
 	this->portee += 10;
 	this->degats += 10;
 	this->cadence -= 100;
@@ -39,14 +39,14 @@ void Tour::afficherEtat() {
 bool Tour::aPortee(int x1, int y1){
 	//positionTour = width*3*(this->y_position-1)+this->x_position*3;
 	//positionMonstre =  width*3*(y-1)+x*3;
-	printf("Est il à ma portée ?\n");
+	//printf("Est il à ma portée ?\n");
 	int x0 = this->x_position;
 	int y0 = this->y_position;
-	printf("Il est à une distance de %f\n", sqrt((x1-x0)*(x1-x0)+(y1-y0)*(y1-y0)));
-	printf("La portée est de %f\n", this->portee);
+	
 
 	if(sqrt((x1-x0)*(x1-x0)+(y1-y0)*(y1-y0)) < this->portee){
-		printf("Il est à ma portééée\n");
+		printf("Il est à une distance de %f\n", sqrt((x1-x0)*(x1-x0)+(y1-y0)*(y1-y0)));
+		printf("La portée est de %f\n donc je peux lui tirer dessus", this->portee);
 		return true;
 	}
 
@@ -59,28 +59,32 @@ void Tour::attaquer(vector<PetitMonstre> &tabPetitMonstre, vector<MoyenMonstre> 
 
 		for(int i=0; i<tabPetitMonstre.size(); i++) {
 			Monstre &cible = tabPetitMonstre[i]; 
-			if (sqrt((((cible.getPositionX())-(this->x_position))*((cible.getPositionX())-(this->x_position)))+(((cible.getPositionY())-(this->y_position))*((cible.getPositionY())-(this->y_position))))) {
+			//if (sqrt((((cible.getPositionX())-(this->x_position))*((cible.getPositionX())-(this->x_position)))+(((cible.getPositionY())-(this->y_position))*((cible.getPositionY())-(this->y_position))))) 
+			if (aPortee(cible.getPositionX(), cible.getPositionY())) {
 				cible.recevoirDegat(this->degats);
+				printf("petit monstre %d a : %d pv \n", i, cible.getVie());
 			}
-			printf("monstre 1 : %d pv \n", cible.getVie());
+			
 		}
 		for(int i=0; i<tabMoyenMonstre.size(); i++) {
 			Monstre &cible = tabMoyenMonstre[i]; 
-			if (sqrt((((cible.getPositionX())-(this->x_position))*((cible.getPositionX())-(this->x_position)))+(((cible.getPositionY())-(this->y_position))*((cible.getPositionY())-(this->y_position))))) {
+			if (aPortee(cible.getPositionX(), cible.getPositionY())) {
 				cible.recevoirDegat(this->degats);
+				printf("moyen monstre %d a: %d pv \n", i, cible.getVie());
 			}
-			printf("monstre 2 : %d pv \n", cible.getVie());
+			
 		}
 		for(int i=0; i<tabGrosMonstre.size(); i++) {
 			Monstre &cible = tabGrosMonstre[i]; 
-			if (sqrt((((cible.getPositionX())-(this->x_position))*((cible.getPositionX())-(this->x_position)))+(((cible.getPositionY())-(this->y_position))*((cible.getPositionY())-(this->y_position))))) {
+			if (aPortee(cible.getPositionX(), cible.getPositionY())) {
 				cible.recevoirDegat(this->degats);
+				printf("gros monstre %d a : %d pv \n", i, cible.getVie());
 			}
-			printf("monstre 3 : %d pv \n", cible.getVie());
+			
 
 		}
 
-	(this->attaque) = 0;
+		(this->attaque) = 0;
 	}
 	else {
 		(this->attaque)++;
@@ -120,7 +124,6 @@ void Tour::augmenterPortee(int pourcent) {
 
 void TourBleue::poser(int x, int y, Carte &carte, vector<TourBleue> &tabTourBleue) {
 	bool isConstructible = carte.isConstructible(x, y, 1800, 1012);
-	//printf("!!!!!!!! Je pose ça là\n");
 
 	if(isConstructible) {
 		this->x_position = x;
@@ -147,6 +150,7 @@ void TourBleue::draw(const unsigned int WINDOW_WIDTH, const unsigned int WINDOW_
 
 	float x = (-1 + 2. * this->x_position / 1800.)*15.;
 	float y = -(-1 + 2. * this->y_position / 1012.)*8.4;
+	float portee = (this->portee * 16.8) / 1012.;
 
 	glPushMatrix();
 	
@@ -158,6 +162,8 @@ void TourBleue::draw(const unsigned int WINDOW_WIDTH, const unsigned int WINDOW_
     glVertex2f(0.9, 0.9);
     glVertex2f(0.9, -0.9);
 
+    drawCircle(portee, 0);
+
     glEnd();
    	glPopMatrix();
 }
@@ -165,7 +171,6 @@ void TourBleue::draw(const unsigned int WINDOW_WIDTH, const unsigned int WINDOW_
 
 void TourJaune::poser(int x, int y, Carte &carte, vector<TourJaune> &tabTourJaune) {
 	bool isConstructible = carte.isConstructible(x, y, 1800, 1012);
-	//printf("!!!!!!!! Je pose ça là\n");
 	if(isConstructible){
 		this->x_position = x;
 		this->y_position = y;
@@ -188,6 +193,8 @@ void TourJaune::draw(const unsigned int WINDOW_WIDTH, const unsigned int WINDOW_
 
 	float x = (-1 + 2. * this->x_position / 1800.)*15.;
 	float y = -(-1 + 2. * this->y_position / 1012.)*8.4;
+	float portee = (this->portee * 16.8) / 1012.;
+
 
 	glPushMatrix();
 	
@@ -199,6 +206,8 @@ void TourJaune::draw(const unsigned int WINDOW_WIDTH, const unsigned int WINDOW_
     glVertex2f(0.9, 0.9);
     glVertex2f(0.9, -0.9);
 
+    drawCircle(portee, 0);
+
     glEnd();
    	glPopMatrix();
 }
@@ -206,7 +215,6 @@ void TourJaune::draw(const unsigned int WINDOW_WIDTH, const unsigned int WINDOW_
 
 void TourRouge::poser(int x, int y, Carte &carte, vector<TourRouge> &tabTourRouge) {
 	bool isConstructible = carte.isConstructible(x, y, 1800, 1012);
-	//printf("!!!!!!!! Je pose ça là\n");
 	if(isConstructible){
 		this->x_position = x;
 		this->y_position = y;
@@ -231,6 +239,13 @@ void TourRouge::draw(const unsigned int WINDOW_WIDTH, const unsigned int WINDOW_
 
 	float x = (-1 + 2. * this->x_position / WINDOW_WIDTH)*15.;
 	float y = -(-1 + 2. * this->y_position / WINDOW_HEIGHT)*8.4;
+	float portee = (this->portee * 16.8) / 1012.;
+
+	glColor3ub(255, 0, 0);
+	glPushMatrix();
+		glTranslatef(x, y, 0);
+		drawCircle(portee, 0);
+	glPopMatrix();
 
 	glColor3ub(255, 255, 255);
 	
@@ -241,7 +256,6 @@ void TourRouge::draw(const unsigned int WINDOW_WIDTH, const unsigned int WINDOW_
 
 void TourVerte::poser(int x, int y, Carte &carte, vector<TourVerte> &tabTourVerte) {
 	bool isConstructible = carte.isConstructible(x, y, 1800, 1012);
-	//printf("!!!!!!!! Je pose ça là\n");
 	if(isConstructible){
 		this->x_position = x;
 		this->y_position = y;
@@ -264,6 +278,7 @@ void TourVerte::draw(const unsigned int WINDOW_WIDTH, const unsigned int WINDOW_
 
 	float x = (-1 + 2. * this->x_position / 1800.)*15.;
 	float y = -(-1 + 2. * this->y_position / 1012.)*8.4;
+	float portee = (this->portee * 16.8) / 1012.;
 
 	glPushMatrix();
 	
@@ -275,8 +290,11 @@ void TourVerte::draw(const unsigned int WINDOW_WIDTH, const unsigned int WINDOW_
     glVertex2f(0.9, 0.9);
     glVertex2f(0.9, -0.9);
 
+    drawCircle(portee, 0);
+
     glEnd();
    	glPopMatrix();
+   	
 }
 
 
@@ -313,7 +331,7 @@ void printTab(vector<TourBleue> &tabTourBleue){
 
 
 	//for (ptr = tabTourBleue.begin(); ptr < tabTourBleue.end(); ptr++){
-		printf("sdvjbhoeqvb\n");
+		//printf("sdvjbhoeqvb\n");
 		//cout<<tabTourBleue[0]<<endl;
 	//}
 }
@@ -346,10 +364,9 @@ void attaqueAllTower(vector<TourBleue> &tabTourBleue, vector<TourJaune> &tabTour
 
 
 void drawAllTower(vector<TourBleue> &tabTourBleue, vector<TourJaune> &tabTourJaune, vector<TourRouge> &tabTourRouge, vector<TourVerte> &tabTourVerte, const unsigned int WINDOW_WIDTH, const unsigned int WINDOW_HEIGHT, int frameIndex ) {
-	//cout<<"hello"<<endl;
-	//tabTourBleue[0]->draw(WINDOW_WIDTH, WINDOW_HEIGHT);
+
 	Sprites tours(300, 300, 100, 100);
-	//GLuint textTourRouge = setTexture("./images/test_sprite.jpg");
+
 	GLuint textTourRouge = setPNGTexture("./images/tourRouge.png");
 	vector<TourBleue>::iterator bleu=tabTourBleue.begin();
 	vector<TourJaune>::iterator jaune=tabTourJaune.begin();
@@ -358,47 +375,39 @@ void drawAllTower(vector<TourBleue> &tabTourBleue, vector<TourJaune> &tabTourJau
 	if(tabTourBleue.size()>0){
 		int i=0;
 		for (bleu = tabTourBleue.begin(); bleu < tabTourBleue.end(); bleu++){
-			// i++;
-			//for (int i = 0; i < tabTourBleue.size(); i++){
+
 			(*bleu).draw(WINDOW_WIDTH, WINDOW_HEIGHT);
-			//printf("tour %d :\n", i);
-			//(*ptr).afficherEtat();
+
 			
 		}
 	}
 	if(tabTourRouge.size()>0){
 		for (rouge = tabTourRouge.begin(); rouge < tabTourRouge.end(); rouge++){
-			// i++;
-			//for (int i = 0; i < tabTourBleue.size(); i++){
+
 			(*rouge).draw(WINDOW_WIDTH, WINDOW_HEIGHT, frameIndex, tours, textTourRouge);
-			//printf("tour %d :\n", i);
-			//(*ptr).afficherEtat();
+
 			
 		}
 	}
 	if(tabTourJaune.size()>0){
 		for (jaune = tabTourJaune.begin(); jaune < tabTourJaune.end(); jaune++){
-			// i++;
-			//for (int i = 0; i < tabTourJaune.size(); i++){
+
 			(*jaune).draw(WINDOW_WIDTH, WINDOW_HEIGHT);
-			//printf("tour %d :\n", i);
-			//(*ptr).afficherEtat();
+
 			
 		}
 	}
 	if(tabTourVerte.size()>0){
 		for (vert = tabTourVerte.begin(); vert < tabTourVerte.end(); vert++){
-			// i++;
-			//for (int i = 0; i < tabTourVerte.size(); i++){
+
 			(*vert).draw(WINDOW_WIDTH, WINDOW_HEIGHT);
-			//printf("tour %d :\n", i);
-			//(*ptr).afficherEtat();
+
 			
 		}
-		//printf("Il y a %d tours\n", tabTourBleue.size());
+
 	}
 	else{
-		//cout<<"y'a aucune tour wesh"<<endl;
+
 	}
 	
 }
@@ -419,72 +428,72 @@ int clickOnTowers(int x, int y, Carte &carte){
 			return 4;
 		}
 	}
-	return 0;
+	return -1;
 }
 
-TourBleue getTourBleue(int x, int y, vector<TourBleue> &tabTourBleue){
+int getTourBleue(int x, int y, vector<TourBleue> &tabTourBleue){
 	if (tabTourBleue.size()>0) {
 		for (int i=0; i<tabTourBleue.size(); i++) {
 			int tour_x = tabTourBleue[i].getPositionX();
 			int tour_y = tabTourBleue[i].getPositionY();
 			if(tour_y > y-60 && tour_y < y+60 && tour_x > x-60 && tour_x < x+60) {
-				return tabTourBleue[i];
+				return i;
 			}
 		}
 	}
 }
 
-TourRouge getTourRouge(int x, int y, vector<TourRouge> &tabTourRouge){
+int getTourRouge(int x, int y, vector<TourRouge> &tabTourRouge){
 	if (tabTourRouge.size()>0) {
 		for (int i=0; i<tabTourRouge.size(); i++) {
 			int tour_x = tabTourRouge[i].getPositionX();
 			int tour_y = tabTourRouge[i].getPositionY();
 			if(tour_y > y-60 && tour_y < y+60 && tour_x > x-60 && tour_x < x+60) {
-				return tabTourRouge[i];
+				return i;
 			}
 		}
 	}
 }
 
-TourJaune getTourJaune(int x, int y, vector<TourJaune> &tabTourJaune){
+int getTourJaune(int x, int y, vector<TourJaune> &tabTourJaune){
 	if (tabTourJaune.size()>0) {
 		for (int i=0; i<tabTourJaune.size(); i++) {
 			int tour_x = tabTourJaune[i].getPositionX();
 			int tour_y = tabTourJaune[i].getPositionY();
 			if(tour_y > y-60 && tour_y < y+60 && tour_x > x-60 && tour_x < x+60) {
-				return tabTourJaune[i];
+				return i;
 			}
 		}
 	}
 }
 
-TourVerte getTourVerte(int x, int y, vector<TourVerte> &tabTourVerte){
+int getTourVerte(int x, int y, vector<TourVerte> &tabTourVerte){
 	if (tabTourVerte.size()>0) {
 		for (int i=0; i<tabTourVerte.size(); i++) {
 			int tour_x = tabTourVerte[i].getPositionX();
 			int tour_y = tabTourVerte[i].getPositionY();
 			if(tour_y > y-60 && tour_y < y+60 && tour_x > x-60 && tour_x < x+60) {
-				return tabTourVerte[i];
+				return i;
 			}
 		}
 	}
 }
 
-void afficherTourSelect(int x, int y, int select, vector<TourBleue> &tabTourBleue, vector<TourJaune> &tabTourJaune, vector<TourRouge> &tabTourRouge, vector<TourVerte> &tabTourVerte){
-	if(select == 1){
-		TourBleue tourbleue = getTourBleue(x, y, tabTourBleue);
-		tourbleue.afficherEtat();
-	}
-	if(select == 2){
-		TourVerte tourverte = getTourVerte(x, y, tabTourVerte);
-		tourverte.afficherEtat();
-	}
-	if(select == 3){
-		TourJaune tourjaune = getTourJaune(x, y, tabTourJaune);
-		tourjaune.afficherEtat();
-	}
-	if(select == 4){
-		TourRouge tourrouge = getTourRouge(x, y, tabTourRouge);
-		tourrouge.afficherEtat();
-	}
-}
+// void afficherTourSelect(int x, int y, int select, vector<TourBleue> &tabTourBleue, vector<TourJaune> &tabTourJaune, vector<TourRouge> &tabTourRouge, vector<TourVerte> &tabTourVerte){
+// 	if(select == 1){
+// 		TourBleue tourbleue = getTourBleue(x, y, tabTourBleue);
+// 		tourbleue.afficherEtat();
+// 	}
+// 	if(select == 2){
+// 		TourVerte tourverte = getTourVerte(x, y, tabTourVerte);
+// 		tourverte.afficherEtat();
+// 	}
+// 	if(select == 3){
+// 		TourJaune tourjaune = getTourJaune(x, y, tabTourJaune);
+// 		tourjaune.afficherEtat();
+// 	}
+// 	if(select == 4){
+// 		TourRouge tourrouge = getTourRouge(x, y, tabTourRouge);
+// 		tourrouge.afficherEtat();
+// 	} 
+// }

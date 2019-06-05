@@ -8,6 +8,9 @@
 #include <math.h>
 #include <string>
 
+
+
+
 void drawSquare(int pos_x, int pos_y, float large, float height, int full, int r, int g, int b);
 
 void drawCircle(float sizeCircle, int full);

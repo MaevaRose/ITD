@@ -11,7 +11,7 @@
 #include <string>
 #include <vector>
 
-#include "../include/tour.h"
+//#include "../include/tour.h"
 #include "../include/interface.hpp"
 //#include "../include/grapheNoeuds.h"
 
@@ -123,7 +123,8 @@ int main(int argc, char* argv[])
     int mousex=500;
     int mousey=500;
     int tourColor = 0;
-    int tour_select = 0;
+    int temp_tour_select = -1;
+    //int indice_tour = -1;
 
     Carte carte;
     carte.setDataCarte();
@@ -232,7 +233,7 @@ int main(int argc, char* argv[])
         glColor3ub(0,0,0);
         //writeString(0, 0,  "Je test loul");
         glColor3ub(255,255,255);
-        interface.drawInterface();
+        interface.drawInterface(tabTourBleue, tabTourJaune, tabTourRouge, tabTourVerte);
 
 
         if(play){
@@ -307,9 +308,27 @@ int main(int argc, char* argv[])
                                 tourrouge.poser(mousex, mousey, carte, tabTourRouge);
                                 interface.select = 0;
                             }
-                            tour_select = clickOnTowers(mousex, mousey, carte);
-                            printf("%d\n", tour_select);
-                            afficherTourSelect(mousex, mousey, tour_select, tabTourBleue, tabTourJaune, tabTourRouge, tabTourVerte);
+                            
+                            temp_tour_select = clickOnTowers(mousex, mousey, carte);
+                            printf("%d\n", interface.tour_select);
+                            if(temp_tour_select > -1){
+                                interface.tour_select = temp_tour_select;
+                                if(interface.tour_select == 1){
+                                    interface.indice_tour = getTourBleue(mousex, mousey, tabTourBleue);
+                                }
+                                 if(interface.tour_select == 2){
+                                    interface.indice_tour = getTourVerte(mousex, mousey, tabTourVerte);
+                                }
+                                 if(interface.tour_select == 3){
+                                    interface.indice_tour = getTourJaune(mousex, mousey, tabTourJaune);
+                                }
+                                 if(interface.tour_select == 4){
+                                    interface.indice_tour = getTourRouge(mousex, mousey, tabTourRouge);
+                                }
+                            }
+                            
+
+                            //afficherTourSelect(mousex, mousey, tour_select, tabTourBleue, tabTourJaune, tabTourRouge, tabTourVerte);
                         }
                     }
                     else{

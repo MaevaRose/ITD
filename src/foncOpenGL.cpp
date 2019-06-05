@@ -49,7 +49,7 @@ void drawCircle(float sizeCircle, int full) {
         glBegin(GL_LINE_STRIP);
     }
 
-        for (float i=0; i<10; i+=0.1) {
+        for (float i=0; i<50; i+=0.1) {
             glVertex2f(sizeCircle*cos(i), sizeCircle*sin(i));
         }
     glEnd();
