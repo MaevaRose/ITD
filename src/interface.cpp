@@ -66,7 +66,8 @@ void Interface::clicOnMenuHaut( Carte &carte, vector<TourBleue> &tabTourBleue, v
 	printf("Je suis dans le menu haut\n");
 	int x = this->x;
 	int y = this->y;
-	if(y>= 170 && y<= 230 && x>=1670 && x<= 1730){
+	
+	if(y>= 240 && y<= 300 && x>=1670 && x<= 1730){
 		if(this->tour_select == 1){
 	        tabTourBleue[indice_tour].supprimer(tabTourBleue, this->indice_tour,  carte);
 			
@@ -86,7 +87,7 @@ void Interface::clicOnMenuHaut( Carte &carte, vector<TourBleue> &tabTourBleue, v
 	    }
 	}
 
-	if(y>= 240 && y<= 300 && x>=1670 && x<= 1730){
+	if(y>= 170 && y<= 230 && x>=1670 && x<= 1730){
 		if(this->tour_select == 1){
 	        tabTourBleue[indice_tour].ameliorer();
 			
@@ -121,8 +122,8 @@ void Interface::drawInterface(vector<TourBleue> &tabTourBleue, vector<TourJaune>
 void Interface::drawMenuHaut(vector<TourBleue> &tabTourBleue, vector<TourJaune> &tabTourJaune, vector<TourRouge> &tabTourRouge, vector<TourVerte> &tabTourVerte) {
 	drawSquare(1700, 150, 3., 5., 1, 0, 0, 255);
 
-	drawSquare(1700, 200, 1., 1., 1, 255, 0, 0);
-	drawSquare(1700, 270, 1., 1., 1, 0, 255, 0);
+	drawSquare(1700, 200, 1., 1., 1, 0, 255, 0);
+	drawSquare(1700, 270, 1., 1., 1, 255, 0, 0);
 	//convertir un int en string
 	//sprintf(machaine,"%d",interface->lvl);
 	glColor3ub(0,0,0);

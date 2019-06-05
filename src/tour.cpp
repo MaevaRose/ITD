@@ -18,10 +18,10 @@ int width = 1800;
 
 
 
-void Tour::supprimer() {
-	printf("Je supprime cette tour\n");
-	//void popOfListTour
-}
+// void Tour::supprimer() {
+// 	printf("Je supprime cette tour\n");
+// 	//void popOfListTour
+// }
 
 
 void Tour::ameliorer() {
