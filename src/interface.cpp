@@ -27,6 +27,11 @@ bool Interface::clicOnInterface(int x, int y){
 		clicOnMenuBas();
 		return true;
 	}
+	if(x>= 1600 && x<= 1800 && y>=0 && y<= 300){
+		this->x = x;
+		this->y = y;
+		clicOnMenuHaut();
+	}
 	return false;
 }
 
@@ -56,6 +61,17 @@ void Interface::clicOnMenuBas(){
 	}
 }
 
+void Interface::clicOnMenuHaut(){
+
+	printf("Je suis dans le menu haut\n");
+	int x = this->x;
+	int y = this->y;
+	if(y>= 170 && y<= 230 && x>=1670 && x<= 1730){
+		
+	}
+
+}
+
 void Interface::setAllTexture(){
 	this->texMenuBas = setPNGTexture("./images/menubas.png");
 }
@@ -68,6 +84,8 @@ void Interface::drawInterface(vector<TourBleue> &tabTourBleue, vector<TourJaune>
 
 void Interface::drawMenuHaut(vector<TourBleue> &tabTourBleue, vector<TourJaune> &tabTourJaune, vector<TourRouge> &tabTourRouge, vector<TourVerte> &tabTourVerte) {
 	drawSquare(1700, 150, 3., 5., 1, 0, 0, 255);
+
+	drawSquare(1700, 200, 1., 1., 1, 255, 0, 0);
 	//convertir un int en string
 	//sprintf(machaine,"%d",interface->lvl);
 	glColor3ub(0,0,0);

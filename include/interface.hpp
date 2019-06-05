@@ -24,6 +24,8 @@ class Interface{
 
 	void clicOnMenuBas();
 
+	void clicOnMenuHaut();
+
 	void setAllTexture();
 
 	void drawInterface(vector<TourBleue> &tabTourBleue, vector<TourJaune> &tabTourJaune, vector<TourRouge> &tabTourRouge, vector<TourVerte> &tabTourVerte);
