@@ -87,6 +87,7 @@ class TourBleue:public Tour {
 
 	void poser(int x, int y, Carte &carte, vector<TourBleue> &tabTourBleue, vector<vector<int>> &tabPoids, vector<vector<int>> &grapheNoeud, vector<vector<int>> &posNoeuds);
 	void draw(const unsigned int WINDOW_WIDTH, const unsigned int WINDOW_HEIGHT);
+	void supprimer(vector<TourBleue> &tabTourBleue, int indice_tour, Carte &carte);
 
 	//TourBleue(TourBleue &) = delete;
 	//TourBleue& operator=(const TourBleue&) = delete;
@@ -104,6 +105,7 @@ class TourJaune:public Tour {
 
 	void poser(int x, int y, Carte &carte, vector<TourJaune> &tabTourJaune);
 	void draw(const unsigned int WINDOW_WIDTH, const unsigned int WINDOW_HEIGHT);
+	void supprimer(vector<TourJaune> &tabTourJaune, int indice_tour, Carte &carte);
 };
 
 
@@ -117,6 +119,7 @@ class TourRouge:public Tour {
 	TourRouge();
 	void poser(int x, int y, Carte &carte, vector<TourRouge> &tabTourRouge);
 	void draw(const unsigned int WINDOW_WIDTH, const unsigned int WINDOW_HEIGHT, int frameIndex, Sprites tours, GLuint textTourRouge);
+	void supprimer(vector<TourRouge> &tabTourRouge, int indice_tour, Carte &carte);
 };
 
 
@@ -130,6 +133,7 @@ class TourVerte:public Tour {
 	TourVerte();
 	void poser(int x, int y, Carte &carte, vector<TourVerte> &tabTourVerte);
 	void draw(const unsigned int WINDOW_WIDTH, const unsigned int WINDOW_HEIGHT);
+	void supprimer(vector<TourVerte> &tabTourVerte, int indice_tour, Carte &carte);
 };
 
 

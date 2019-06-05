@@ -20,11 +20,11 @@ class Interface{
 
 	int select;
 
-	bool clicOnInterface(int x, int y);
+	bool clicOnInterface(int x, int y,  Carte &carte, vector<TourBleue> &tabTourBleue, vector<TourJaune> &tabTourJaune, vector<TourRouge> &tabTourRouge, vector<TourVerte> &tabTourVerte);
 
 	void clicOnMenuBas();
 
-	void clicOnMenuHaut();
+	void clicOnMenuHaut( Carte &carte, vector<TourBleue> &tabTourBleue, vector<TourJaune> &tabTourJaune, vector<TourRouge> &tabTourRouge, vector<TourVerte> &tabTourVerte);
 
 	void setAllTexture();
 

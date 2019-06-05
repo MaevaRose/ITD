@@ -18,7 +18,7 @@ using namespace std;
 Interface::Interface(){};
 
 
-bool Interface::clicOnInterface(int x, int y){
+bool Interface::clicOnInterface(int x, int y,  Carte &carte, vector<TourBleue> &tabTourBleue, vector<TourJaune> &tabTourJaune, vector<TourRouge> &tabTourRouge, vector<TourVerte> &tabTourVerte){
 
 	printf("suis je sur l'interface ?\n");
 	if(y>=850 && y<=950 && x>=400 && x<=1200){
@@ -30,7 +30,7 @@ bool Interface::clicOnInterface(int x, int y){
 	if(x>= 1600 && x<= 1800 && y>=0 && y<= 300){
 		this->x = x;
 		this->y = y;
-		clicOnMenuHaut();
+		clicOnMenuHaut( carte, tabTourBleue, tabTourJaune, tabTourRouge, tabTourVerte);
 	}
 	return false;
 }
@@ -61,13 +61,29 @@ void Interface::clicOnMenuBas(){
 	}
 }
 
-void Interface::clicOnMenuHaut(){
+void Interface::clicOnMenuHaut( Carte &carte, vector<TourBleue> &tabTourBleue, vector<TourJaune> &tabTourJaune, vector<TourRouge> &tabTourRouge, vector<TourVerte> &tabTourVerte){
 
 	printf("Je suis dans le menu haut\n");
 	int x = this->x;
 	int y = this->y;
 	if(y>= 170 && y<= 230 && x>=1670 && x<= 1730){
-		
+		if(this->tour_select == 1){
+	        tabTourBleue[indice_tour].supprimer(tabTourBleue, this->indice_tour,  carte);
+			
+
+	    }
+	    if(this->tour_select == 2){
+	    	tabTourVerte[indice_tour].supprimer(tabTourVerte, this->indice_tour,  carte);
+			
+	    }
+	    if(this->tour_select == 3){
+	        tabTourJaune[indice_tour].supprimer(tabTourJaune, this->indice_tour,  carte);
+			
+	   	}
+	    if(this->tour_select == 4){
+	       tabTourRouge[indice_tour].supprimer(tabTourRouge, this->indice_tour,  carte);
+			
+	    }
 	}
 
 }

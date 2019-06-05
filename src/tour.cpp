@@ -19,6 +19,7 @@ int width = 1800;
 
 
 void Tour::supprimer() {
+	printf("Je supprime cette tour\n");
 	//void popOfListTour
 }
 
@@ -485,3 +486,92 @@ int getTourVerte(int x, int y, vector<TourVerte> &tabTourVerte){
 // 		tourrouge.afficherEtat();
 // 	} 
 // }
+
+
+void TourBleue::supprimer(vector<TourBleue> &tabTourBleue, int indice_tour,  Carte &carte) {
+	printf("Je supprime cette tour bleue\n");
+
+	int x = this->x_position;
+	int y = this->y_position;
+
+	for(int i = y-60 ; i < y+60 ; i++){
+		for(int j = x-60; j < x+60 ; j++){
+			int position = width*3*(i-1)+j*3;
+			carte.data[position+1]=255;
+			carte.data[position+2]=255;
+		}
+	}
+
+	vector<TourBleue>::iterator ptr = tabTourBleue.begin();
+	for(int i = 0; i<indice_tour ; i++){
+		ptr++;
+	}
+	tabTourBleue.erase(ptr);
+	//void popOfListTour
+}
+
+void TourJaune::supprimer(vector<TourJaune> &tabTourJaune, int indice_tour,  Carte &carte) {
+	printf("Je supprime cette tour jaune\n");
+
+	int x = this->x_position;
+	int y = this->y_position;
+
+	for(int i = y-60 ; i < y+60 ; i++){
+		for(int j = x-60; j < x+60 ; j++){
+			int position = width*3*(i-1)+j*3;
+			carte.data[position+1]=255;
+			carte.data[position+2]=255;
+		}
+	}
+
+	vector<TourJaune>::iterator ptr = tabTourJaune.begin();
+	for(int i = 0; i<indice_tour ; i++){
+		ptr++;
+	}
+	tabTourJaune.erase(ptr);
+	//void popOfListTour
+}
+
+void TourRouge::supprimer(vector<TourRouge> &tabTourRouge, int indice_tour,  Carte &carte) {
+	printf("Je supprime cette tour rouge\n");
+
+	int x = this->x_position;
+	int y = this->y_position;
+
+	for(int i = y-60 ; i < y+60 ; i++){
+		for(int j = x-60; j < x+60 ; j++){
+			int position = width*3*(i-1)+j*3;
+			carte.data[position+1]=255;
+			carte.data[position+2]=255;
+		}
+	}
+
+	vector<TourRouge>::iterator ptr = tabTourRouge.begin();
+	for(int i = 0; i<indice_tour ; i++){
+		ptr++;
+	}
+	tabTourRouge.erase(ptr);
+	//void popOfListTour
+}
+
+void TourVerte::supprimer(vector<TourVerte> &tabTourVerte, int indice_tour,  Carte &carte) {
+	printf("Je supprime cette tour jaune\n");
+
+	int x = this->x_position;
+	int y = this->y_position;
+
+	for(int i = y-60 ; i < y+60 ; i++){
+		for(int j = x-60; j < x+60 ; j++){
+			int position = width*3*(i-1)+j*3;
+			carte.data[position+1]=255;
+			carte.data[position+2]=255;
+		}
+	}
+
+	vector<TourVerte>::iterator ptr = tabTourVerte.begin();
+	for(int i = 0; i<indice_tour ; i++){
+		ptr++;
+	}
+	tabTourVerte.erase(ptr);
+	//void popOfListTour
+}
