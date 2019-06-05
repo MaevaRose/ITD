@@ -25,10 +25,12 @@ void Tour::supprimer() {
 
 
 void Tour::ameliorer() {
-	this->level += 1;
-	this->portee += 10;
-	this->degats += 10;
-	this->cadence -= 100;
+	if(this->level<5){
+		this->level += 1;
+		this->portee += 10;
+		this->degats += 10;
+	}
+	//this->cadence -= 10;
 }
 
 
@@ -104,6 +106,10 @@ int Tour::getPositionX() {
 
 int Tour::getPositionY() {
 	return this -> y_position;
+}
+
+int Tour::getNiveau(){
+	return this->level;
 }
 
 

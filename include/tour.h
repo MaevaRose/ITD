@@ -42,6 +42,8 @@ class Tour {
 
 	int getPositionY();						//OK	
 
+	int getNiveau();
+
 	void augmenterPuissance(int pourcent);	//OK
 
 	void augmenterVitesse(int pourcent);	//OK

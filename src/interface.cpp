@@ -86,6 +86,26 @@ void Interface::clicOnMenuHaut( Carte &carte, vector<TourBleue> &tabTourBleue, v
 	    }
 	}
 
+	if(y>= 240 && y<= 300 && x>=1670 && x<= 1730){
+		if(this->tour_select == 1){
+	        tabTourBleue[indice_tour].ameliorer();
+			
+
+	    }
+	    if(this->tour_select == 2){
+	    	tabTourVerte[indice_tour].ameliorer();
+			
+	    }
+	    if(this->tour_select == 3){
+	        tabTourJaune[indice_tour].ameliorer();
+			
+	   	}
+	    if(this->tour_select == 4){
+	       tabTourRouge[indice_tour].ameliorer();
+			
+	    }
+	}
+
 }
 
 void Interface::setAllTexture(){
@@ -102,41 +122,42 @@ void Interface::drawMenuHaut(vector<TourBleue> &tabTourBleue, vector<TourJaune> 
 	drawSquare(1700, 150, 3., 5., 1, 0, 0, 255);
 
 	drawSquare(1700, 200, 1., 1., 1, 255, 0, 0);
+	drawSquare(1700, 270, 1., 1., 1, 0, 255, 0);
 	//convertir un int en string
 	//sprintf(machaine,"%d",interface->lvl);
 	glColor3ub(0,0,0);
 	writeString(13, 7,  "Tour :");
 	//printf("echo loul\n");
 	if(this->tour_select == 1){
-        int x = tabTourBleue[indice_tour].getPositionX();
+        int lvl = tabTourBleue[indice_tour].getNiveau();
 		char info[50];
-		char texte[50] = "La tour est à la position : ";
-		sprintf (info, "%d", x);
+		char texte[50] = "La tour est niveau : ";
+		sprintf (info, "%d", lvl);
 		strcat (texte, info);
 		writeString(10, 6.9,  texte);
 
     }
     if(this->tour_select == 2){
-    	int x = tabTourVerte[indice_tour].getPositionX();
+    	int lvl = tabTourVerte[indice_tour].getNiveau();
 		char info[50];
-		char texte[50] = "La tour est à la position : ";
-		sprintf (info, "%d", x);
+		char texte[50] = "La tour est niveau : ";
+		sprintf (info, "%d", lvl);
 		strcat (texte, info);
 		writeString(10, 6.9,  texte);
     }
     if(this->tour_select == 3){
-        int x = tabTourJaune[indice_tour].getPositionX();
+        int lvl = tabTourJaune[indice_tour].getNiveau();
 		char info[50];
-		char texte[50] = "La tour est à la position : ";
-		sprintf (info, "%d", x);
+		char texte[50] = "La tour est niveau : ";
+		sprintf (info, "%d", lvl);
 		strcat (texte, info);
 		writeString(10, 6.9,  texte);
    	}
     if(this->tour_select == 4){
-       int x = tabTourRouge[indice_tour].getPositionX();
+       int lvl = tabTourRouge[indice_tour].getNiveau();
 		char info[50];
-		char texte[50] = "La tour est à la position : ";
-		sprintf (info, "%d", x);
+		char texte[50] = "La tour est niveau : ";
+		sprintf (info, "%d", lvl);
 		strcat (texte, info);
 		writeString(10, 6.9,  texte);
     }
