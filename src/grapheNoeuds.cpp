@@ -212,15 +212,20 @@ void ajoutePoidsChemin(int portee, int posX, int posY, int poid, vector<vector<i
 		for (int i=0; i<grapheNoeud[noeud1].size(); i++) {
 			int noeud2 = grapheNoeud[noeud1][i];
 			if (posNoeuds[noeud1][0] == posNoeuds[noeud2][0]) {
-				if (abs(posX-posNoeuds[noeud1][0]-15) < portee) {
+				int milieuChemin = (posNoeuds[noeud1][1] + posNoeuds[noeud2][1]) / 2;
+				int tailleDemiChemin = abs(posNoeuds[noeud1][1] - posNoeuds[noeud2][1]) / 2;
+				if ((abs(posX-posNoeuds[noeud1][0]-15) < portee) && (posY < milieuChemin+tailleDemiChemin) && (posY > milieuChemin-tailleDemiChemin)) {
 					tabPoids[noeud1][i] += poid;
 				}
 			}
 			else {
-				if (abs(posY-posNoeuds[noeud1][1]-15) < portee) {
+				int milieuChemin = (posNoeuds[noeud1][0] + posNoeuds[noeud2][0]) / 2;
+				int tailleDemiChemin = abs(posNoeuds[noeud1][0] - posNoeuds[noeud2][0]) / 2;
+				if ((abs(posY-posNoeuds[noeud1][1]-15) < portee) && (posX < milieuChemin+tailleDemiChemin) && (posX > milieuChemin-tailleDemiChemin)) {
 					tabPoids[noeud1][i] += poid;
 				}
 			}
+			printf("Le poid du chemin allant de %d à %d vaut %d\n", noeud1, noeud2, tabPoids[noeud1][i]);
 		}
 	}
 }

@@ -295,7 +295,7 @@ int main(int argc, char* argv[])
                     if(!clicOnInterface){
                         if(play){
                             if(interface.select==1){
-                                tourbleue.poser(mousex, mousey, carte, tabTourBleue);
+                                tourbleue.poser(mousex, mousey, carte, tabTourBleue, tabPoids, grapheNoeuds, posNoeuds);
                                 interface.select = 0;
                             }
                             if(interface.select==2){
