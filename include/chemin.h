@@ -7,7 +7,7 @@ using namespace std;
 class Chemin {
 
 	public :
-	Chemin(int poid, int idNoeud1, int idNoeud2);
+	Chemin(int poid, int idNoeud1, int idNoeud2, int type, int position);
 
 	//méthodes
 	int getPoid();
@@ -23,4 +23,6 @@ class Chemin {
 	int poid;
 	int idNoeud1;
 	int idNoeud2;
+	int type;
+	int position;
 };

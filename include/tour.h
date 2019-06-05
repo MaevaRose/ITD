@@ -85,7 +85,7 @@ class TourBleue:public Tour {
 	public :
 	TourBleue();
 
-	void poser(int x, int y, Carte &carte, vector<TourBleue> &tabTourBleue);
+	void poser(int x, int y, Carte &carte, vector<TourBleue> &tabTourBleue, vector<vector<int>> &tabPoids, vector<vector<int>> &grapheNoeud, vector<vector<int>> &posNoeuds);
 	void draw(const unsigned int WINDOW_WIDTH, const unsigned int WINDOW_HEIGHT);
 
 	//TourBleue(TourBleue &) = delete;

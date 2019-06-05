@@ -5,7 +5,7 @@
 
 using namespace std;
 
-Chemin::Chemin(int poid, int idNoeud1, int idNoeud2) : poid(poid), idNoeud1(idNoeud1), idNoeud2(idNoeud2) {};
+Chemin::Chemin(int poid, int idNoeud1, int idNoeud2, int type, int position) : poid(poid), idNoeud1(idNoeud1), idNoeud2(idNoeud2), type(type), position(position) {};
 
 
 int Chemin::getPoid() {
@@ -21,3 +21,5 @@ int Chemin::getNoeud1() {
 int Chemin::getNoeud2() {
 	return this->idNoeud2;
 }
+
+

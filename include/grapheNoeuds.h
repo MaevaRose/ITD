@@ -30,6 +30,8 @@ vector<vector<int>> creerTabTest2();
 
 vector<vector<int>> creerPosNoeud();
 
+void ajoutePoidsChemin(int portee, int posX, int posY, int poid, vector<vector<int>> &tabPoids, vector<vector<int>> &grapheNoeud, vector<vector<int>> posNoeuds);
+
 int meilleurChemin(vector<vector<int>> &grapheNoeuds, vector<vector<int>> tabPoids, vector<int> &utilise, int idNoeud, int end);
 
 vector<int> calculCheminMonstre(vector<vector<int>> &grapheNoeuds, vector<vector<int>> &tabPoids, int start, int end);
