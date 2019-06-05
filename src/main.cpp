@@ -132,8 +132,8 @@ int main(int argc, char* argv[])
     GLuint textCarte = carte.setCarte();
 
     //test sprite
-    Sprites testSprite(300, 300, 100, 100);
-    GLuint textTestSprite = setPNGTexture("./images/tourRouge.png");
+    Sprites testSprite(400, 400, 100, 100);
+    GLuint textTestSprite = setPNGTexture("./images/petitMonstre.png");
 
     // Création des tours
     int finPartie = 0;
@@ -224,16 +224,16 @@ int main(int argc, char* argv[])
         
 
         carte.afficherCarte(textCarte, 15., 8.4);
-        testSprite.drawSprite(textTestSprite, 0.9, -5, 5, frameIndex);
+        //testSprite.drawSprite(textTestSprite, 0.9, -5, 5, frameIndex);
 
 
         drawAllTower(tabTourBleue, tabTourJaune, tabTourRouge, tabTourVerte, WINDOW_WIDTH, WINDOW_HEIGHT, frameIndex);
         attaqueAllTower(tabTourBleue, tabTourJaune, tabTourRouge, tabTourVerte, tabPetitMonstre, tabMoyenMonstre, tabGrosMonstre);
         drawTourShape(mousex, mousey, carte);        
-        glColor3ub(0,0,0);
+        //glColor3ub(0,0,0);
         //writeString(0, 0,  "Je test loul");
-        glColor3ub(255,255,255);
-        interface.drawInterface(tabTourBleue, tabTourJaune, tabTourRouge, tabTourVerte);
+        //glColor3ub(255,255,255);
+        
 
 
         if(play){
@@ -241,7 +241,9 @@ int main(int argc, char* argv[])
         //printf("BOB\n");
             
         }
-        drawAllMonstres(tabPetitMonstre, tabMoyenMonstre, tabGrosMonstre);
+        drawAllMonstres(frameIndex, tabPetitMonstre, tabMoyenMonstre, tabGrosMonstre);
+
+        interface.drawInterface(tabTourBleue, tabTourJaune, tabTourRouge, tabTourVerte);
 
         
         /* Echange du front et du back buffer : mise a jour de la fenetre */

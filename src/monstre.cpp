@@ -2,22 +2,26 @@
 #include <string>
 #include <vector>
 //#include "../include/tableauMonstre.h"
-#include "../include/foncOpenGL.h"
+
 #include "../include/grapheNoeuds.h"
 #include "../include/monstre.h"
 
 using namespace std;
 
-Monstre::Monstre(int pv, int vit, int x_pos, int y_pos, int indice) : pts_vie(pv), vitesse(vit), x_position(x_pos), y_position(y_pos), indiceChemin(indice) {};
-PetitMonstre::PetitMonstre() : Monstre(100, 5, -1, -1, 0) {};
-MoyenMonstre::MoyenMonstre() : Monstre(250, 2, -1, -1, 0) {};
-GrosMonstre::GrosMonstre() : Monstre(500, 1, -1, -1, 0) {};
+Monstre::Monstre(int pv, float vit, int x_pos, int y_pos, int indice, Sprites spriteMonstre) : pts_vie(pv), vitesse(vit), x_position(x_pos), y_position(y_pos), indiceChemin(indice), spriteMonstre(spriteMonstre) {};
+
+PetitMonstre::PetitMonstre() : Monstre(100, 2., -1, -1, 0, spriteMonstre) {};
+MoyenMonstre::MoyenMonstre() : Monstre(250, 1., -1, -1, 0, spriteMonstre) {};
+GrosMonstre::GrosMonstre() : Monstre(500, 0.5, -1, -1, 0, spriteMonstre) {};
 
 
 
 void PetitMonstre::apparaitre(int x, int y, vector<PetitMonstre> &tabMonstre) {
 	this->x_position = x;
 	this->y_position = y;
+	Sprites spriteMonstre(400, 400, 100, 100);
+	this->spriteMonstre = spriteMonstre;
+	this->textMonstre = setPNGTexture("./images/petitMonstre.png");
 	addToTabPetitMonstre(tabMonstre, *this);
 }
 
@@ -25,6 +29,8 @@ void PetitMonstre::apparaitre(int x, int y, vector<PetitMonstre> &tabMonstre) {
 void MoyenMonstre::apparaitre(int x, int y, vector<MoyenMonstre> &tabMonstre) {
 	this->x_position = x;
 	this->y_position = y;
+	Sprites spriteMonstre(400, 400, 100, 100);
+	this->spriteMonstre = spriteMonstre;
 	addToTabMoyenMonstre(tabMonstre, *this);
 }
 
@@ -32,6 +38,8 @@ void MoyenMonstre::apparaitre(int x, int y, vector<MoyenMonstre> &tabMonstre) {
 void GrosMonstre::apparaitre(int x, int y, vector<GrosMonstre> &tabMonstre) {
 	this->x_position = x;
 	this->y_position = y;
+	Sprites spriteMonstre(400, 400, 100, 100);
+	this->spriteMonstre = spriteMonstre;
 	addToTabGrosMonstre(tabMonstre, *this);
 }
 
@@ -82,15 +90,14 @@ void Monstre::pushPosition(int x, int y) {
 }
 
 
-void PetitMonstre::drawPetitMonstre() {
+void PetitMonstre::drawPetitMonstre(int frameIndex) {
 	float x = (-1 + 2 * this -> x_position / 1800.)*15;
 	float y = -(-1 + 2 * this -> y_position/ 1012.)*8.4;
 
-	glPushMatrix();
-		glTranslatef(x, y, 0);
-            glColor3ub(153,218,75);
-            drawCircle(0.1,1);
-    glPopMatrix();
+     glColor3ub(255,255,255);
+
+
+    this->spriteMonstre.drawSprite(this->textMonstre, 0.7, x, y, frameIndex);
 }
 
 
@@ -286,12 +293,12 @@ void updateAllMonstre(vector<PetitMonstre> &tabPetitMonstre, vector<MoyenMonstre
 }
 
 
-void drawAllMonstres(vector<PetitMonstre> &tabPetitMonstre, vector<MoyenMonstre> &tabMoyenMonstre, vector<GrosMonstre> &tabGrosMonstre) {
+void drawAllMonstres(int frameIndex, vector<PetitMonstre> &tabPetitMonstre, vector<MoyenMonstre> &tabMoyenMonstre, vector<GrosMonstre> &tabGrosMonstre) {
 	int size = tabPetitMonstre.size();
 	PetitMonstre monstre1;
 	for (int i=0; i<size; i++) {
 		monstre1 = tabPetitMonstre[i];
-		monstre1.drawPetitMonstre();
+		monstre1.drawPetitMonstre(frameIndex);
 	}
 
 	size = tabPetitMonstre.size();
@@ -307,4 +314,5 @@ void drawAllMonstres(vector<PetitMonstre> &tabPetitMonstre, vector<MoyenMonstre>
 		monstre3 = tabGrosMonstre[i];
 		monstre3.drawGrosMonstre();
 	}
+
 }
