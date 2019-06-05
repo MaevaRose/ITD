@@ -133,3 +133,5 @@ void addToTabGrosMonstre(vector<GrosMonstre> &tabMonstre,  GrosMonstre monstre);
 void popOfTabGrosMonstre(vector<GrosMonstre> &tabMonstre, vector<GrosMonstre>::iterator ptr);
 
 void drawAllMonstres(int frameIndex, vector<PetitMonstre> &tabPetitMonstre, vector<MoyenMonstre> &tabMoyenMonstre, vector<GrosMonstre> &tabGrosMonstre);
+
+void creerVague(int indice, vector<vector<int>> tabVagues, int temps, int &loop, int start, vector<vector<int>> posNoeuds, vector<PetitMonstre> tabPetitMonstre, vector<MoyenMonstre> tabMoyenMonstre, vector<GrosMonstre> tabGrosMonstre);

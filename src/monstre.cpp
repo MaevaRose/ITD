@@ -316,3 +316,87 @@ void drawAllMonstres(int frameIndex, vector<PetitMonstre> &tabPetitMonstre, vect
 	}
 
 }
+
+
+vector<vector<int>> creerTabVague() {
+	
+	vector<vector<int>> tabVagues;
+
+	tabVagues.push_back(vector<int>(1, 10));
+	tabVagues.push_back(vector<int>(1, 25));
+	tabVagues.push_back(vector<int>(1, 40));
+	tabVagues.push_back(vector<int>(1, 60));
+	tabVagues.push_back(vector<int>(1, 80));
+	tabVagues.push_back(vector<int>(1, 100));
+	tabVagues.push_back(vector<int>(1, 120));
+	tabVagues.push_back(vector<int>(1, 150));
+	tabVagues.push_back(vector<int>(1, 180));
+	tabVagues.push_back(vector<int>(1, 210));
+
+	tabVagues[0].push_back(10);
+	tabVagues[0].push_back(0);
+	tabVagues[0].push_back(0);
+
+	tabVagues[1].push_back(10);
+	tabVagues[1].push_back(5);
+	tabVagues[1].push_back(0);
+
+	tabVagues[2].push_back(10);
+	tabVagues[2].push_back(10);
+	tabVagues[2].push_back(0);
+
+	tabVagues[3].push_back(10);
+	tabVagues[3].push_back(0);
+	tabVagues[3].push_back(2);
+
+	tabVagues[4].push_back(10);
+	tabVagues[4].push_back(10);
+	tabVagues[4].push_back(5);
+
+	tabVagues[5].push_back(25);
+	tabVagues[5].push_back(0);
+	tabVagues[5].push_back(0);
+
+	tabVagues[6].push_back(0);
+	tabVagues[6].push_back(15);
+	tabVagues[6].push_back(1);
+
+	tabVagues[7].push_back(5);
+	tabVagues[7].push_back(0);
+	tabVagues[7].push_back(5);
+
+	tabVagues[8].push_back(10);
+	tabVagues[8].push_back(5);
+	tabVagues[8].push_back(3);
+
+	tabVagues[9].push_back(15);
+	tabVagues[9].push_back(8);
+	tabVagues[9].push_back(5);
+
+	printf("J'ai finis de créer les vagues\n");
+	return tabVagues;
+}
+
+
+void creerVague(int indice, vector<vector<int>> tabVagues, int temps, int &loop, int start, vector<vector<int>> posNoeuds, vector<PetitMonstre> tabPetitMonstre, vector<MoyenMonstre> tabMoyenMonstre, vector<GrosMonstre> tabGrosMonstre) {
+	if (temps > tabVagues[indice][0]) {
+		if (loop == 5) {
+			if (tabVagues[indice][1] != 0) {
+				PetitMonstre monstre;
+				monstre.apparaitre(posNoeuds[start][0], posNoeuds[start][1], tabPetitMonstre);
+				tabVagues[indice][1]--;
+			}
+			else if (tabVagues[indice][2] != 0) {
+				MoyenMonstre monstre;
+				monstre.apparaitre(posNoeuds[start][0], posNoeuds[start][1], tabMoyenMonstre);
+				tabVagues[indice][2]--;
+			}
+			else if (tabVagues[indice][3] != 0) {
+				GrosMonstre monstre;
+				monstre.apparaitre(posNoeuds[start][0], posNoeuds[start][1], tabGrosMonstre);
+				tabVagues[indice][3]--;
+			}
+			loop = 0;
+		}
+	}
+}
