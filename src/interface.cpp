@@ -18,7 +18,7 @@ using namespace std;
 Interface::Interface(){};
 
 
-bool Interface::clicOnInterface(int x, int y,  Carte &carte, vector<TourBleue> &tabTourBleue, vector<TourJaune> &tabTourJaune, vector<TourRouge> &tabTourRouge, vector<TourVerte> &tabTourVerte){
+bool Interface::clicOnInterface(int x, int y,  Carte &carte, vector<TourBleue> &tabTourBleue, vector<TourJaune> &tabTourJaune, vector<TourRouge> &tabTourRouge, vector<TourVerte> &tabTourVerte, vector<vector<int>> &tabPoids, vector<vector<int>> &grapheNoeud, vector<vector<int>> &posNoeuds){
 
 	printf("suis je sur l'interface ?\n");
 	if(y>=850 && y<=950 && x>=400 && x<=1200){
@@ -30,7 +30,7 @@ bool Interface::clicOnInterface(int x, int y,  Carte &carte, vector<TourBleue> &
 	if(x>= 1600 && x<= 1800 && y>=0 && y<= 300){
 		this->x = x;
 		this->y = y;
-		clicOnMenuHaut( carte, tabTourBleue, tabTourJaune, tabTourRouge, tabTourVerte);
+		clicOnMenuHaut( carte, tabTourBleue, tabTourJaune, tabTourRouge, tabTourVerte, tabPoids, grapheNoeud, posNoeuds);
 	}
 	return false;
 }
@@ -61,7 +61,7 @@ void Interface::clicOnMenuBas(){
 	}
 }
 
-void Interface::clicOnMenuHaut( Carte &carte, vector<TourBleue> &tabTourBleue, vector<TourJaune> &tabTourJaune, vector<TourRouge> &tabTourRouge, vector<TourVerte> &tabTourVerte){
+void Interface::clicOnMenuHaut( Carte &carte, vector<TourBleue> &tabTourBleue, vector<TourJaune> &tabTourJaune, vector<TourRouge> &tabTourRouge, vector<TourVerte> &tabTourVerte, vector<vector<int>> &tabPoids, vector<vector<int>> &grapheNoeud, vector<vector<int>> &posNoeuds) {
 
 	printf("Je suis dans le menu haut\n");
 	int x = this->x;
@@ -69,20 +69,20 @@ void Interface::clicOnMenuHaut( Carte &carte, vector<TourBleue> &tabTourBleue, v
 	
 	if(y>= 240 && y<= 300 && x>=1670 && x<= 1730){
 		if(this->tour_select == 1){
-	        tabTourBleue[indice_tour].supprimer(tabTourBleue, this->indice_tour,  carte);
+	        tabTourBleue[indice_tour].supprimer(tabTourBleue, this->indice_tour,  carte, tabPoids, grapheNoeud, posNoeuds);
 			
 
 	    }
 	    if(this->tour_select == 2){
-	    	tabTourVerte[indice_tour].supprimer(tabTourVerte, this->indice_tour,  carte);
+	    	tabTourVerte[indice_tour].supprimer(tabTourVerte, this->indice_tour,  carte, tabPoids, grapheNoeud, posNoeuds);
 			
 	    }
 	    if(this->tour_select == 3){
-	        tabTourJaune[indice_tour].supprimer(tabTourJaune, this->indice_tour,  carte);
+	        tabTourJaune[indice_tour].supprimer(tabTourJaune, this->indice_tour,  carte, tabPoids, grapheNoeud, posNoeuds);
 			
 	   	}
 	    if(this->tour_select == 4){
-	       tabTourRouge[indice_tour].supprimer(tabTourRouge, this->indice_tour,  carte);
+	       tabTourRouge[indice_tour].supprimer(tabTourRouge, this->indice_tour,  carte, tabPoids, grapheNoeud, posNoeuds);
 			
 	    }
 	}

@@ -502,7 +502,7 @@ int getTourVerte(int x, int y, vector<TourVerte> &tabTourVerte){
 // }
 
 
-void TourBleue::supprimer(vector<TourBleue> &tabTourBleue, int indice_tour,  Carte &carte) {
+void TourBleue::supprimer(vector<TourBleue> &tabTourBleue, int indice_tour,  Carte &carte, vector<vector<int>> &tabPoids, vector<vector<int>> &grapheNoeud, vector<vector<int>> &posNoeuds) {
 	printf("Je supprime cette tour bleue\n");
 
 	int x = this->x_position;
@@ -518,15 +518,20 @@ void TourBleue::supprimer(vector<TourBleue> &tabTourBleue, int indice_tour,  Car
 		}
 	}
 
+
+
 	vector<TourBleue>::iterator ptr = tabTourBleue.begin();
 	for(int i = 0; i<indice_tour ; i++){
 		ptr++;
 	}
+
+	ajoutePoidsChemin(this->portee, this->x_position, this->y_position, -30, tabPoids, grapheNoeud, posNoeuds);
+
 	tabTourBleue.erase(ptr);
 	//void popOfListTour
 }
 
-void TourJaune::supprimer(vector<TourJaune> &tabTourJaune, int indice_tour,  Carte &carte) {
+void TourJaune::supprimer(vector<TourJaune> &tabTourJaune, int indice_tour,  Carte &carte, vector<vector<int>> &tabPoids, vector<vector<int>> &grapheNoeud, vector<vector<int>> &posNoeuds) {
 	printf("Je supprime cette tour jaune\n");
 
 	int x = this->x_position;
@@ -546,11 +551,14 @@ void TourJaune::supprimer(vector<TourJaune> &tabTourJaune, int indice_tour,  Car
 	for(int i = 0; i<indice_tour ; i++){
 		ptr++;
 	}
+
+	ajoutePoidsChemin(this->portee, this->x_position, this->y_position, -20, tabPoids, grapheNoeud, posNoeuds);
+
 	tabTourJaune.erase(ptr);
 	//void popOfListTour
 }
 
-void TourRouge::supprimer(vector<TourRouge> &tabTourRouge, int indice_tour,  Carte &carte) {
+void TourRouge::supprimer(vector<TourRouge> &tabTourRouge, int indice_tour,  Carte &carte, vector<vector<int>> &tabPoids, vector<vector<int>> &grapheNoeud, vector<vector<int>> &posNoeuds) {
 	printf("Je supprime cette tour rouge\n");
 
 	int x = this->x_position;
@@ -570,11 +578,14 @@ void TourRouge::supprimer(vector<TourRouge> &tabTourRouge, int indice_tour,  Car
 	for(int i = 0; i<indice_tour ; i++){
 		ptr++;
 	}
+
+	ajoutePoidsChemin(this->portee, this->x_position, this->y_position, -50, tabPoids, grapheNoeud, posNoeuds);
+
 	tabTourRouge.erase(ptr);
 	//void popOfListTour
 }
 
-void TourVerte::supprimer(vector<TourVerte> &tabTourVerte, int indice_tour,  Carte &carte) {
+void TourVerte::supprimer(vector<TourVerte> &tabTourVerte, int indice_tour,  Carte &carte, vector<vector<int>> &tabPoids, vector<vector<int>> &grapheNoeud, vector<vector<int>> &posNoeuds) {
 	printf("Je supprime cette tour jaune\n");
 
 	int x = this->x_position;
@@ -594,6 +605,9 @@ void TourVerte::supprimer(vector<TourVerte> &tabTourVerte, int indice_tour,  Car
 	for(int i = 0; i<indice_tour ; i++){
 		ptr++;
 	}
+
+	ajoutePoidsChemin(this->portee, this->x_position, this->y_position, -40, tabPoids, grapheNoeud, posNoeuds);
+
 	tabTourVerte.erase(ptr);
 	//void popOfListTour
 }

@@ -307,7 +307,7 @@ int main(int argc, char* argv[])
                     mousex = e.button.x;
                     mousey = e.button.y;
                     printf("clic en (%d, %d)\n", mousex, mousey);
-                    clicOnInterface = interface.clicOnInterface(mousex, mousey, carte, tabTourBleue, tabTourJaune, tabTourRouge, tabTourVerte);
+                    clicOnInterface = interface.clicOnInterface(mousex, mousey, carte, tabTourBleue, tabTourJaune, tabTourRouge, tabTourVerte, tabPoids, grapheNoeuds, posNoeuds);
                     if(!clicOnInterface){
                         if(play){
                             if(interface.select==1){
