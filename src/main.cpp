@@ -130,6 +130,7 @@ int main(int argc, char* argv[])
     carte.setDataCarte();
     carte.verifITD();
     GLuint textCarte = carte.setCarte();
+    carte.argent = 100;
 
     //test sprite
     Sprites testSprite(400, 400, 100, 100);
@@ -243,7 +244,7 @@ int main(int argc, char* argv[])
         }
         drawAllMonstres(frameIndex, tabPetitMonstre, tabMoyenMonstre, tabGrosMonstre);
 
-        interface.drawInterface(tabTourBleue, tabTourJaune, tabTourRouge, tabTourVerte);
+        interface.drawInterface(carte, tabTourBleue, tabTourJaune, tabTourRouge, tabTourVerte);
 
         
         /* Echange du front et du back buffer : mise a jour de la fenetre */

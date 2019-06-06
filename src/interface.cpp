@@ -113,13 +113,13 @@ void Interface::setAllTexture(){
 	this->texMenuBas = setPNGTexture("./images/menubas.png");
 }
 
-void Interface::drawInterface(vector<TourBleue> &tabTourBleue, vector<TourJaune> &tabTourJaune, vector<TourRouge> &tabTourRouge, vector<TourVerte> &tabTourVerte) {
-	drawMenuHaut(tabTourBleue, tabTourJaune, tabTourRouge, tabTourVerte);
+void Interface::drawInterface(Carte &carte, vector<TourBleue> &tabTourBleue, vector<TourJaune> &tabTourJaune, vector<TourRouge> &tabTourRouge, vector<TourVerte> &tabTourVerte) {
+	drawMenuHaut(carte, tabTourBleue, tabTourJaune, tabTourRouge, tabTourVerte);
 	drawMenuBas();
 }
 
 
-void Interface::drawMenuHaut(vector<TourBleue> &tabTourBleue, vector<TourJaune> &tabTourJaune, vector<TourRouge> &tabTourRouge, vector<TourVerte> &tabTourVerte) {
+void Interface::drawMenuHaut(Carte &carte, vector<TourBleue> &tabTourBleue, vector<TourJaune> &tabTourJaune, vector<TourRouge> &tabTourRouge, vector<TourVerte> &tabTourVerte) {
 	drawSquare(1700, 150, 3., 5., 1, 0, 0, 255);
 
 	drawSquare(1700, 200, 1., 1., 1, 0, 255, 0);
@@ -127,7 +127,13 @@ void Interface::drawMenuHaut(vector<TourBleue> &tabTourBleue, vector<TourJaune> 
 	//convertir un int en string
 	//sprintf(machaine,"%d",interface->lvl);
 	glColor3ub(0,0,0);
-	writeString(13, 7,  "Tour :");
+	//writeString(13, 7,  "Tour :");
+	int argent = carte.argent;
+	char info[50];
+	char texte[50] = "Argent : ";
+	sprintf (info, "%d", argent);
+	strcat (texte, info);
+	writeString(10, 7,  texte);
 	//printf("echo loul\n");
 	if(this->tour_select == 1){
         int lvl = tabTourBleue[indice_tour].getNiveau();

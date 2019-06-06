@@ -131,10 +131,11 @@ void Tour::augmenterPortee(int pourcent) {
 void TourBleue::poser(int x, int y, Carte &carte, vector<TourBleue> &tabTourBleue, vector<vector<int>> &tabPoids, vector<vector<int>> &grapheNoeud, vector<vector<int>> &posNoeuds) {
 	bool isConstructible = carte.isConstructible(x, y, 1800, 1012);
 
-	if(isConstructible) {
+	if(isConstructible && carte.argent>=this->cout) {
 		this->x_position = x;
 		this->y_position = y;
-		this->cout = this->cout/2;
+		carte.argent -= this->cout;
+
 
 		//changer le ppm pour rendre la zone plus constructible
 		for(int i = y-60 ; i < y+60 ; i++) {
@@ -177,10 +178,10 @@ void TourBleue::draw(const unsigned int WINDOW_WIDTH, const unsigned int WINDOW_
 
 void TourJaune::poser(int x, int y, Carte &carte, vector<TourJaune> &tabTourJaune) {
 	bool isConstructible = carte.isConstructible(x, y, 1800, 1012);
-	if(isConstructible){
+	if(isConstructible  && carte.argent>=this->cout){
 		this->x_position = x;
 		this->y_position = y;
-		this->cout = this->cout/2;
+		carte.argent -= this->cout;
 
 		for(int i = y-60 ; i < y+60 ; i++){
 			for(int j = x-60; j < x+60 ; j++){
@@ -221,10 +222,10 @@ void TourJaune::draw(const unsigned int WINDOW_WIDTH, const unsigned int WINDOW_
 
 void TourRouge::poser(int x, int y, Carte &carte, vector<TourRouge> &tabTourRouge) {
 	bool isConstructible = carte.isConstructible(x, y, 1800, 1012);
-	if(isConstructible){
+	if(isConstructible  && carte.argent>=this->cout){
 		this->x_position = x;
 		this->y_position = y;
-		this->cout = this->cout/2;
+		carte.argent -= this->cout;
 
 		for(int i = y-60 ; i < y+60 ; i++){
 			for(int j = x-60; j < x+60 ; j++){
@@ -259,10 +260,10 @@ void TourRouge::draw(const unsigned int WINDOW_WIDTH, const unsigned int WINDOW_
 
 void TourVerte::poser(int x, int y, Carte &carte, vector<TourVerte> &tabTourVerte) {
 	bool isConstructible = carte.isConstructible(x, y, 1800, 1012);
-	if(isConstructible){
+	if(isConstructible  && carte.argent>=this->cout){
 		this->x_position = x;
 		this->y_position = y;
-		this->cout = this->cout/2;
+		carte.argent -= this->cout;
 
 		for(int i = y-60 ; i < y+60 ; i++){
 			for(int j = x-60; j < x+60 ; j++){

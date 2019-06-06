@@ -44,6 +44,7 @@ class Carte{
 
 	vector<int> data;
 	vector<Noeud> noeuds;
+	int argent;
 
 	protected:
 	int energie;
