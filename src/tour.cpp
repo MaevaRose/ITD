@@ -42,9 +42,6 @@ void Tour::afficherEtat() {
 
 
 bool Tour::aPortee(int x1, int y1){
-	//positionTour = width*3*(this->y_position-1)+this->x_position*3;
-	//positionMonstre =  width*3*(y-1)+x*3;
-	//printf("Est il à ma portée ?\n");
 	int x0 = this->x_position;
 	int y0 = this->y_position;
 	
@@ -70,21 +67,21 @@ bool Tour::aPortee(int x1, int y1){
 
 
 void Tour::attaquer(vector<PetitMonstre> &tabPetitMonstre, vector<MoyenMonstre> &tabMoyenMonstre, vector<GrosMonstre> &tabGrosMonstre) {
-	if (this->attaque == this->cadence) {
+	if (this->attaque == this->cadencePlus) {
 
 		for(int i=0; i<tabPetitMonstre.size(); i++) {
 			Monstre &cible = tabPetitMonstre[i]; 
 			//if (sqrt((((cible.getPositionX())-(this->x_position))*((cible.getPositionX())-(this->x_position)))+(((cible.getPositionY())-(this->y_position))*((cible.getPositionY())-(this->y_position))))) 
 			if (aPortee(cible.getPositionX(), cible.getPositionY())) {
-				cible.recevoirDegat(this->degats);
-				printf("petit monstre %d a : %d pv \n", i, cible.getVie());
+				cible.recevoirDegat(this->degatsPlus);
+				printf("petit monstre %d a : %d pv \n les dégâts étaient de %d et sont maintenant de %d", i, cible.getVie(), this->degats, this->degatsPlus);
 			}
 			
 		}
 		for(int i=0; i<tabMoyenMonstre.size(); i++) {
 			Monstre &cible = tabMoyenMonstre[i]; 
 			if (aPortee(cible.getPositionX(), cible.getPositionY())) {
-				cible.recevoirDegat(this->degats);
+				cible.recevoirDegat(this->degatsPlus);
 				printf("moyen monstre %d a: %d pv \n", i, cible.getVie());
 			}
 			
@@ -92,7 +89,7 @@ void Tour::attaquer(vector<PetitMonstre> &tabPetitMonstre, vector<MoyenMonstre> 
 		for(int i=0; i<tabGrosMonstre.size(); i++) {
 			Monstre &cible = tabGrosMonstre[i]; 
 			if (aPortee(cible.getPositionX(), cible.getPositionY())) {
-				cible.recevoirDegat(this->degats);
+				cible.recevoirDegat(this->degatsPlus);
 				printf("gros monstre %d a : %d pv \n", i, cible.getVie());
 			}
 		}
@@ -130,7 +127,7 @@ void Tour::augmenterPuissance(int pourcent) {
 
 
 void Tour::augmenterVitesse(int pourcent) {
-	this->cadencePlus = this->cadence + pourcent;
+	this->cadencePlus = this->cadence - pourcent;
 }
 
 
@@ -456,6 +453,12 @@ int clickOnTowers(int x, int y, Carte &carte){
 		}
 		if(carte.data[position+2] == 200){
 			return 5;
+		}
+		if(carte.data[position+2] == 220){
+			return 6;
+		}
+		if(carte.data[position+2] == 240){
+			return 7;
 		}
 	}
 	return -1;

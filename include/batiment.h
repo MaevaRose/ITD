@@ -75,6 +75,8 @@ class UsineArmement:public Batiment {
 
 	void poser(int x, int y, Carte &carte, vector<UsineArmement> &tabUsineArmement);
 
+	void augmenterTour(vector<TourBleue> &tabTourBleue, vector<TourJaune> &tabTourJaune, vector<TourRouge> &tabTourRouge, vector<TourVerte> &tabTourVerte);
+
 	void drawUsineArmement();
 	
 };
@@ -89,6 +91,8 @@ class StockMunition:public Batiment {
 	void ajouterCadence(int pourcent, Tour &tour);
 
 	void poser(int x, int y, Carte &carte, vector<StockMunition> &tabStockMunition);
+
+	void augmenterTour(vector<TourBleue> &tabTourBleue, vector<TourJaune> &tabTourJaune, vector<TourRouge> &tabTourRouge, vector<TourVerte> &tabTourVerte);
 
 	void drawStockMunition();
 	
@@ -121,3 +125,8 @@ void drawAllBatiments(vector<Radar> &tabRadar, vector<UsineArmement> &tabUsineAr
 
 void augmenteAllTours(vector<Radar> &tabRadar, vector<UsineArmement> &tabUsineArmement, vector<StockMunition> &tabStockMunition, vector<TourBleue> &tabTourBleue, vector<TourJaune> &tabTourJaune, vector<TourRouge> &tabTourRouge, vector<TourVerte> &tabTourVerte);
 
+int getRadar(int x, int y, vector<Radar> &tabRadar);
+
+int getUsineArmement(int x, int y, vector<UsineArmement> &tabUsineArmement);
+
+int getStockMunition(int x, int y, vector<StockMunition> &tabStockMunition);
