@@ -30,6 +30,10 @@ static const unsigned int BIT_PER_PIXEL = 32;
 /* Nombre minimal de millisecondes separant le rendu de deux images */
 static const Uint32 FRAMERATE_MILLISECONDS = 1000 / 60;
 
+
+
+
+
 void reshape(SDL_Surface** surface, unsigned int width, unsigned int height)
 {
     SDL_Surface* surface_temp = SDL_SetVideoMode(   
@@ -50,20 +54,8 @@ void reshape(SDL_Surface** surface, unsigned int width, unsigned int height)
     gluOrtho2D(-15, 15, -8.4, 8.4);
 }
 
-void drawCircle(float size, float x, float y){
-    
-    glBegin(GL_LINE_STRIP);
 
-    glColor3ub(0, 0, 0);
-
-    for ( float i = 0 ; i < 10 ; i=i+0.1){
-        glVertex2f(cos(i)*size, sin(i)*size);
-    }
-
-    glEnd();
-}
-
-void drawTourShape(int mousex, int mousey, Carte &carte, bool clicOnInterface, int select){
+void drawTourShape(int mousex, int mousey, Carte &carte){
     float x = (-1 + 2. * mousex / 1800.)*15.;
     float y = -(-1 + 2. * mousey / 1012.)*8.4;
 
@@ -75,8 +67,6 @@ void drawTourShape(int mousex, int mousey, Carte &carte, bool clicOnInterface, i
         glColor3ub(255, 0, 0);
     }
 
-    //glColor3ub(0, 0, 0);
-    
     glPushMatrix();
 
         glTranslatef(x, y, 0);
@@ -91,56 +81,11 @@ void drawTourShape(int mousex, int mousey, Carte &carte, bool clicOnInterface, i
 
     glEnd();
     glPopMatrix();
-    // int size = 0.6;
-    // bool isConstructible = false;
-    // float x = (-1 + 2. * mousex / 1800.)*15.;
-    // float y = -(-1 + 2. * mousey / 1012.)*8.4;
-    // glColor3ub(0, 0, 0);
-
-    // if(clicOnInterface){
-        
-    //     if(select<=4){
-    //         cout<<"je suis là maman"<<endl;
-    //         isConstructible = carte.isConstructible(mousex, mousey, 1800, 1012);
-    //         cout<<isConstructible<<endl;
-    //         size = 0.9;
-    //     }
-    //     else{
-    //         cout<<"et maintenant je suis là maman"<<endl;
-    //         isConstructible = carte.isConstructibleBatiment(mousex, mousey, 1800, 1012);
-    //         cout<<isConstructible<<endl;
-    //         size = 0.6;
-    //     }
-       
-        
-    //     if(isConstructible){
-    //         glColor3ub(0, 255, 0);
-    //     }
-    //     else{
-    //         glColor3ub(255, 0, 0);
-    //     }
-
-    //     //glColor3ub(0, 0, 0);
-        
-        
-    // }
-
-    // glPushMatrix();
-
-    //         glTranslatef(x, y, 0);
-
-    //         glBegin(GL_LINE_LOOP);
-            
-            
-    //         glVertex2f(-size, -size);
-    //         glVertex2f(-size, size);
-    //         glVertex2f(size, size);
-    //         glVertex2f(size, -size);
-
-    // glEnd();
-    // glPopMatrix();
-    
 }
+
+
+
+
 
 
 int main(int argc, char* argv[])
@@ -167,15 +112,25 @@ int main(int argc, char* argv[])
 
     //temps
     bool play = true;
-    //cout<<"horloge"<<CLOCKS_PER_SEC<<endl;
-    //double frame=1;
 
+
+    //quelques variables 
     int mousex=500;
     int mousey=500;
     int tourColor = 0;
     int temp_tour_select = -1;
-    //int indice_tour = -1;
+    int indice = 0;
+    int nbLoop=0;
+    int endGame = 0;
+    int arrive =0;
+    int frameIndex = 0;
+    int start = 0;
+    int end = 13;
 
+
+
+
+    //initialisation de la carte
     Carte carte;
     
     carte.verifITD(argv[1]);
@@ -183,12 +138,8 @@ int main(int argc, char* argv[])
     GLuint textCarte = carte.setCarte();
     carte.argent = 100;
 
-    //test sprite
-    Sprites testSprite(400, 400, 100, 100);
-    GLuint textTestSprite = setPNGTexture("./images/petitMonstre.png");
 
     // Création des tours
-
     TourBleue tourbleue;
     TourBleue select_blue;
     vector<TourBleue> tabTourBleue;
@@ -217,62 +168,33 @@ int main(int argc, char* argv[])
     StockMunition select_stomuni;
     vector<StockMunition> tabStockMunition;
 
+
+
     //Création des monstres
 
     vector<PetitMonstre> tabPetitMonstre;
     vector<MoyenMonstre> tabMoyenMonstre;
     vector<GrosMonstre> tabGrosMonstre;
 
-    // PetitMonstre monstre1;
-    // MoyenMonstre monstre2;
-    // GrosMonstre monstre3;
-
-    // monstre1.apparaitre(1625,725, tabPetitMonstre);
-    // monstre2.apparaitre(1625,725, tabMoyenMonstre);
-    // monstre3.apparaitre(1625, 725, tabGrosMonstre);
 
 
-
-
-    int indice = 0;
-    int nbLoop=0;
-    int endGame = 0;
-    int arrive =0;
-
-    
-
-    int frameIndex = 0;
-
-    //TEST DIJKSTRA
+    //Initialisations tableaux
 
     vector<Noeud> noeuds = carte.noeuds;
     vector<vector<int>> grapheNoeuds;
     vector<vector<int>> tabPoids;
     vector<vector<int>> posNoeuds;
     constructGraphes (noeuds, grapheNoeuds, tabPoids, posNoeuds);
-
     vector<vector<int>> tabVagues = creerTabVague();
-    
-
-    //printf("JE SUIS LA\n");
-    //vector<vector<int>> grapheNoeuds = creerGrapheTest2();
-    //printf("il y a %d noeuds et le premier noeud est %d\n", grapheNoeuds.size(), grapheNoeuds[0][0]);
-    //vector<vector<int>> tabPoids = creerTabTest2();
-    //printf("il y a %d poids et le deuxieme poids est %d\n", tabPoids.size(), tabPoids[0][0]);
-    int start = 0;
-    int end = 13;
-vector<vector<int>> creerTabVague() ;
-    // vector<int> chemin = calculCheminMonstre(grapheNoeuds, tabPoids, start, end);
-    // afficheChemin(chemin);
-
-    //vector<vector<int>> posNoeuds = creerPosNoeud();
-
+    vector<vector<int>> creerTabVague() ;
 
 
 
     /* Initialisation du titre de la fenetre */
     SDL_WM_SetCaption(WINDOW_TITLE, NULL);
   
+
+
     /* Boucle principale */
     int loop = 1;
     while(loop) 
@@ -284,20 +206,7 @@ vector<vector<int>> creerTabVague() ;
         Uint32 startTime;
         Uint32 time;
 
-        if(play){
-            startTime = SDL_GetTicks();
-            time = SDL_GetTicks()/1000;
-            frameIndex=SDL_GetTicks()/200;
-            augmenteAllTours(tabRadar, tabUsineArmement, tabStockMunition, tabTourBleue, tabTourJaune, tabTourRouge, tabTourVerte);
-            attaqueAllTower(tabTourBleue, tabTourJaune, tabTourRouge, tabTourVerte, tabPetitMonstre, tabMoyenMonstre, tabGrosMonstre);
-        //printf("j'ai attaqué sans pb\n");
-            tuerAllMonstre(carte, tabPetitMonstre, tabMoyenMonstre, tabGrosMonstre);
-            
-            creerVague(indice, tabVagues, time, nbLoop, start, end, posNoeuds, tabPetitMonstre, tabMoyenMonstre, tabGrosMonstre, grapheNoeuds, tabPoids);
-            // vector<vector<int>> tabVagues = creerTabVague();
-            // creerVague(indice, tabVagues, time, nbLoop, start, end, posNoeuds, tabPetitMonstre, tabMoyenMonstre, tabGrosMonstre, grapheNoeuds, tabPoids);
-        //printf("apres premier if play\n");
-        }
+
         // TEST FIN DU JEU
         if (arrive) {
             endGame = 2;
@@ -318,6 +227,8 @@ vector<vector<int>> creerTabVague() ;
             break;
         }
 
+
+
         if(play){
         startTime = SDL_GetTicks();
         time = SDL_GetTicks()/1000;
@@ -326,6 +237,7 @@ vector<vector<int>> creerTabVague() ;
         attaqueAllTower(tabTourBleue, tabTourJaune, tabTourRouge, tabTourVerte, tabPetitMonstre, tabMoyenMonstre, tabGrosMonstre);
         tuerAllMonstre(carte, tabPetitMonstre, tabMoyenMonstre, tabGrosMonstre);
         creerVague(indice, tabVagues, time, nbLoop, start, end, posNoeuds, tabPetitMonstre, tabMoyenMonstre, tabGrosMonstre, grapheNoeuds, tabPoids);
+        updateAllMonstre(tabPetitMonstre, tabMoyenMonstre, tabGrosMonstre, posNoeuds, arrive);
         }
         
         /* Placer ici le code de dessin */
@@ -333,36 +245,26 @@ vector<vector<int>> creerTabVague() ;
         glEnable(GL_BLEND);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-        
 
+        // Affichage des éléments
         carte.afficherCarte(textCarte, 15., 8.4);
-        //testSprite.drawSprite(textTestSprite, 0.9, -5, 5, frameIndex);
 
 
         drawAllTower(tabTourBleue, tabTourJaune, tabTourRouge, tabTourVerte, WINDOW_WIDTH, WINDOW_HEIGHT, frameIndex);
         drawAllBatiments(tabRadar, tabUsineArmement, tabStockMunition, frameIndex);
         attaqueAllTower(tabTourBleue, tabTourJaune, tabTourRouge, tabTourVerte, tabPetitMonstre, tabMoyenMonstre, tabGrosMonstre);
-        drawTourShape(mousex, mousey, carte, clicOnInterface, interface.select);        
-        //glColor3ub(0,0,0);
-        //writeString(0, 0,  "Je test loul");
-        //glColor3ub(255,255,255);
-        
-
-
-        if(play){
-            updateAllMonstre(tabPetitMonstre, tabMoyenMonstre, tabGrosMonstre, posNoeuds, arrive);
-        //printf("BOB\n");
-            
-        }
+        drawTourShape(mousex, mousey, carte);        
         drawAllMonstres(frameIndex, tabPetitMonstre, tabMoyenMonstre, tabGrosMonstre);
-
         interface.drawInterface(carte, tabTourBleue, tabTourJaune, tabTourRouge, tabTourVerte, tabRadar, tabUsineArmement, tabStockMunition);
+
 
         
         /* Echange du front et du back buffer : mise a jour de la fenetre */
         SDL_GL_SwapBuffers();
         glDisable(GL_BLEND);
         
+
+
         /* Boucle traitant les evenements */
         SDL_Event e;
         while(SDL_PollEvent(&e)) 

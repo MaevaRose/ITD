@@ -10,7 +10,7 @@ using namespace std;
 class Monstre {
 
 	public:
-	Monstre(int pv, float vit, int x_pos, int y_pos, int indice, Sprites spriteMonstre);
+	Monstre(int pv, float vit, int x_pos, int y_pos, uint indice, Sprites spriteMonstre);
 	
 	//méthodes
 
@@ -56,7 +56,7 @@ class Monstre {
 	int x_position;
 	int y_position;
 	vector<int> chemin;
-	int indiceChemin;
+	uint indiceChemin;
 
 	Sprites spriteMonstre;
 	GLuint textMonstre;

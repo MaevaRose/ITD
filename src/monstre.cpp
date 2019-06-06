@@ -8,7 +8,7 @@
 
 using namespace std;
 
-Monstre::Monstre(int pv, float vit, int x_pos, int y_pos, int indice, Sprites spriteMonstre) : pts_vie(pv), vitesse(vit), x_position(x_pos), y_position(y_pos), indiceChemin(indice), spriteMonstre(spriteMonstre) {};
+Monstre::Monstre(int pv, float vit, int x_pos, int y_pos, uint indice, Sprites spriteMonstre) : pts_vie(pv), vitesse(vit), x_position(x_pos), y_position(y_pos), indiceChemin(indice), spriteMonstre(spriteMonstre) {};
 
 PetitMonstre::PetitMonstre() : Monstre(100, 2., -1, -1, 0, spriteMonstre) {};
 MoyenMonstre::MoyenMonstre() : Monstre(250, 1., -1, -1, 0, spriteMonstre) {};
@@ -293,15 +293,15 @@ void tuerAllMonstre(Carte &carte, vector<PetitMonstre> &tabPetitMonstre, vector<
 
 void updateAllMonstre(vector<PetitMonstre> &tabPetitMonstre, vector<MoyenMonstre> &tabMoyenMonstre, vector<GrosMonstre> &tabGrosMonstre, vector<vector<int>> posNoeuds, int &arrive) {
 	//printf("update monstre begin\n");
-	for(int i=0; i<tabPetitMonstre.size(); i++) {
+	for(uint i=0; i<tabPetitMonstre.size(); i++) {
 		Monstre &cible = tabPetitMonstre[i]; 
 		cible.updatePos(cible.getChemin(), posNoeuds, arrive);
 	}
-	for(int i=0; i<tabMoyenMonstre.size(); i++) {
+	for(uint i=0; i<tabMoyenMonstre.size(); i++) {
 		Monstre &cible = tabMoyenMonstre[i]; 
 		cible.updatePos(cible.getChemin(), posNoeuds, arrive);
 	}
-	for(int i=0; i<tabGrosMonstre.size(); i++) {
+	for(uint i=0; i<tabGrosMonstre.size(); i++) {
 		Monstre &cible = tabGrosMonstre[i]; 
 		cible.updatePos(cible.getChemin(), posNoeuds, arrive);
 	}
