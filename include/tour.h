@@ -4,7 +4,7 @@
 
 
 #include "monstre.h"
-#include "carte.h"
+//#include "carte.h"
 //#include "../include/foncOpenGL.h"
 //#include "sprites.h"
 

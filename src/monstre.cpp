@@ -3,7 +3,7 @@
 #include <vector>
 //#include "../include/tableauMonstre.h"
 
-#include "../include/grapheNoeuds.h"
+//#include "../include/grapheNoeuds.h"
 #include "../include/monstre.h"
 
 using namespace std;
@@ -200,10 +200,11 @@ void addToTabPetitMonstre(vector<PetitMonstre> &tabMonstre,  PetitMonstre monstr
 }
  
 
-void popOfTabPetitMonstre(vector<PetitMonstre> &tabMonstre, vector<PetitMonstre>::iterator ptr) {
+void popOfTabPetitMonstre(Carte &carte, vector<PetitMonstre> &tabMonstre, vector<PetitMonstre>::iterator ptr) {
 	// printf("taille avant tuage %d\n", tabMonstre.size());
 	// printf("JE SUIS DANS TUER LE PETIT MONSTRE !!!\n");
 	tabMonstre.erase(ptr);
+	carte.argent += 2;
 	// printf("taille tab monstre : %d\n", tabMonstre.size());
 }
 
@@ -213,8 +214,9 @@ void addToTabMoyenMonstre(vector<MoyenMonstre> &tabMonstre,  MoyenMonstre monstr
 }
 
 
-void popOfTabMoyenMonstre(vector<MoyenMonstre> &tabMonstre, vector<MoyenMonstre>::iterator ptr) {
+void popOfTabMoyenMonstre(Carte &carte, vector<MoyenMonstre> &tabMonstre, vector<MoyenMonstre>::iterator ptr) {
 	tabMonstre.erase(ptr);
+	carte.argent += 5;
 }
 
 
@@ -223,12 +225,13 @@ void addToTabGrosMonstre(vector<GrosMonstre> &tabMonstre,  GrosMonstre monstre) 
 }
 
 
-void popOfTabGrosMonstre(vector<GrosMonstre> &tabMonstre, vector<GrosMonstre>::iterator ptr) {
+void popOfTabGrosMonstre(Carte &carte, vector<GrosMonstre> &tabMonstre, vector<GrosMonstre>::iterator ptr) {
 	tabMonstre.erase(ptr);
+	carte.argent += 10;	
 }
 
 
-void tuerAllMonstre(vector<PetitMonstre> &tabPetitMonstre, vector<MoyenMonstre> &tabMoyenMonstre, vector<GrosMonstre> &tabGrosMonstre) {
+void tuerAllMonstre(Carte &carte, vector<PetitMonstre> &tabPetitMonstre, vector<MoyenMonstre> &tabMoyenMonstre, vector<GrosMonstre> &tabGrosMonstre) {
 	int i = 0;
 	vector<PetitMonstre>::iterator iterator1;
 	//printf("taille petit monstres : %d\n", tabPetitMonstre.size());
@@ -239,7 +242,7 @@ void tuerAllMonstre(vector<PetitMonstre> &tabPetitMonstre, vector<MoyenMonstre> 
 			Monstre &cible = tabPetitMonstre[i]; 
 			if (!cible.estVivant()) {
 				//printf("je suis dans le if pour voir si il est mort\n");
-				popOfTabPetitMonstre(tabPetitMonstre, iterator1);
+				popOfTabPetitMonstre(carte, tabPetitMonstre, iterator1);
 				//printf("j'ai tué le petit monstre\n");
 				iterator1--;
 				i--;
@@ -253,7 +256,7 @@ void tuerAllMonstre(vector<PetitMonstre> &tabPetitMonstre, vector<MoyenMonstre> 
 		for(iterator2=tabMoyenMonstre.begin(); iterator2!=tabMoyenMonstre.end(); iterator2++) {
 			Monstre &cible = tabMoyenMonstre[i]; 
 			if (!cible.estVivant()) {
-				popOfTabMoyenMonstre(tabMoyenMonstre, iterator2);
+				popOfTabMoyenMonstre(carte, tabMoyenMonstre, iterator2);
 				iterator2--;
 				i--;
 			}
@@ -266,7 +269,7 @@ void tuerAllMonstre(vector<PetitMonstre> &tabPetitMonstre, vector<MoyenMonstre> 
 		for(iterator3=tabGrosMonstre.begin(); iterator3!=tabGrosMonstre.end(); iterator3++) {
 			Monstre &cible = tabGrosMonstre[i]; 
 			if (!cible.estVivant()) {
-				popOfTabGrosMonstre(tabGrosMonstre, iterator3);
+				popOfTabGrosMonstre(carte, tabGrosMonstre, iterator3);
 				iterator3--;
 				i--;
 			}
@@ -276,19 +279,19 @@ void tuerAllMonstre(vector<PetitMonstre> &tabPetitMonstre, vector<MoyenMonstre> 
 }
 
 
-void updateAllMonstre(vector<PetitMonstre> &tabPetitMonstre, vector<MoyenMonstre> &tabMoyenMonstre, vector<GrosMonstre> &tabGrosMonstre, vector<vector<int>> posNoeuds, int &finPartie) {
+void updateAllMonstre(vector<PetitMonstre> &tabPetitMonstre, vector<MoyenMonstre> &tabMoyenMonstre, vector<GrosMonstre> &tabGrosMonstre, vector<int> chemin, vector<vector<int>> posNoeuds, int &finPartie) {
 	//printf("update monstre begin\n");
 	for(int i=0; i<tabPetitMonstre.size(); i++) {
 		Monstre &cible = tabPetitMonstre[i]; 
-		cible.updatePos(cible.getChemin(), posNoeuds, finPartie);
+		cible.updatePos(chemin, posNoeuds, finPartie);
 	}
 	for(int i=0; i<tabMoyenMonstre.size(); i++) {
 		Monstre &cible = tabMoyenMonstre[i]; 
-		cible.updatePos(cible.getChemin(), posNoeuds, finPartie);
+		cible.updatePos(chemin, posNoeuds, finPartie);
 	}
 	for(int i=0; i<tabGrosMonstre.size(); i++) {
 		Monstre &cible = tabGrosMonstre[i]; 
-		cible.updatePos(cible.getChemin(), posNoeuds, finPartie);
+		cible.updatePos(chemin, posNoeuds, finPartie);
 	}
 }
 
@@ -301,7 +304,7 @@ void drawAllMonstres(int frameIndex, vector<PetitMonstre> &tabPetitMonstre, vect
 		monstre1.drawPetitMonstre(frameIndex);
 	}
 
-	size = tabPetitMonstre.size();
+	size = tabMoyenMonstre.size();
 	MoyenMonstre monstre2;
 	for (int i=0; i<size; i++) {
 		monstre2 = tabMoyenMonstre[i];

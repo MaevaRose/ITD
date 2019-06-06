@@ -3,6 +3,7 @@
 #include <vector>
 
 #include "../include/foncOpenGL.h"
+#include "../include/carte.h"
 
 using namespace std;
 
@@ -114,23 +115,23 @@ class MoyenMonstre:public Monstre {
 };
 
 
-void tuerAllMonstre(vector<PetitMonstre> &tabPetitMonstre, vector<MoyenMonstre> &tabMoyenMonstre, vector<GrosMonstre> &tabGrosMonstre);
+void tuerAllMonstre(Carte &carte, vector<PetitMonstre> &tabPetitMonstre, vector<MoyenMonstre> &tabMoyenMonstre, vector<GrosMonstre> &tabGrosMonstre);
 
-void updateAllMonstre(vector<PetitMonstre> &tabPetitMonstre, vector<MoyenMonstre> &tabMoyenMonstre, vector<GrosMonstre> &tabGrosMonstre, vector<vector<int>> posNoeuds, int &finPartie);
+void updateAllMonstre(vector<PetitMonstre> &tabPetitMonstre, vector<MoyenMonstre> &tabMoyenMonstre, vector<GrosMonstre> &tabGrosMonstre, vector<int> chemin, vector<vector<int>> posNoeuds, int &finPartie);
 
 void drawAllMonstres(vector<PetitMonstre> &tabPetitMonstre, vector<MoyenMonstre> &tabMoyenMonstre, vector<GrosMonstre> &tabGrosMonstre);
 
 void addToTabPetitMonstre(vector<PetitMonstre> &tabMonstre,  PetitMonstre monstre);
 
-void popOfTabPetitMonstre(vector<PetitMonstre> &tabMonstre, vector<PetitMonstre>::iterator ptr);
+void popOfTabPetitMonstre(Carte &carte, vector<PetitMonstre> &tabMonstre, vector<PetitMonstre>::iterator ptr);
 
 void addToTabMoyenMonstre(vector<MoyenMonstre> &tabMonstre,  MoyenMonstre monstre);
 
-void popOfTabMoyenMonstre(vector<MoyenMonstre> &tabMonstre, vector<MoyenMonstre>::iterator ptr);
+void popOfTabMoyenMonstre(Carte &carte, vector<MoyenMonstre> &tabMonstre, vector<MoyenMonstre>::iterator ptr);
 
 void addToTabGrosMonstre(vector<GrosMonstre> &tabMonstre,  GrosMonstre monstre);
 
-void popOfTabGrosMonstre(vector<GrosMonstre> &tabMonstre, vector<GrosMonstre>::iterator ptr);
+void popOfTabGrosMonstre(Carte &carte, vector<GrosMonstre> &tabMonstre, vector<GrosMonstre>::iterator ptr);
 
 void drawAllMonstres(int frameIndex, vector<PetitMonstre> &tabPetitMonstre, vector<MoyenMonstre> &tabMoyenMonstre, vector<GrosMonstre> &tabGrosMonstre);
 
