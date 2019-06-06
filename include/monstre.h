@@ -96,7 +96,7 @@ class GrosMonstre:public Monstre {
 
 	void apparaitre(int x, int y, vector<GrosMonstre> &tabMonstre);
 
-	void drawGrosMonstre();
+	void drawGrosMonstre(int frameIndex);
 };
 
 

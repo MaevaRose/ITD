@@ -38,8 +38,9 @@ void MoyenMonstre::apparaitre(int x, int y, vector<MoyenMonstre> &tabMonstre) {
 void GrosMonstre::apparaitre(int x, int y, vector<GrosMonstre> &tabMonstre) {
 	this->x_position = x;
 	this->y_position = y;
-	Sprites spriteMonstre(400, 400, 100, 100);
+	Sprites spriteMonstre(300, 300, 100, 100);
 	this->spriteMonstre = spriteMonstre;
+	this->textMonstre = setPNGTexture("./images/grosMonstre.png");
 	addToTabGrosMonstre(tabMonstre, *this);
 }
 
@@ -113,15 +114,19 @@ void MoyenMonstre::drawMoyenMonstre() {
 }
 
 
-void GrosMonstre::drawGrosMonstre() {
+void GrosMonstre::drawGrosMonstre(int frameIndex) {
 	float x = (-1 + 2 * this -> x_position / 1800.)*15;
 	float y = -(-1 + 2 * this -> y_position/ 1012.)*8.4;
 
-	glPushMatrix();
-		glTranslatef(x, y, 0);
-            glColor3ub(190,33,6);
-            drawCircle(0.1,1);
-    glPopMatrix();
+	// glPushMatrix();
+	// 	glTranslatef(x, y, 0);
+ //            glColor3ub(190,33,6);
+ //            drawCircle(0.1,1);
+ //    glPopMatrix();
+    glColor3ub(255,255,255);
+
+
+    this->spriteMonstre.drawSprite(this->textMonstre, 0.7, x, y, frameIndex);
 }
 
 
@@ -315,7 +320,7 @@ void drawAllMonstres(int frameIndex, vector<PetitMonstre> &tabPetitMonstre, vect
 	GrosMonstre monstre3;
 	for (int i=0; i<size; i++) {
 		monstre3 = tabGrosMonstre[i];
-		monstre3.drawGrosMonstre();
+		monstre3.drawGrosMonstre(frameIndex);
 	}
 
 }
