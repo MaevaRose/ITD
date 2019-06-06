@@ -148,13 +148,18 @@ void Monstre::updateIndice() {
 }
 
 
-void Monstre::updatePos(vector<int> chemin, vector<vector<int>> posNoeuds, int &finPartie) { 
+void Monstre::updatePos(vector<int> chemin, vector<vector<int>> posNoeuds, int &arrive) { 
 
 	int sens;
 	//printf("j'update la position\n");
 	//printf("positions avant update : x=%d, y=%d\n", this->x_position, this->y_position);
+	//printf("taille chemin = %d et indice = %d\n",  chemin.size(), this->indiceChemin);
+	if (this->indiceChemin == chemin.size()-1) {
+		arrive = 1;
+		//printf("arrive = %d\n", arrive);
+	}
 
-	if (posNoeuds[chemin[this->indiceChemin]][0] == posNoeuds[chemin[this->indiceChemin+1]][0]) {
+	else if (posNoeuds[chemin[this->indiceChemin]][0] == posNoeuds[chemin[this->indiceChemin+1]][0]) {
 		//printf("je suis dans if 1 \n");
 		if (posNoeuds[chemin[this->indiceChemin]][1] < posNoeuds[chemin[this->indiceChemin+1]][1]) {
 			sens = 1;
@@ -168,7 +173,7 @@ void Monstre::updatePos(vector<int> chemin, vector<vector<int>> posNoeuds, int &
 		}
 		else {
 			this->indiceChemin += 1;
-			printf("update indice y\n");
+			//printf("update indice y\n");
 		}
 	}
 
@@ -185,12 +190,10 @@ void Monstre::updatePos(vector<int> chemin, vector<vector<int>> posNoeuds, int &
 		}
 		else {
 			this->indiceChemin += 1;
-			printf("update indice x\n");
+			//printf("update indice x\n");
 		}
 	}
-	if (this->indiceChemin == chemin.size()) {
-		finPartie = 1;
-	}
+
 	//printf("positions apres update : x=%d, y=%d\n", this->x_position, this->y_position);
 }
 
@@ -284,19 +287,19 @@ void tuerAllMonstre(Carte &carte, vector<PetitMonstre> &tabPetitMonstre, vector<
 }
 
 
-void updateAllMonstre(vector<PetitMonstre> &tabPetitMonstre, vector<MoyenMonstre> &tabMoyenMonstre, vector<GrosMonstre> &tabGrosMonstre, vector<vector<int>> posNoeuds, int &finPartie) {
+void updateAllMonstre(vector<PetitMonstre> &tabPetitMonstre, vector<MoyenMonstre> &tabMoyenMonstre, vector<GrosMonstre> &tabGrosMonstre, vector<vector<int>> posNoeuds, int &arrive) {
 	//printf("update monstre begin\n");
 	for(int i=0; i<tabPetitMonstre.size(); i++) {
 		Monstre &cible = tabPetitMonstre[i]; 
-		cible.updatePos(cible.getChemin(), posNoeuds, finPartie);
+		cible.updatePos(cible.getChemin(), posNoeuds, arrive);
 	}
 	for(int i=0; i<tabMoyenMonstre.size(); i++) {
 		Monstre &cible = tabMoyenMonstre[i]; 
-		cible.updatePos(cible.getChemin(), posNoeuds, finPartie);
+		cible.updatePos(cible.getChemin(), posNoeuds, arrive);
 	}
 	for(int i=0; i<tabGrosMonstre.size(); i++) {
 		Monstre &cible = tabGrosMonstre[i]; 
-		cible.updatePos(cible.getChemin(), posNoeuds, finPartie);
+		cible.updatePos(cible.getChemin(), posNoeuds, arrive);
 	}
 }
 
@@ -333,13 +336,15 @@ vector<vector<int>> creerTabVague() {
 	tabVagues.push_back(vector<int>(1, 10));
 	tabVagues.push_back(vector<int>(1, 25));
 	tabVagues.push_back(vector<int>(1, 40));
-	tabVagues.push_back(vector<int>(1, 60));
-	tabVagues.push_back(vector<int>(1, 80));
-	tabVagues.push_back(vector<int>(1, 100));
-	tabVagues.push_back(vector<int>(1, 120));
-	tabVagues.push_back(vector<int>(1, 150));
-	tabVagues.push_back(vector<int>(1, 180));
-	tabVagues.push_back(vector<int>(1, 210));
+	// tabVagues.push_back(vector<int>(1, 60));
+	// tabVagues.push_back(vector<int>(1, 80));
+	// tabVagues.push_back(vector<int>(1, 100));
+	// tabVagues.push_back(vector<int>(1, 120));
+	// tabVagues.push_back(vector<int>(1, 150));
+	// tabVagues.push_back(vector<int>(1, 180));
+	// tabVagues.push_back(vector<int>(1, 210));
+	tabVagues.push_back(vector<int>(1, 1000000));
+
 
 	tabVagues[0].push_back(10);
 	tabVagues[0].push_back(0);
@@ -351,35 +356,63 @@ vector<vector<int>> creerTabVague() {
 
 	tabVagues[2].push_back(10);
 	tabVagues[2].push_back(10);
-	tabVagues[2].push_back(0);
+	tabVagues[2].push_back(5);
 
-	tabVagues[3].push_back(10);
-	tabVagues[3].push_back(0);
-	tabVagues[3].push_back(2);
+	// tabVagues[3].push_back(10);
+	// tabVagues[3].push_back(0);
+	// tabVagues[3].push_back(2);
 
-	tabVagues[4].push_back(10);
-	tabVagues[4].push_back(10);
-	tabVagues[4].push_back(5);
+	// tabVagues[4].push_back(10);
+	// tabVagues[4].push_back(10);
+	// tabVagues[4].push_back(5);
 
-	tabVagues[5].push_back(25);
-	tabVagues[5].push_back(0);
-	tabVagues[5].push_back(0);
+	// tabVagues[5].push_back(25);
+	// tabVagues[5].push_back(0);
+	// tabVagues[5].push_back(0);
 
-	tabVagues[6].push_back(0);
-	tabVagues[6].push_back(15);
-	tabVagues[6].push_back(1);
+	// tabVagues[6].push_back(0);
+	// tabVagues[6].push_back(15);
+	// tabVagues[6].push_back(1);
 
-	tabVagues[7].push_back(5);
-	tabVagues[7].push_back(0);
-	tabVagues[7].push_back(5);
+	// tabVagues[7].push_back(5);
+	// tabVagues[7].push_back(0);
+	// tabVagues[7].push_back(5);
 
-	tabVagues[8].push_back(10);
-	tabVagues[8].push_back(5);
-	tabVagues[8].push_back(3);
+	// tabVagues[8].push_back(10);
+	// tabVagues[8].push_back(5);
+	// tabVagues[8].push_back(3);
 
-	tabVagues[9].push_back(15);
-	tabVagues[9].push_back(8);
-	tabVagues[9].push_back(5);
+	// tabVagues[9].push_back(15);
+	// tabVagues[9].push_back(8);
+	// tabVagues[9].push_back(5);
+
+	//printf("J'ai finis de créer les vagues\n");
+	return tabVagues;
+}
+
+
+vector<vector<int>> creerTabVagueBis() {
+	
+	vector<vector<int>> tabVagues;
+
+	tabVagues.push_back(vector<int>(1, 10));
+	tabVagues.push_back(vector<int>(1, 25));
+	tabVagues.push_back(vector<int>(1, 40));
+	tabVagues.push_back(vector<int>(1, 1000000));
+
+
+	tabVagues[0].push_back(10);
+	tabVagues[0].push_back(0);
+	tabVagues[0].push_back(0);
+
+	tabVagues[1].push_back(10);
+	tabVagues[1].push_back(5);
+	tabVagues[1].push_back(0);
+
+	tabVagues[2].push_back(10);
+	tabVagues[2].push_back(10);
+	tabVagues[2].push_back(5);
+
 
 	//printf("J'ai finis de créer les vagues\n");
 	return tabVagues;
@@ -394,7 +427,7 @@ void creerVague(int &indice, vector<vector<int>> &tabVagues, int temps, int &nbL
 				monstre.pushChemin(grapheNoeuds, tabPoids, start, end);
 				monstre.apparaitre(posNoeuds[start][0], posNoeuds[start][1], tabPetitMonstre);
 				tabVagues[indice][1]--;
-				printf("nb de petits monstres dans la vague 1 : %d\n", tabVagues[indice][1]);
+				//printf("nb de petits monstres dans la vague 1 : %d\n", tabVagues[indice][1]);
 			}
 			else if (tabVagues[indice][2] != 0) {
 				MoyenMonstre monstre;
