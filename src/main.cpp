@@ -13,6 +13,7 @@
 
 //#include "../include/tour.h"
 #include "../include/interface.hpp"
+
 //#include "../include/grapheNoeuds.h"
 
 
@@ -156,6 +157,18 @@ int main(int argc, char* argv[])
     TourVerte select_verte;
     vector<TourVerte> tabTourVerte;
 
+    Radar radar;
+    Radar select_radar;
+    vector<Radar> tabRadar;
+
+    UsineArmement uarmement;
+    UsineArmement select_uarmement;
+    vector<UsineArmement> tabUsineArmement;
+
+    StockMunition stomuni;
+    StockMunition select_stomuni;
+    vector<StockMunition> tabStockMunition;
+
     //Création des monstres
 
     vector<PetitMonstre> tabPetitMonstre;
@@ -194,7 +207,7 @@ int main(int argc, char* argv[])
     //vector<vector<int>> tabPoids = creerTabTest2();
     printf("il y a %d poids et le deuxieme poids est %d\n", tabPoids.size(), tabPoids[0][0]);
     int start = 0;
-    int end = 3;
+    int end = 13;
 
     vector<int> chemin = calculCheminMonstre(grapheNoeuds, tabPoids, start, end);
     afficheChemin(chemin);
@@ -222,6 +235,7 @@ int main(int argc, char* argv[])
             startTime = SDL_GetTicks();
             time = SDL_GetTicks()/1000;
             frameIndex=SDL_GetTicks()/300;
+            augmenteAllTours(tabRadar, tabUsineArmement, tabStockMunition, tabTourBleue, tabTourJaune, tabTourRouge, tabTourVerte);
             attaqueAllTower(tabTourBleue, tabTourJaune, tabTourRouge, tabTourVerte, tabPetitMonstre, tabMoyenMonstre, tabGrosMonstre);
         //printf("j'ai attaqué sans pb\n");
             tuerAllMonstre(carte, tabPetitMonstre, tabMoyenMonstre, tabGrosMonstre);
@@ -244,6 +258,7 @@ int main(int argc, char* argv[])
 
 
         drawAllTower(tabTourBleue, tabTourJaune, tabTourRouge, tabTourVerte, WINDOW_WIDTH, WINDOW_HEIGHT, frameIndex);
+        drawAllBatiments(tabRadar, tabUsineArmement, tabStockMunition, frameIndex);
         attaqueAllTower(tabTourBleue, tabTourJaune, tabTourRouge, tabTourVerte, tabPetitMonstre, tabMoyenMonstre, tabGrosMonstre);
         drawTourShape(mousex, mousey, carte);        
         //glColor3ub(0,0,0);
@@ -324,6 +339,18 @@ int main(int argc, char* argv[])
                             }
                             if(interface.select==4){
                                 tourrouge.poser(mousex, mousey, carte, tabTourRouge, tabPoids, grapheNoeuds, posNoeuds);
+                                interface.select = 0;
+                            }
+                            if(interface.select==5){
+                                radar.poser(mousex, mousey, carte, tabRadar);
+                                interface.select = 0;
+                            }
+                            if(interface.select==6){
+                                uarmement.poser(mousex, mousey, carte, tabUsineArmement);
+                                interface.select = 0;
+                            }
+                            if(interface.select==7){
+                                stomuni.poser(mousex, mousey, carte, tabStockMunition);
                                 interface.select = 0;
                             }
                             

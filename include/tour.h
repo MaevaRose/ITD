@@ -4,6 +4,7 @@
 
 
 #include "monstre.h"
+
 //#include "carte.h"
 //#include "../include/foncOpenGL.h"
 //#include "sprites.h"
@@ -48,7 +49,7 @@ class Tour {
 
 	void augmenterVitesse(int pourcent);	//OK
 
-	void augmenterPortee(int pourcent);		//OK
+	void augmenterPortee(float pourcent);		//OK
 
 	bool aPortee(int x1, int y1);
 
@@ -67,6 +68,9 @@ class Tour {
 	int degats;
 	int cadence;
 	float portee;
+	int degatsPlus;
+	int cadencePlus;
+	float porteePlus;
 	int cout;
 	int level;
 	int x_position;

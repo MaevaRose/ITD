@@ -13,13 +13,15 @@ class Batiment   {
 
 
 
-	void poser(int x, int y, Carte &carte);				//OK
+	//void poser(int x, int y, Carte &carte);				//OK
 
 	void suprimer();						//OK
 
 	void ameliorer(int level);				//OK
 
 	void afficherEtat();					//OK
+
+	bool aPortee(int x1, int y1);
 
 	//void afficherHallo(int portee);					//OPENGL
 
@@ -54,6 +56,9 @@ class Radar:public Batiment {
 	Radar();
 
 	void ajouterPortee(int pourcent, Tour &tour);
+	void poser(int x, int y, Carte &carte, vector<Radar> &tabRadar);
+
+	void augmenterTour(vector<TourBleue> &tabTourBleue, vector<TourJaune> &tabTourJaune, vector<TourRouge> &tabTourRouge, vector<TourVerte> &tabTourVerte);
 
 	void drawRadar();
 
@@ -68,6 +73,8 @@ class UsineArmement:public Batiment {
 
 	void ajouterPuissance(int pourcent, Tour &tour);
 
+	void poser(int x, int y, Carte &carte, vector<UsineArmement> &tabUsineArmement);
+
 	void drawUsineArmement();
 	
 };
@@ -80,6 +87,8 @@ class StockMunition:public Batiment {
 	StockMunition();
 
 	void ajouterCadence(int pourcent, Tour &tour);
+
+	void poser(int x, int y, Carte &carte, vector<StockMunition> &tabStockMunition);
 
 	void drawStockMunition();
 	
@@ -100,12 +109,15 @@ class StockMunition:public Batiment {
 
 
 
-void addToTabRadar(vector<TourBleue> &tabTourBleue, TourBleue tour);
+void addToTabRadar(vector<Radar> &tabRadar, Radar radar);
 
-void addToTabUsine(vector<TourJaune> &tabTourJaune, TourJaune tour);
+void addToTabUsine(vector<UsineArmement> &tabUsineArmement, UsineArmement usine);
 
-void addToTabStock(vector<TourRouge> &tabTourRouge, TourRouge tour);
+void addToTabStock(vector<StockMunition> &tabStockMunition, StockMunition stock);
 
 void printTab(vector<TourBleue> &tabTourBleue);
 
-void drawAllBatiments(vector<TourBleue> &tabTourBleue, vector<TourJaune> &tabTourJaune, vector<TourRouge> &tabTourRouge, vector<TourVerte> &tabTourVerte, const unsigned int WINDOW_WIDTH, const unsigned int WINDOW_HEIGHT, int frameIndex );
+void drawAllBatiments(vector<Radar> &tabRadar, vector<UsineArmement> &tabUsineArmement, vector<StockMunition> &tabStockMunition, int frameIndex );
+
+void augmenteAllTours(vector<Radar> &tabRadar, vector<UsineArmement> &tabUsineArmement, vector<StockMunition> &tabStockMunition, vector<TourBleue> &tabTourBleue, vector<TourJaune> &tabTourJaune, vector<TourRouge> &tabTourRouge, vector<TourVerte> &tabTourVerte);
+

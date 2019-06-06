@@ -37,6 +37,7 @@ class Carte{
 	bool verifChemin(string const nomCarte);
 
 	bool isConstructible(int x, int y, int width, int height);
+	bool isConstructibleBatiment(int x, int y, int width, int height);
 	bool isChemin(int x, int y, int width);
 	bool isIn(int x, int y, int width);
 	bool isOut(int x, int y, int width);

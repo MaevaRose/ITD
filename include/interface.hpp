@@ -10,7 +10,7 @@
 #include <math.h>
 #include <string>
 
-#include "../include/tour.h"
+#include "../include/batiment.h"
 
 using namespace std;
 

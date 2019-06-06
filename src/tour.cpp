@@ -48,12 +48,22 @@ bool Tour::aPortee(int x1, int y1){
 	int x0 = this->x_position;
 	int y0 = this->y_position;
 	
-
-	if(sqrt((x1-x0)*(x1-x0)+(y1-y0)*(y1-y0)) < this->portee){
-		printf("Il est à une distance de %f\n", sqrt((x1-x0)*(x1-x0)+(y1-y0)*(y1-y0)));
-		printf("La portée est de %f\n donc je peux lui tirer dessus", this->portee);
-		return true;
+	if(this->porteePlus > this->portee){
+		if(sqrt((x1-x0)*(x1-x0)+(y1-y0)*(y1-y0)) < this->porteePlus){
+			printf("Il est à une distance de %f\n", sqrt((x1-x0)*(x1-x0)+(y1-y0)*(y1-y0)));
+			printf("La portée est de %f\n donc je peux lui tirer dessus", this->porteePlus);
+			return true;
+		}
 	}
+	else{
+		if(sqrt((x1-x0)*(x1-x0)+(y1-y0)*(y1-y0)) < this->portee){
+			printf("Il est à une distance de %f\n", sqrt((x1-x0)*(x1-x0)+(y1-y0)*(y1-y0)));
+			printf("La portée est de %f\n donc je peux lui tirer dessus", this->portee);
+			return true;
+		}
+	}
+
+	
 
 	return false;
 }
@@ -115,17 +125,17 @@ int Tour::getNiveau(){
 
 
 void Tour::augmenterPuissance(int pourcent) {
-	this->degats += this->degats*(pourcent/100);
+	this->degatsPlus = this->degats + pourcent;
 }
 
 
 void Tour::augmenterVitesse(int pourcent) {
-	this->cadence += this->cadence*(pourcent/100);
+	this->cadencePlus = this->cadence + pourcent;
 }
 
 
-void Tour::augmenterPortee(int pourcent) {
-	this->portee += this->portee*(pourcent/100);
+void Tour::augmenterPortee(float pourcent) {
+	this->porteePlus = this->portee + pourcent;
 }
 
 
@@ -136,6 +146,11 @@ void TourBleue::poser(int x, int y, Carte &carte, vector<TourBleue> &tabTourBleu
 		this->x_position = x;
 		this->y_position = y;
 		carte.argent -= this->cout;
+
+		this->degatsPlus = this->degats;
+		this->cadencePlus = this->cadence;
+		this->porteePlus = this->portee;
+		this->level = 1;
 
 
 		//changer le ppm pour rendre la zone plus constructible
@@ -158,7 +173,9 @@ void TourBleue::draw(const unsigned int WINDOW_WIDTH, const unsigned int WINDOW_
 
 	float x = (-1 + 2. * this->x_position / 1800.)*15.;
 	float y = -(-1 + 2. * this->y_position / 1012.)*8.4;
-	float portee = (this->portee * 16.8) / 1012.;
+
+		float portee = (this->porteePlus * 16.8) / 1012.;
+
 
 	glPushMatrix();
 	
@@ -183,6 +200,10 @@ void TourJaune::poser(int x, int y, Carte &carte, vector<TourJaune> &tabTourJaun
 		this->x_position = x;
 		this->y_position = y;
 		carte.argent -= this->cout;
+
+		this->degatsPlus = this->degats;
+		this->cadencePlus = this->cadence;
+		this->porteePlus = this->portee;
 
 		for(int i = y-60 ; i < y+60 ; i++){
 			for(int j = x-60; j < x+60 ; j++){
@@ -230,6 +251,10 @@ void TourRouge::poser(int x, int y, Carte &carte, vector<TourRouge> &tabTourRoug
 		this->y_position = y;
 		carte.argent -= this->cout;
 
+		this->degatsPlus = this->degats;
+		this->cadencePlus = this->cadence;
+		this->porteePlus = this->portee;
+
 		for(int i = y-60 ; i < y+60 ; i++){
 			for(int j = x-60; j < x+60 ; j++){
 				int position = width*3*(i-1)+j*3;
@@ -269,6 +294,10 @@ void TourVerte::poser(int x, int y, Carte &carte, vector<TourVerte> &tabTourVert
 		this->x_position = x;
 		this->y_position = y;
 		carte.argent -= this->cout;
+
+		this->degatsPlus = this->degats;
+		this->cadencePlus = this->cadence;
+		this->porteePlus = this->portee;
 
 		for(int i = y-60 ; i < y+60 ; i++){
 			for(int j = x-60; j < x+60 ; j++){

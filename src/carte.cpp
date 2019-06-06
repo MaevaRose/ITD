@@ -64,6 +64,43 @@ bool Carte::isConstructible(int x, int y, int width, int height){
 		int coin2 = width*3*((y-50)-1)+(x+50)*3;
 		int coin3 = width*3*((y-50)-1)+(x-50)*3;
 		int coin4 = width*3*((y+50)-1)+(x+50)*3;
+
+		int demi1 = width*3*((y)-1)+(x-50)*3;
+		int demi2 = width*3*((y)-1)+(x+50)*3;
+		int demi3 = width*3*((y-50)-1)+(x)*3;
+		int demi4 = width*3*((y+50)-1)+(x)*3;
+
+		for(int i=0; i<3; i++){
+			if(this->data[position+i+1]!=this->constructColor[i] || 
+				this->data[coin1+i+1]!=this->constructColor[i] ||
+				this->data[coin2+i+1]!=this->constructColor[i] ||
+				this->data[coin3+i+1]!=this->constructColor[i] ||
+				this->data[coin4+i+1]!=this->constructColor[i] || 
+				this->data[demi1+i+1]!=this->constructColor[i] ||
+				this->data[demi2+i+1]!=this->constructColor[i] ||
+				this->data[demi3+i+1]!=this->constructColor[i] ||
+				this->data[demi4+i+1]!=this->constructColor[i]){
+					//cout<<"Cette zone n'est pas constructible"<<endl;
+					return false;
+			}
+		}
+		//cout<<"Cette zone est constructible"<<endl;
+		return true;
+	}
+	
+}
+
+bool Carte::isConstructibleBatiment(int x, int y, int width, int height){
+	if (x<30 || y<30 || x+30>width || y+30>height){
+		//printf("Hors carte !\n");
+		return false;
+	}
+	else{
+		int position = width*3*(y-1)+x*3;
+		int coin1 = width*3*((y+30)-1)+(x-30)*3;
+		int coin2 = width*3*((y-30)-1)+(x+30)*3;
+		int coin3 = width*3*((y-30)-1)+(x-30)*3;
+		int coin4 = width*3*((y+30)-1)+(x+30)*3;
 		for(int i=0; i<3; i++){
 			if(this->data[position+i+1]!=this->constructColor[i] || 
 				this->data[coin1+i+1]!=this->constructColor[i] ||
