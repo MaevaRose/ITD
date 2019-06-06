@@ -315,15 +315,15 @@ int main(int argc, char* argv[])
                                 interface.select = 0;
                             }
                             if(interface.select==2){
-                                tourverte.poser(mousex, mousey, carte, tabTourVerte);
+                                tourverte.poser(mousex, mousey, carte, tabTourVerte, tabPoids, grapheNoeuds, posNoeuds);
                                 interface.select = 0;
                             }
                             if(interface.select==3){
-                                tourjaune.poser(mousex, mousey, carte, tabTourJaune);
+                                tourjaune.poser(mousex, mousey, carte, tabTourJaune, tabPoids, grapheNoeuds, posNoeuds);
                                 interface.select = 0;
                             }
                             if(interface.select==4){
-                                tourrouge.poser(mousex, mousey, carte, tabTourRouge);
+                                tourrouge.poser(mousex, mousey, carte, tabTourRouge, tabPoids, grapheNoeuds, posNoeuds);
                                 interface.select = 0;
                             }
                             

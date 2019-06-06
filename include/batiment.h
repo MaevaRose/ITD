@@ -48,11 +48,14 @@ class Batiment   {
 class Radar:public Batiment {
 
 	void typeBatiment() {  return;  }
-
-	void ajouterPortee(int pourcent, Tour &tour);
+	
 
 	public :
 	Radar();
+
+	void ajouterPortee(int pourcent, Tour &tour);
+
+	void drawRadar();
 
 };
 
@@ -60,10 +63,12 @@ class UsineArmement:public Batiment {
 
 	void typeBatiment() {  return;  }
 
-	void ajouterPuissance(int pourcent, Tour &tour);
-
 	public :
 	UsineArmement();
+
+	void ajouterPuissance(int pourcent, Tour &tour);
+
+	void drawUsineArmement();
 	
 };
 
@@ -71,10 +76,12 @@ class StockMunition:public Batiment {
 
 	void typeBatiment() {  return;  }
 
-	void ajouterCadence(int pourcent, Tour &tour);
-
 	public :
 	StockMunition();
+
+	void ajouterCadence(int pourcent, Tour &tour);
+
+	void drawStockMunition();
 	
 };
 
@@ -90,3 +97,15 @@ class StockMunition:public Batiment {
 	Centrale();
 	
 }*/
+
+
+
+void addToTabRadar(vector<TourBleue> &tabTourBleue, TourBleue tour);
+
+void addToTabUsine(vector<TourJaune> &tabTourJaune, TourJaune tour);
+
+void addToTabStock(vector<TourRouge> &tabTourRouge, TourRouge tour);
+
+void printTab(vector<TourBleue> &tabTourBleue);
+
+void drawAllBatiments(vector<TourBleue> &tabTourBleue, vector<TourJaune> &tabTourJaune, vector<TourRouge> &tabTourRouge, vector<TourVerte> &tabTourVerte, const unsigned int WINDOW_WIDTH, const unsigned int WINDOW_HEIGHT, int frameIndex );

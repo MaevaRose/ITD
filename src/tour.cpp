@@ -147,7 +147,7 @@ void TourBleue::poser(int x, int y, Carte &carte, vector<TourBleue> &tabTourBleu
 			}
 		}
 
-		ajoutePoidsChemin(this->portee, this->x_position, this->y_position, 20, tabPoids, grapheNoeud, posNoeuds);
+		ajoutePoidsChemin(this->portee, this->x_position, this->y_position, 30, tabPoids, grapheNoeud, posNoeuds);
 
 		addToTabBlueTower(tabTourBleue, *this);
 	}
@@ -177,7 +177,7 @@ void TourBleue::draw(const unsigned int WINDOW_WIDTH, const unsigned int WINDOW_
 }
 
 
-void TourJaune::poser(int x, int y, Carte &carte, vector<TourJaune> &tabTourJaune) {
+void TourJaune::poser(int x, int y, Carte &carte, vector<TourJaune> &tabTourJaune, vector<vector<int>> &tabPoids, vector<vector<int>> &grapheNoeud, vector<vector<int>> &posNoeuds) {
 	bool isConstructible = carte.isConstructible(x, y, 1800, 1012);
 	if(isConstructible  && carte.argent>=this->cout){
 		this->x_position = x;
@@ -191,6 +191,8 @@ void TourJaune::poser(int x, int y, Carte &carte, vector<TourJaune> &tabTourJaun
 				carte.data[position+2]=100;
 			}
 		}
+
+		ajoutePoidsChemin(this->portee, this->x_position, this->y_position, 20, tabPoids, grapheNoeud, posNoeuds);
 
 		addToTabYellowTower(tabTourJaune, *this);
 	}	
@@ -221,7 +223,7 @@ void TourJaune::draw(const unsigned int WINDOW_WIDTH, const unsigned int WINDOW_
 }
 
 
-void TourRouge::poser(int x, int y, Carte &carte, vector<TourRouge> &tabTourRouge) {
+void TourRouge::poser(int x, int y, Carte &carte, vector<TourRouge> &tabTourRouge, vector<vector<int>> &tabPoids, vector<vector<int>> &grapheNoeud, vector<vector<int>> &posNoeuds) {
 	bool isConstructible = carte.isConstructible(x, y, 1800, 1012);
 	if(isConstructible  && carte.argent>=this->cout){
 		this->x_position = x;
@@ -235,6 +237,8 @@ void TourRouge::poser(int x, int y, Carte &carte, vector<TourRouge> &tabTourRoug
 				carte.data[position+2]=150;
 			}
 		}
+
+		ajoutePoidsChemin(this->portee, this->x_position, this->y_position, 50, tabPoids, grapheNoeud, posNoeuds);
 
 		addToTabRedTower(tabTourRouge, *this);
 	}
@@ -259,7 +263,7 @@ void TourRouge::draw(const unsigned int WINDOW_WIDTH, const unsigned int WINDOW_
 }
 
 
-void TourVerte::poser(int x, int y, Carte &carte, vector<TourVerte> &tabTourVerte) {
+void TourVerte::poser(int x, int y, Carte &carte, vector<TourVerte> &tabTourVerte, vector<vector<int>> &tabPoids, vector<vector<int>> &grapheNoeud, vector<vector<int>> &posNoeuds) {
 	bool isConstructible = carte.isConstructible(x, y, 1800, 1012);
 	if(isConstructible  && carte.argent>=this->cout){
 		this->x_position = x;
@@ -273,6 +277,8 @@ void TourVerte::poser(int x, int y, Carte &carte, vector<TourVerte> &tabTourVert
 				carte.data[position+2]=50;
 			}
 		}
+
+		ajoutePoidsChemin(this->portee, this->x_position, this->y_position, 40, tabPoids, grapheNoeud, posNoeuds);
 
 		addToTabGreenTower(tabTourVerte, *this);
 	}	

@@ -2,7 +2,7 @@ CC     = g++
 CFLAGS = -Wall -Wextra -O2 -Wno-unused-result -g
 LDFLAGS	= -lSDL -lSDL_image -lGLU -lGL -lglut -lm
 LIB    = -lm
-OBJ    = main.o monstre.o tour.o carte.o foncOpenGL.o interface.o noeud.o chemin.o grapheNoeuds.o
+OBJ    = main.o monstre.o tour.o carte.o foncOpenGL.o interface.o noeud.o chemin.o grapheNoeuds.o batiment.o
 RM     = rm -f
 BIN    = ./bin/itd
 DIRNAME = $(shell basename $$PWD)
@@ -50,15 +50,10 @@ tour.o : src/tour.cpp include/tour.h
 	$(CC) $(CFLAGS) -c $<  
 	@echo "done..."
 
-# tableauTour.o : src/tableauTour.cpp include/tableauTour.h
-# 	@echo "compile tableauTour"
-# 	$(CC) $(CFLAGS) -c $<  
-# 	@echo "done..."
-
-#batiment.o : batiment.cpp batiment.h
-#	@echo "compile batiment"
-#	$(CC) $(CFLAGS) -c $<  
-#	@echo "done..."
+batiment.o : src/batiment.cpp include/batiment.h
+	@echo "compile batiment"
+	$(CC) $(CFLAGS) -c $<  
+	@echo "done..."
 
 carte.o : src/carte.cpp include/carte.h
 	@echo "compile carte"
