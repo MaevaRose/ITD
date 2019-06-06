@@ -89,20 +89,20 @@ void Interface::clicOnMenuHaut( Carte &carte, vector<TourBleue> &tabTourBleue, v
 
 	if(y>= 170 && y<= 230 && x>=1670 && x<= 1730){
 		if(this->tour_select == 1){
-	        tabTourBleue[indice_tour].ameliorer();
+	        tabTourBleue[indice_tour].ameliorer(carte);
 			
 
 	    }
 	    if(this->tour_select == 2){
-	    	tabTourVerte[indice_tour].ameliorer();
+	    	tabTourVerte[indice_tour].ameliorer(carte);
 			
 	    }
 	    if(this->tour_select == 3){
-	        tabTourJaune[indice_tour].ameliorer();
+	        tabTourJaune[indice_tour].ameliorer(carte);
 			
 	   	}
 	    if(this->tour_select == 4){
-	       tabTourRouge[indice_tour].ameliorer();
+	       tabTourRouge[indice_tour].ameliorer(carte);
 			
 	    }
 	}

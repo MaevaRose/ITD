@@ -26,7 +26,7 @@ class Tour {
 
 	void supprimer();						//OK
 
-	void ameliorer();				//OK
+	void ameliorer(Carte &carte);				//OK
 
 	void afficherEtat();					//OK
 

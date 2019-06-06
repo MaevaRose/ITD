@@ -24,11 +24,12 @@ int width = 1800;
 // }
 
 
-void Tour::ameliorer() {
-	if(this->level<5){
+void Tour::ameliorer(Carte &carte) {
+	if(this->level<5 && this->cout/2<=carte.argent){
 		this->level += 1;
 		this->portee += 10;
 		this->degats += 10;
+		carte.argent -= this->cout/2;
 	}
 	//this->cadence -= 10;
 }
@@ -501,6 +502,8 @@ void TourBleue::supprimer(vector<TourBleue> &tabTourBleue, int indice_tour,  Car
 	int x = this->x_position;
 	int y = this->y_position;
 
+	carte.argent+=8;
+
 	for(int i = y-60 ; i < y+60 ; i++){
 		for(int j = x-60; j < x+60 ; j++){
 			int position = width*3*(i-1)+j*3;
@@ -522,6 +525,8 @@ void TourJaune::supprimer(vector<TourJaune> &tabTourJaune, int indice_tour,  Car
 
 	int x = this->x_position;
 	int y = this->y_position;
+
+	carte.argent+=4;
 
 	for(int i = y-60 ; i < y+60 ; i++){
 		for(int j = x-60; j < x+60 ; j++){
@@ -545,6 +550,8 @@ void TourRouge::supprimer(vector<TourRouge> &tabTourRouge, int indice_tour,  Car
 	int x = this->x_position;
 	int y = this->y_position;
 
+	carte.argent+=16;
+
 	for(int i = y-60 ; i < y+60 ; i++){
 		for(int j = x-60; j < x+60 ; j++){
 			int position = width*3*(i-1)+j*3;
@@ -566,6 +573,8 @@ void TourVerte::supprimer(vector<TourVerte> &tabTourVerte, int indice_tour,  Car
 
 	int x = this->x_position;
 	int y = this->y_position;
+
+	carte.argent+=12;
 
 	for(int i = y-60 ; i < y+60 ; i++){
 		for(int j = x-60; j < x+60 ; j++){
