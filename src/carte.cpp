@@ -9,13 +9,18 @@
 #include "../include/foncOpenGL.h"
 
 using namespace std;
-static const char CARTE[] = "./images/niveau2.ppm";
-static const string STRING_CARTE = "./images/niveau2.ppm";
+// static const char CARTE[] = "./images/niveau2.ppm";
+// static const string STRING_CARTE = "./images/niveau2.ppm";
 
 Carte::Carte(){};
 
 GLuint Carte::setCarte(){
-	GLuint texture = setTexture(CARTE); 
+	string a = string(this->nomCarte);
+	string b = "./images/";
+	string cheminCarte = b+a;
+	const char* charcheminCarte = cheminCarte.data();
+	cout<<charcheminCarte<<endl;
+	GLuint texture = setTexture(charcheminCarte); 
 	return texture;
 }
 
@@ -81,8 +86,13 @@ void Carte::setDataCarte(){
 	string mot;
 	int nb;
 
+
+	string a = string(this->nomCarte);
+	string b = "./images/";
+	string cheminCarte = b+a;
+	cout<<cheminCarte<<endl;
 	//j'ouvre le fichier ppm
-	string const nomCarteppm("./images/niveau2.ppm");
+	string const nomCarteppm(cheminCarte);
 	ifstream carteppm(nomCarteppm.c_str(), ios::in);
 
 	if(!carteppm){cout<<"Non la carte ppm s'ouvre pas loul"<<endl;}
@@ -125,15 +135,23 @@ void Carte::returnColor(int x, int y, int width){
 }
 
 
-bool Carte::verifITD(){
+bool Carte::verifITD(char* argv){
 
 	// on ouvre le fichier .itd
-	string const nomCarte("./data/carte2.itd");
+	string nomITD = string(argv);
+	string cheminITD = "./data/";
+	string ITD = cheminITD+nomITD;
+	cout<<ITD<<endl;
+
+
+
+	string const nomCarte(ITD);
 	ifstream carte(nomCarte.c_str());
 
 	//pour chaque partie de la carte, on returne si c'est bon ou non
 	bool header=verifHeader(nomCarte);
 	bool carteOk=verifCarte(nomCarte);
+	setDataCarte();
 	bool energie=verifEnergie(nomCarte);
 	bool chemin=verifCouleurs(nomCarte, "chemin", this->cheminColor);
 	bool noeud=verifCouleurs(nomCarte, "noeud", this->noeudColor);
@@ -194,7 +212,12 @@ bool Carte::verifCarte(string const nomCarte){
 
 	while(getline(carte, ligne)){
 		carte>>mot;
-    	if(mot=="carte") { carte.close();return true;}
+    	if(mot=="carte") { 
+    		carte.seekg(1, ios::cur);
+    		carte>>mot;
+    		this->nomCarte = mot;
+    		carte.close();
+    		return true;}
 	}
 	carte.close();
 	return false;

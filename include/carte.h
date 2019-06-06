@@ -22,7 +22,7 @@ class Carte{
 
 	void returnColor(int x, int y, int width);
 
-	bool verifITD();
+	bool verifITD(char* argv);
 
 	bool verifHeader(string const nomCarte);
 
@@ -55,6 +55,7 @@ class Carte{
 	int constructColor[3];
 	int outColor[3];
 	int inColor[3];
+	string nomCarte;
 
 };
 

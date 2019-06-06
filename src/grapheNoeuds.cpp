@@ -242,6 +242,7 @@ int meilleurChemin(vector<vector<int>> &grapheNoeuds, vector<vector<int>> tabPoi
 	for (int i=1; i<grapheNoeuds[idNoeud].size(); i++) {
 		if (grapheNoeuds[idNoeud][i] == end) {
 			indice = i;
+
 			return grapheNoeuds[idNoeud][indice];
 		}
 
@@ -257,6 +258,7 @@ int meilleurChemin(vector<vector<int>> &grapheNoeuds, vector<vector<int>> tabPoi
 		return indice;
 	}
 	else {
+		printf("hello theeeeeeeeeere\n");
 		//printf("Le meilleur choix est %d\n", grapheNoeuds[idNoeud][indice]);
 		return grapheNoeuds[idNoeud][indice];
 	}
@@ -307,6 +309,7 @@ vector<int> calculCheminMonstre (vector<vector<int>> &grapheNoeuds, vector<vecto
 			}
 		}
 	}
+
 	return chemin;
 }
 

@@ -127,8 +127,9 @@ int main(int argc, char* argv[])
     //int indice_tour = -1;
 
     Carte carte;
-    carte.setDataCarte();
-    carte.verifITD();
+    
+    carte.verifITD(argv[1]);
+
     GLuint textCarte = carte.setCarte();
     carte.argent = 100;
 
@@ -193,7 +194,7 @@ int main(int argc, char* argv[])
     //vector<vector<int>> tabPoids = creerTabTest2();
     printf("il y a %d poids et le deuxieme poids est %d\n", tabPoids.size(), tabPoids[0][0]);
     int start = 0;
-    int end = 13;
+    int end = 3;
 
     vector<int> chemin = calculCheminMonstre(grapheNoeuds, tabPoids, start, end);
     afficheChemin(chemin);
