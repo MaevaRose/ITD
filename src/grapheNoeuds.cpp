@@ -254,7 +254,7 @@ int meilleurChemin(vector<vector<int>> &grapheNoeuds, vector<vector<int>> tabPoi
 		}
 
 		else if ((tabPoids[idNoeud][i] < min) && (utilise[grapheNoeuds[idNoeud][i]] == 0)) {
-			printf("je suis dans le if\n");
+			//printf("je suis dans le if\n");
 			min = tabPoids[idNoeud][i];
 			indice = i;
 		}
@@ -265,7 +265,7 @@ int meilleurChemin(vector<vector<int>> &grapheNoeuds, vector<vector<int>> tabPoi
 		return indice;
 	}
 	else {
-		printf("hello theeeeeeeeeere\n");
+		//printf("hello theeeeeeeeeere\n");
 		//printf("Le meilleur choix est %d\n", grapheNoeuds[idNoeud][indice]);
 		return grapheNoeuds[idNoeud][indice];
 	}
@@ -274,7 +274,7 @@ int meilleurChemin(vector<vector<int>> &grapheNoeuds, vector<vector<int>> tabPoi
 
 vector<int> calculCheminMonstre (vector<vector<int>> &grapheNoeuds, vector<vector<int>> &tabPoids, int start, int end) {
 	
-	printf("je commence le calcul.\n");
+	//printf("je commence le calcul.\n");
 	vector<int> utilise (grapheNoeuds.size(), 0);
 	utilise[start] = 1;
 	vector<int> chemin (1, start);
@@ -296,7 +296,7 @@ vector<int> calculCheminMonstre (vector<vector<int>> &grapheNoeuds, vector<vecto
 				chemin.push_back(grapheNoeuds[i][0]);
 				utilise[grapheNoeuds[i][0]] = 1;
 				i=grapheNoeuds[i][0];
-				printf("il n'y avait ici qu'une possibilité\n");
+				//printf("il n'y avait ici qu'une possibilité\n");
 			}
 		}
 		else {
@@ -316,7 +316,8 @@ vector<int> calculCheminMonstre (vector<vector<int>> &grapheNoeuds, vector<vecto
 			}
 		}
 	}
-
+	afficheChemin(chemin);
+	printf("\n\n\n");
 	return chemin;
 }
 

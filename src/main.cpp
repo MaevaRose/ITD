@@ -188,7 +188,6 @@ int main(int argc, char* argv[])
     GLuint textTestSprite = setPNGTexture("./images/petitMonstre.png");
 
     // Création des tours
-    int finPartie = 0;
 
     TourBleue tourbleue;
     TourBleue select_blue;
@@ -237,6 +236,8 @@ int main(int argc, char* argv[])
 
     int indice = 0;
     int nbLoop=0;
+    int endGame = 0;
+    int arrive =0;
 
     
 
@@ -255,9 +256,9 @@ int main(int argc, char* argv[])
 
     //printf("JE SUIS LA\n");
     //vector<vector<int>> grapheNoeuds = creerGrapheTest2();
-    printf("il y a %d noeuds et le premier noeud est %d\n", grapheNoeuds.size(), grapheNoeuds[0][0]);
+    //printf("il y a %d noeuds et le premier noeud est %d\n", grapheNoeuds.size(), grapheNoeuds[0][0]);
     //vector<vector<int>> tabPoids = creerTabTest2();
-    printf("il y a %d poids et le deuxieme poids est %d\n", tabPoids.size(), tabPoids[0][0]);
+    //printf("il y a %d poids et le deuxieme poids est %d\n", tabPoids.size(), tabPoids[0][0]);
     int start = 0;
     int end = 13;
 vector<vector<int>> creerTabVague() ;
@@ -279,7 +280,7 @@ vector<vector<int>> creerTabVague() ;
         /* Recuperation du temps au debut de la boucle */
         //Uint32 startTime = SDL_GetTicks();
 
-        
+
         Uint32 startTime;
         Uint32 time;
 
@@ -297,7 +298,35 @@ vector<vector<int>> creerTabVague() ;
             // creerVague(indice, tabVagues, time, nbLoop, start, end, posNoeuds, tabPetitMonstre, tabMoyenMonstre, tabGrosMonstre, grapheNoeuds, tabPoids);
         //printf("apres premier if play\n");
         }
+        // TEST FIN DU JEU
+        if (arrive) {
+            endGame = 2;
+        }
+        if (indice == tabVagues.size()-1) {
+            if ((tabPetitMonstre.size() == 0) && (tabMoyenMonstre.size() == 0) && (tabGrosMonstre.size() == 0)) {
+                endGame = 1;
+            }
+        }
+        if  (endGame == 1) {
+            printf("VOUS AVEZ GAGNEEEEEEEEEEEEEEEEEEEE\n");
+            loop = 0;
+            break;
+            }
+        else if (endGame == 2) {
+            printf("vous avez perduuuuuuuuuuuuu\n");
+            loop = 0;
+            break;
+        }
 
+        if(play){
+        startTime = SDL_GetTicks();
+        time = SDL_GetTicks()/1000;
+        frameIndex=SDL_GetTicks()/300;
+        augmenteAllTours(tabRadar, tabUsineArmement, tabStockMunition, tabTourBleue, tabTourJaune, tabTourRouge, tabTourVerte);
+        attaqueAllTower(tabTourBleue, tabTourJaune, tabTourRouge, tabTourVerte, tabPetitMonstre, tabMoyenMonstre, tabGrosMonstre);
+        tuerAllMonstre(carte, tabPetitMonstre, tabMoyenMonstre, tabGrosMonstre);
+        creerVague(indice, tabVagues, time, nbLoop, start, end, posNoeuds, tabPetitMonstre, tabMoyenMonstre, tabGrosMonstre, grapheNoeuds, tabPoids);
+        }
         
         /* Placer ici le code de dessin */
         glClear(GL_COLOR_BUFFER_BIT);
@@ -321,7 +350,7 @@ vector<vector<int>> creerTabVague() ;
 
 
         if(play){
-            updateAllMonstre(tabPetitMonstre, tabMoyenMonstre, tabGrosMonstre, posNoeuds, finPartie);
+            updateAllMonstre(tabPetitMonstre, tabMoyenMonstre, tabGrosMonstre, posNoeuds, arrive);
         //printf("BOB\n");
             
         }
