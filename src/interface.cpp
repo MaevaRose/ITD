@@ -18,7 +18,7 @@ using namespace std;
 Interface::Interface(){};
 
 
-bool Interface::clicOnInterface(int x, int y,  Carte &carte, vector<TourBleue> &tabTourBleue, vector<TourJaune> &tabTourJaune, vector<TourRouge> &tabTourRouge, vector<TourVerte> &tabTourVerte, vector<vector<int>> &tabPoids, vector<vector<int>> &grapheNoeud, vector<vector<int>> &posNoeuds){
+bool Interface::clicOnInterface(int x, int y,  Carte &carte, vector<TourBleue> &tabTourBleue, vector<TourJaune> &tabTourJaune, vector<TourRouge> &tabTourRouge, vector<TourVerte> &tabTourVerte, vector<vector<int>> &tabPoids, vector<vector<int>> &grapheNoeud, vector<vector<int>> &posNoeuds, vector<Radar> &tabRadar, vector<UsineArmement> &tabUsineArmement, vector<StockMunition> &tabStockMunition){
 
 	printf("suis je sur l'interface ?\n");
 	if(y>=850 && y<=950 && x>=400 && x<=1200){
@@ -30,7 +30,8 @@ bool Interface::clicOnInterface(int x, int y,  Carte &carte, vector<TourBleue> &
 	if(x>= 1600 && x<= 1800 && y>=0 && y<= 300){
 		this->x = x;
 		this->y = y;
-		clicOnMenuHaut( carte, tabTourBleue, tabTourJaune, tabTourRouge, tabTourVerte, tabPoids, grapheNoeud, posNoeuds);
+		clicOnMenuHaut( carte, tabTourBleue, tabTourJaune, tabTourRouge, tabTourVerte, tabPoids, grapheNoeud, posNoeuds, tabRadar, tabUsineArmement, tabStockMunition);
+		return true;
 	}
 	return false;
 }
@@ -61,7 +62,7 @@ void Interface::clicOnMenuBas(){
 	}
 }
 
-void Interface::clicOnMenuHaut( Carte &carte, vector<TourBleue> &tabTourBleue, vector<TourJaune> &tabTourJaune, vector<TourRouge> &tabTourRouge, vector<TourVerte> &tabTourVerte, vector<vector<int>> &tabPoids, vector<vector<int>> &grapheNoeud, vector<vector<int>> &posNoeuds) {
+void Interface::clicOnMenuHaut( Carte &carte, vector<TourBleue> &tabTourBleue, vector<TourJaune> &tabTourJaune, vector<TourRouge> &tabTourRouge, vector<TourVerte> &tabTourVerte, vector<vector<int>> &tabPoids, vector<vector<int>> &grapheNoeud, vector<vector<int>> &posNoeuds, vector<Radar> &tabRadar, vector<UsineArmement> &tabUsineArmement, vector<StockMunition> &tabStockMunition) {
 
 	printf("Je suis dans le menu haut\n");
 	int x = this->x;
@@ -85,6 +86,18 @@ void Interface::clicOnMenuHaut( Carte &carte, vector<TourBleue> &tabTourBleue, v
 	       tabTourRouge[indice_tour].supprimer(tabTourRouge, this->indice_tour,  carte, tabPoids, grapheNoeud, posNoeuds);
 			
 	    }
+	   	if(this->tour_select == 5){
+	       tabRadar[indice_tour].supprimer(tabRadar, this->indice_tour,  carte);
+			
+	    }
+	    if(this->tour_select == 6){
+	       tabUsineArmement[indice_tour].supprimer(tabUsineArmement, this->indice_tour,  carte);
+			
+	    }
+	    if(this->tour_select == 7){
+	       tabStockMunition[indice_tour].supprimer(tabStockMunition, this->indice_tour,  carte);
+			
+	    }
 	}
 
 	if(y>= 170 && y<= 230 && x>=1670 && x<= 1730){
@@ -105,6 +118,18 @@ void Interface::clicOnMenuHaut( Carte &carte, vector<TourBleue> &tabTourBleue, v
 	       tabTourRouge[indice_tour].ameliorer(carte);
 			
 	    }
+	    if(this->tour_select == 5){
+	       tabRadar[indice_tour].ameliorer(carte);
+			
+	    }
+	    if(this->tour_select == 6){
+	       tabUsineArmement[indice_tour].ameliorer(carte);
+			
+	    }
+	    if(this->tour_select == 7){
+	       tabStockMunition[indice_tour].ameliorer(carte);
+			
+	    }
 	}
 
 }
@@ -113,13 +138,13 @@ void Interface::setAllTexture(){
 	this->texMenuBas = setPNGTexture("./images/menubas.png");
 }
 
-void Interface::drawInterface(Carte &carte, vector<TourBleue> &tabTourBleue, vector<TourJaune> &tabTourJaune, vector<TourRouge> &tabTourRouge, vector<TourVerte> &tabTourVerte) {
-	drawMenuHaut(carte, tabTourBleue, tabTourJaune, tabTourRouge, tabTourVerte);
+void Interface::drawInterface(Carte &carte, vector<TourBleue> &tabTourBleue, vector<TourJaune> &tabTourJaune, vector<TourRouge> &tabTourRouge, vector<TourVerte> &tabTourVerte, vector<Radar> &tabRadar, vector<UsineArmement> &tabUsineArmement, vector<StockMunition> &tabStockMunition) {
+	drawMenuHaut(carte, tabTourBleue, tabTourJaune, tabTourRouge, tabTourVerte, tabRadar, tabUsineArmement, tabStockMunition);
 	drawMenuBas();
 }
 
 
-void Interface::drawMenuHaut(Carte &carte, vector<TourBleue> &tabTourBleue, vector<TourJaune> &tabTourJaune, vector<TourRouge> &tabTourRouge, vector<TourVerte> &tabTourVerte) {
+void Interface::drawMenuHaut(Carte &carte, vector<TourBleue> &tabTourBleue, vector<TourJaune> &tabTourJaune, vector<TourRouge> &tabTourRouge, vector<TourVerte> &tabTourVerte, vector<Radar> &tabRadar, vector<UsineArmement> &tabUsineArmement, vector<StockMunition> &tabStockMunition) {
 	drawSquare(1700, 150, 3., 5., 1, 0, 0, 255);
 
 	drawSquare(1700, 200, 1., 1., 1, 0, 255, 0);

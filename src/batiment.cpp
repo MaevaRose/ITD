@@ -17,30 +17,16 @@ StockMunition::StockMunition () : Batiment(25, 130, 10, 1, -1, -1) {};
 
 
 
-// void Batiment::poser(int x, int y, Carte &carte) {
-// 	bool isConstructible = carte.isConstructible(x, y, 1800, 1012);
-// 	if(isConstructible){
-// 		this->x_position = x;
-// 		this->y_position = y;
-// 		this->cout = cout/2;
-// 		//void addToListBatiment
-// 	}
-// 	else{
-// 		//void fonction qui prévient que ce n'est pas contructible
-// 	}
-	
-// }
 
 
-void Batiment::suprimer() {
-	//void popOfListBatiment
+void Batiment::ameliorer(Carte &carte) {
+	if(this->level<5 && this->cout/2<=carte.argent){
+		this->level += 1;
+		this->pourcent += 10;
+		carte.argent -= this->cout/2;
+	}
+
 }
-
-
-// void Batiment::ameliorer(int level) {
-// 	level += 1;
-// 	this->pourcent += 10;
-// }
 
 
 void Batiment::afficherEtat() {
@@ -392,4 +378,77 @@ int getStockMunition(int x, int y, vector<StockMunition> &tabStockMunition){
 			}
 		}
 	}
+}
+
+void Radar::supprimer(vector<Radar> &tabRadar, int indice_tour,  Carte &carte){
+
+	int x = this->x_position;
+	int y = this->y_position;
+
+	carte.argent+=8;
+
+	for(int i = y-30; i < y+30; i++){
+		for(int j = x-30 ; j < x+30; j++){
+			int position = 1800*3*(i-1)+j*3;
+			carte.data[position+1]=255;
+			carte.data[position+2]=255;
+		}
+	}
+
+
+	vector<Radar>::iterator ptr = tabRadar.begin();
+	for(int i = 0; i<indice_tour ; i++){
+		ptr++;
+	}
+
+	tabRadar.erase(ptr);
+
+}
+void UsineArmement::supprimer(vector<UsineArmement> &tabUsineArmement, int indice_tour,  Carte &carte){
+
+	int x = this->x_position;
+	int y = this->y_position;
+
+	carte.argent+=8;
+
+	for(int i = y-30; i < y+30; i++){
+		for(int j = x-30 ; j < x+30; j++){
+			int position = 1800*3*(i-1)+j*3;
+			carte.data[position+1]=255;
+			carte.data[position+2]=255;
+		}
+	}
+
+
+	vector<UsineArmement>::iterator ptr = tabUsineArmement.begin();
+	for(int i = 0; i<indice_tour ; i++){
+		ptr++;
+	}
+
+	tabUsineArmement.erase(ptr);
+
+}
+void StockMunition::supprimer(vector<StockMunition> &tabStockMunition, int indice_tour,  Carte &carte){
+
+	int x = this->x_position;
+	int y = this->y_position;
+
+	carte.argent+=8;
+
+	for(int i = y-30; i < y+30; i++){
+		for(int j = x-30 ; j < x+30; j++){
+			int position = 1800*3*(i-1)+j*3;
+			carte.data[position+1]=255;
+			carte.data[position+2]=255;
+		}
+	}
+
+
+	vector<StockMunition>::iterator ptr = tabStockMunition.begin();
+	for(int i = 0; i<indice_tour ; i++){
+		ptr++;
+	}
+
+	tabStockMunition.erase(ptr);
+
 }

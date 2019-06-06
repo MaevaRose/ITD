@@ -17,7 +17,7 @@ class Batiment   {
 
 	void suprimer();						//OK
 
-	void ameliorer(int level);				//OK
+	void ameliorer(Carte &carte);				//OK
 
 	void afficherEtat();					//OK
 
@@ -62,6 +62,8 @@ class Radar:public Batiment {
 
 	void drawRadar();
 
+	void supprimer(vector<Radar> &tabRadar, int indice_tour,  Carte &carte);
+
 };
 
 class UsineArmement:public Batiment {
@@ -78,6 +80,8 @@ class UsineArmement:public Batiment {
 	void augmenterTour(vector<TourBleue> &tabTourBleue, vector<TourJaune> &tabTourJaune, vector<TourRouge> &tabTourRouge, vector<TourVerte> &tabTourVerte);
 
 	void drawUsineArmement();
+
+	void supprimer(vector<UsineArmement> &tabUsineArmement, int indice_tour,  Carte &carte);
 	
 };
 
@@ -95,6 +99,8 @@ class StockMunition:public Batiment {
 	void augmenterTour(vector<TourBleue> &tabTourBleue, vector<TourJaune> &tabTourJaune, vector<TourRouge> &tabTourRouge, vector<TourVerte> &tabTourVerte);
 
 	void drawStockMunition();
+
+	void supprimer(vector<StockMunition> &tabStockMunition, int indice_tour,  Carte &carte);
 	
 };
 

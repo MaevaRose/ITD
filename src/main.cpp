@@ -63,7 +63,7 @@ void drawCircle(float size, float x, float y){
     glEnd();
 }
 
-void drawTourShape(int mousex, int mousey, Carte &carte){
+void drawTourShape(int mousex, int mousey, Carte &carte, bool clicOnInterface, int select){
     float x = (-1 + 2. * mousex / 1800.)*15.;
     float y = -(-1 + 2. * mousey / 1012.)*8.4;
 
@@ -91,6 +91,55 @@ void drawTourShape(int mousex, int mousey, Carte &carte){
 
     glEnd();
     glPopMatrix();
+    // int size = 0.6;
+    // bool isConstructible = false;
+    // float x = (-1 + 2. * mousex / 1800.)*15.;
+    // float y = -(-1 + 2. * mousey / 1012.)*8.4;
+    // glColor3ub(0, 0, 0);
+
+    // if(clicOnInterface){
+        
+    //     if(select<=4){
+    //         cout<<"je suis là maman"<<endl;
+    //         isConstructible = carte.isConstructible(mousex, mousey, 1800, 1012);
+    //         cout<<isConstructible<<endl;
+    //         size = 0.9;
+    //     }
+    //     else{
+    //         cout<<"et maintenant je suis là maman"<<endl;
+    //         isConstructible = carte.isConstructibleBatiment(mousex, mousey, 1800, 1012);
+    //         cout<<isConstructible<<endl;
+    //         size = 0.6;
+    //     }
+       
+        
+    //     if(isConstructible){
+    //         glColor3ub(0, 255, 0);
+    //     }
+    //     else{
+    //         glColor3ub(255, 0, 0);
+    //     }
+
+    //     //glColor3ub(0, 0, 0);
+        
+        
+    // }
+
+    // glPushMatrix();
+
+    //         glTranslatef(x, y, 0);
+
+    //         glBegin(GL_LINE_LOOP);
+            
+            
+    //         glVertex2f(-size, -size);
+    //         glVertex2f(-size, size);
+    //         glVertex2f(size, size);
+    //         glVertex2f(size, -size);
+
+    // glEnd();
+    // glPopMatrix();
+    
 }
 
 
@@ -262,7 +311,7 @@ int main(int argc, char* argv[])
         drawAllTower(tabTourBleue, tabTourJaune, tabTourRouge, tabTourVerte, WINDOW_WIDTH, WINDOW_HEIGHT, frameIndex);
         drawAllBatiments(tabRadar, tabUsineArmement, tabStockMunition, frameIndex);
         attaqueAllTower(tabTourBleue, tabTourJaune, tabTourRouge, tabTourVerte, tabPetitMonstre, tabMoyenMonstre, tabGrosMonstre);
-        drawTourShape(mousex, mousey, carte);        
+        drawTourShape(mousex, mousey, carte, clicOnInterface, interface.select);        
         //glColor3ub(0,0,0);
         //writeString(0, 0,  "Je test loul");
         //glColor3ub(255,255,255);
@@ -276,7 +325,7 @@ int main(int argc, char* argv[])
         }
         drawAllMonstres(frameIndex, tabPetitMonstre, tabMoyenMonstre, tabGrosMonstre);
 
-        interface.drawInterface(carte, tabTourBleue, tabTourJaune, tabTourRouge, tabTourVerte);
+        interface.drawInterface(carte, tabTourBleue, tabTourJaune, tabTourRouge, tabTourVerte, tabRadar, tabUsineArmement, tabStockMunition);
 
         
         /* Echange du front et du back buffer : mise a jour de la fenetre */
@@ -324,7 +373,7 @@ int main(int argc, char* argv[])
                     mousex = e.button.x;
                     mousey = e.button.y;
                     printf("clic en (%d, %d)\n", mousex, mousey);
-                    clicOnInterface = interface.clicOnInterface(mousex, mousey, carte, tabTourBleue, tabTourJaune, tabTourRouge, tabTourVerte, tabPoids, grapheNoeuds, posNoeuds);
+                    clicOnInterface = interface.clicOnInterface(mousex, mousey, carte, tabTourBleue, tabTourJaune, tabTourRouge, tabTourVerte, tabPoids, grapheNoeuds, posNoeuds, tabRadar, tabUsineArmement, tabStockMunition);
                     if(!clicOnInterface){
                         if(play){
                             if(interface.select==1){
@@ -373,7 +422,13 @@ int main(int argc, char* argv[])
                                     interface.indice_tour = getTourRouge(mousex, mousey, tabTourRouge);
                                 }
                                 if(interface.tour_select == 5){
-                                    printf("coucou tu es dans main.cpp\n");
+                                    interface.indice_tour = getRadar(mousex, mousey, tabRadar);
+                                }
+                                if(interface.tour_select == 6){
+                                    interface.indice_tour = getUsineArmement(mousex, mousey, tabUsineArmement);
+                                }
+                                if(interface.tour_select == 7){
+                                    interface.indice_tour = getStockMunition(mousex, mousey, tabStockMunition);
                                 }
                             }
                             
@@ -381,10 +436,10 @@ int main(int argc, char* argv[])
                             //afficherTourSelect(mousex, mousey, tour_select, tabTourBleue, tabTourJaune, tabTourRouge, tabTourVerte);
                         }
                     }
-                    else{
-                        clicOnInterface = false;
+                    // else{
+                    //     clicOnInterface = false;
 
-                    }
+                    // }
                     
                     carte.isConstructible(mousex, mousey, WINDOW_WIDTH, WINDOW_HEIGHT);
                     
