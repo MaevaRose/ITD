@@ -284,19 +284,19 @@ void tuerAllMonstre(Carte &carte, vector<PetitMonstre> &tabPetitMonstre, vector<
 }
 
 
-void updateAllMonstre(vector<PetitMonstre> &tabPetitMonstre, vector<MoyenMonstre> &tabMoyenMonstre, vector<GrosMonstre> &tabGrosMonstre, vector<int> chemin, vector<vector<int>> posNoeuds, int &finPartie) {
+void updateAllMonstre(vector<PetitMonstre> &tabPetitMonstre, vector<MoyenMonstre> &tabMoyenMonstre, vector<GrosMonstre> &tabGrosMonstre, vector<vector<int>> posNoeuds, int &finPartie) {
 	//printf("update monstre begin\n");
 	for(int i=0; i<tabPetitMonstre.size(); i++) {
 		Monstre &cible = tabPetitMonstre[i]; 
-		cible.updatePos(chemin, posNoeuds, finPartie);
+		cible.updatePos(cible.getChemin(), posNoeuds, finPartie);
 	}
 	for(int i=0; i<tabMoyenMonstre.size(); i++) {
 		Monstre &cible = tabMoyenMonstre[i]; 
-		cible.updatePos(chemin, posNoeuds, finPartie);
+		cible.updatePos(cible.getChemin(), posNoeuds, finPartie);
 	}
 	for(int i=0; i<tabGrosMonstre.size(); i++) {
 		Monstre &cible = tabGrosMonstre[i]; 
-		cible.updatePos(chemin, posNoeuds, finPartie);
+		cible.updatePos(cible.getChemin(), posNoeuds, finPartie);
 	}
 }
 
@@ -388,20 +388,23 @@ vector<vector<int>> creerTabVague() {
 
 void creerVague(int &indice, vector<vector<int>> &tabVagues, int temps, int &nbLoop, int start, int end, vector<vector<int>> posNoeuds, vector<PetitMonstre> &tabPetitMonstre, vector<MoyenMonstre> &tabMoyenMonstre, vector<GrosMonstre> &tabGrosMonstre, vector<vector<int>> &grapheNoeuds, vector<vector<int>> &tabPoids) {
 	if (temps > tabVagues[indice][0]) {
-		if (nbLoop == 5) {
+		if (nbLoop == 20) {
 			if (tabVagues[indice][1] != 0) {
 				PetitMonstre monstre;
 				monstre.pushChemin(grapheNoeuds, tabPoids, start, end);
 				monstre.apparaitre(posNoeuds[start][0], posNoeuds[start][1], tabPetitMonstre);
 				tabVagues[indice][1]--;
+				printf("nb de petits monstres dans la vague 1 : %d\n", tabVagues[indice][1]);
 			}
 			else if (tabVagues[indice][2] != 0) {
 				MoyenMonstre monstre;
+				monstre.pushChemin(grapheNoeuds, tabPoids, start, end);
 				monstre.apparaitre(posNoeuds[start][0], posNoeuds[start][1], tabMoyenMonstre);
 				tabVagues[indice][2]--;
 			}
 			else if (tabVagues[indice][3] != 0) {
 				GrosMonstre monstre;
+				monstre.pushChemin(grapheNoeuds, tabPoids, start, end);
 				monstre.apparaitre(posNoeuds[start][0], posNoeuds[start][1], tabGrosMonstre);
 				tabVagues[indice][3]--;
 			}			

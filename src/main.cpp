@@ -175,13 +175,13 @@ int main(int argc, char* argv[])
     vector<MoyenMonstre> tabMoyenMonstre;
     vector<GrosMonstre> tabGrosMonstre;
 
-    PetitMonstre monstre1;
-    MoyenMonstre monstre2;
-    GrosMonstre monstre3;
+    // PetitMonstre monstre1;
+    // MoyenMonstre monstre2;
+    // GrosMonstre monstre3;
 
-    monstre1.apparaitre(1625,725, tabPetitMonstre);
-    monstre2.apparaitre(1625,725, tabMoyenMonstre);
-    monstre3.apparaitre(1625, 725, tabGrosMonstre);
+    // monstre1.apparaitre(1625,725, tabPetitMonstre);
+    // monstre2.apparaitre(1625,725, tabMoyenMonstre);
+    // monstre3.apparaitre(1625, 725, tabGrosMonstre);
 
 
 
@@ -200,6 +200,7 @@ int main(int argc, char* argv[])
     vector<vector<int>> tabPoids;
     vector<vector<int>> posNoeuds;
     constructGraphes (noeuds, grapheNoeuds, tabPoids, posNoeuds);
+    vector<vector<int>> tabVagues = creerTabVague();
 
     //printf("JE SUIS LA\n");
     //vector<vector<int>> grapheNoeuds = creerGrapheTest2();
@@ -209,8 +210,8 @@ int main(int argc, char* argv[])
     int start = 0;
     int end = 13;
 
-    vector<int> chemin = calculCheminMonstre(grapheNoeuds, tabPoids, start, end);
-    afficheChemin(chemin);
+    // vector<int> chemin = calculCheminMonstre(grapheNoeuds, tabPoids, start, end);
+    // afficheChemin(chemin);
 
     //vector<vector<int>> posNoeuds = creerPosNoeud();
 
@@ -239,7 +240,8 @@ int main(int argc, char* argv[])
             attaqueAllTower(tabTourBleue, tabTourJaune, tabTourRouge, tabTourVerte, tabPetitMonstre, tabMoyenMonstre, tabGrosMonstre);
         //printf("j'ai attaqué sans pb\n");
             tuerAllMonstre(carte, tabPetitMonstre, tabMoyenMonstre, tabGrosMonstre);
-
+            
+            creerVague(indice, tabVagues, time, nbLoop, start, end, posNoeuds, tabPetitMonstre, tabMoyenMonstre, tabGrosMonstre, grapheNoeuds, tabPoids);
             // vector<vector<int>> tabVagues = creerTabVague();
             // creerVague(indice, tabVagues, time, nbLoop, start, end, posNoeuds, tabPetitMonstre, tabMoyenMonstre, tabGrosMonstre, grapheNoeuds, tabPoids);
         //printf("apres premier if play\n");
@@ -268,7 +270,7 @@ int main(int argc, char* argv[])
 
 
         if(play){
-            updateAllMonstre(tabPetitMonstre, tabMoyenMonstre, tabGrosMonstre, chemin, posNoeuds, finPartie);
+            updateAllMonstre(tabPetitMonstre, tabMoyenMonstre, tabGrosMonstre, posNoeuds, finPartie);
         //printf("BOB\n");
             
         }
