@@ -246,7 +246,7 @@ int meilleurChemin(vector<vector<int>> &grapheNoeuds, vector<vector<int>> tabPoi
 		}
 
 		else if ((tabPoids[idNoeud][i] < min) && (utilise[grapheNoeuds[idNoeud][i]] == 0)) {
-			//printf("je suis dans le if\n");
+			printf("je suis dans le if\n");
 			min = tabPoids[idNoeud][i];
 			indice = i;
 		}
