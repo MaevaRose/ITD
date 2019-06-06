@@ -36,7 +36,7 @@ class Monstre {
 
 	void pushChemin(vector<vector<int>> &grapheNoeuds, vector<vector<int>> &tabPoids, int start, int end);
 
-	void updatePos(vector<int> chemin, vector<vector<int>> posNoeuds, int &finPartie);
+	void updatePos(vector<int> chemin, vector<vector<int>> posNoeuds, int &arrive);
 
 	vector<int> getChemin();
 
@@ -111,13 +111,13 @@ class MoyenMonstre:public Monstre {
 
 	void apparaitre(int x, int y, vector<MoyenMonstre> &tabMonstre);
 
-	void drawMoyenMonstre();
+	void drawMoyenMonstre(int frameIndex);
 };
 
 
 void tuerAllMonstre(Carte &carte, vector<PetitMonstre> &tabPetitMonstre, vector<MoyenMonstre> &tabMoyenMonstre, vector<GrosMonstre> &tabGrosMonstre);
 
-void updateAllMonstre(vector<PetitMonstre> &tabPetitMonstre, vector<MoyenMonstre> &tabMoyenMonstre, vector<GrosMonstre> &tabGrosMonstre, vector<vector<int>> posNoeuds, int &finPartie);
+void updateAllMonstre(vector<PetitMonstre> &tabPetitMonstre, vector<MoyenMonstre> &tabMoyenMonstre, vector<GrosMonstre> &tabGrosMonstre, vector<vector<int>> posNoeuds, int &arrive);
 
 void drawAllMonstres(vector<PetitMonstre> &tabPetitMonstre, vector<MoyenMonstre> &tabMoyenMonstre, vector<GrosMonstre> &tabGrosMonstre);
 

@@ -326,3 +326,48 @@ void afficheChemin(vector<int> chemin) {
 		printf("Le noeud %d est : %d\n", i+1, chemin[i]);
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+// int endGame = 0;
+// int arrive =0;
+
+
+
+
+
+// int resultatsFin (){
+// 	if (arrive) {
+// 		return 2;
+// 	}
+// 	if (indice == tabVagues.size()) {
+// 		if ((tabPetitMonstre.size() == 0) && (tabMoyenMonstre.size() == 0) && (tabGrosMonstre.size() == 0)) {
+// 			return 1;
+// 		}
+// 	}
+	
+// }
+
+
+
+
+// if  (endGame == 1) {
+// 	printf("VOUS AVEZ GAGNEEEEEEEEEEEEEEEEEEEE\n");
+// 	loop = 0;
+// 	}
+// else if (endGame == 2) {
+// 	printf("vous avez perduuuuuuuuuuuuu\n");
+// 	loop = 0
+// }
+// else {
+
+// }

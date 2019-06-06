@@ -249,7 +249,9 @@ int main(int argc, char* argv[])
     vector<vector<int>> tabPoids;
     vector<vector<int>> posNoeuds;
     constructGraphes (noeuds, grapheNoeuds, tabPoids, posNoeuds);
+
     vector<vector<int>> tabVagues = creerTabVague();
+    
 
     //printf("JE SUIS LA\n");
     //vector<vector<int>> grapheNoeuds = creerGrapheTest2();
@@ -258,7 +260,7 @@ int main(int argc, char* argv[])
     printf("il y a %d poids et le deuxieme poids est %d\n", tabPoids.size(), tabPoids[0][0]);
     int start = 0;
     int end = 13;
-
+vector<vector<int>> creerTabVague() ;
     // vector<int> chemin = calculCheminMonstre(grapheNoeuds, tabPoids, start, end);
     // afficheChemin(chemin);
 
@@ -284,7 +286,7 @@ int main(int argc, char* argv[])
         if(play){
             startTime = SDL_GetTicks();
             time = SDL_GetTicks()/1000;
-            frameIndex=SDL_GetTicks()/300;
+            frameIndex=SDL_GetTicks()/200;
             augmenteAllTours(tabRadar, tabUsineArmement, tabStockMunition, tabTourBleue, tabTourJaune, tabTourRouge, tabTourVerte);
             attaqueAllTower(tabTourBleue, tabTourJaune, tabTourRouge, tabTourVerte, tabPetitMonstre, tabMoyenMonstre, tabGrosMonstre);
         //printf("j'ai attaqué sans pb\n");

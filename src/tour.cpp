@@ -217,7 +217,7 @@ void TourJaune::poser(int x, int y, Carte &carte, vector<TourJaune> &tabTourJaun
 }
 
 
-void TourJaune::draw(const unsigned int WINDOW_WIDTH, const unsigned int WINDOW_HEIGHT ) {
+void TourJaune::draw(const unsigned int WINDOW_WIDTH, const unsigned int WINDOW_HEIGHT, int frameIndex, Sprites tours, GLuint textTourJaune) {
 
 	float x = (-1 + 2. * this->x_position / 1800.)*15.;
 	float y = -(-1 + 2. * this->y_position / 1012.)*8.4;
@@ -227,17 +227,21 @@ void TourJaune::draw(const unsigned int WINDOW_WIDTH, const unsigned int WINDOW_
 	glPushMatrix();
 	
 	glTranslatef(x, y, 0);
-    glBegin(GL_QUADS);
+    //glBegin(GL_QUADS);
     glColor3ub(255, 204, 0);
-    glVertex2f(-0.9, -0.9);
-    glVertex2f(-0.9, 0.9);
-    glVertex2f(0.9, 0.9);
-    glVertex2f(0.9, -0.9);
+    // glVertex2f(-0.9, -0.9);
+    // glVertex2f(-0.9, 0.9);
+    // glVertex2f(0.9, 0.9);
+    // glVertex2f(0.9, -0.9);
 
     drawCircle(portee, 0);
 
-    glEnd();
+    //glEnd();
    	glPopMatrix();
+
+   	glColor3ub(255, 255, 255);
+	
+	tours.drawSprite(textTourJaune, 0.9, x, y, frameIndex);
 }
 
 
@@ -311,7 +315,7 @@ void TourVerte::poser(int x, int y, Carte &carte, vector<TourVerte> &tabTourVert
 }
 
 
-void TourVerte::draw(const unsigned int WINDOW_WIDTH, const unsigned int WINDOW_HEIGHT ) {
+void TourVerte::draw(const unsigned int WINDOW_WIDTH, const unsigned int WINDOW_HEIGHT, int frameIndex, Sprites tours, GLuint textTourVerte ) {
 
 	float x = (-1 + 2. * this->x_position / 1800.)*15.;
 	float y = -(-1 + 2. * this->y_position / 1012.)*8.4;
@@ -320,17 +324,21 @@ void TourVerte::draw(const unsigned int WINDOW_WIDTH, const unsigned int WINDOW_
 	glPushMatrix();
 	
 	glTranslatef(x, y, 0);
-    glBegin(GL_QUADS);
+    //glBegin(GL_QUADS);
     glColor3ub(0, 255, 0);
-    glVertex2f(-0.9, -0.9);
-    glVertex2f(-0.9, 0.9);
-    glVertex2f(0.9, 0.9);
-    glVertex2f(0.9, -0.9);
+    // glVertex2f(-0.9, -0.9);
+    // glVertex2f(-0.9, 0.9);
+    // glVertex2f(0.9, 0.9);
+    // glVertex2f(0.9, -0.9);
 
     drawCircle(portee, 0);
 
-    glEnd();
+    //glEnd();
    	glPopMatrix();
+
+   	glColor3ub(255, 255, 255);
+	
+	tours.drawSprite(textTourVerte, 0.9, x, y, frameIndex);
 }
 
 
@@ -404,6 +412,8 @@ void drawAllTower(vector<TourBleue> &tabTourBleue, vector<TourJaune> &tabTourJau
 	Sprites tours(300, 300, 100, 100);
 
 	GLuint textTourRouge = setPNGTexture("./images/tourRouge.png");
+	GLuint textTourVerte = setPNGTexture("./images/tourVerte.png");
+	GLuint textTourJaune = setPNGTexture("./images/tourJaune.png");
 	vector<TourBleue>::iterator bleu=tabTourBleue.begin();
 	vector<TourJaune>::iterator jaune=tabTourJaune.begin();
 	vector<TourRouge>::iterator rouge=tabTourRouge.begin();
@@ -424,13 +434,13 @@ void drawAllTower(vector<TourBleue> &tabTourBleue, vector<TourJaune> &tabTourJau
 	if(tabTourJaune.size()>0){
 		for (jaune = tabTourJaune.begin(); jaune < tabTourJaune.end(); jaune++){
 
-			(*jaune).draw(WINDOW_WIDTH, WINDOW_HEIGHT);
+			(*jaune).draw(WINDOW_WIDTH, WINDOW_HEIGHT, frameIndex, tours, textTourJaune);
 		}
 	}
 	if(tabTourVerte.size()>0){
 		for (vert = tabTourVerte.begin(); vert < tabTourVerte.end(); vert++){
 
-			(*vert).draw(WINDOW_WIDTH, WINDOW_HEIGHT);	
+			(*vert).draw(WINDOW_WIDTH, WINDOW_HEIGHT, frameIndex, tours, textTourVerte);	
 		}
 	}	
 }

@@ -29,8 +29,9 @@ void PetitMonstre::apparaitre(int x, int y, vector<PetitMonstre> &tabMonstre) {
 void MoyenMonstre::apparaitre(int x, int y, vector<MoyenMonstre> &tabMonstre) {
 	this->x_position = x;
 	this->y_position = y;
-	Sprites spriteMonstre(400, 400, 100, 100);
+	Sprites spriteMonstre(300, 300, 100, 100);
 	this->spriteMonstre = spriteMonstre;
+	this->textMonstre = setPNGTexture("./images/moyenMonstre.png");
 	addToTabMoyenMonstre(tabMonstre, *this);
 }
 
@@ -102,15 +103,17 @@ void PetitMonstre::drawPetitMonstre(int frameIndex) {
 }
 
 
-void MoyenMonstre::drawMoyenMonstre() {
+void MoyenMonstre::drawMoyenMonstre(int frameIndex) {
 	float x = (-1 + 2 * this -> x_position / 1800.)*15;
 	float y = -(-1 + 2 * this -> y_position/ 1012.)*8.4;
 
-	glPushMatrix();
-		glTranslatef(x, y, 0);
-            glColor3ub(210,84,28);
-            drawCircle(0.1,1);
-    glPopMatrix();
+	// glPushMatrix();
+	// 	glTranslatef(x, y, 0);
+ //            glColor3ub(210,84,28);
+ //            drawCircle(0.1,1);
+ //    glPopMatrix();
+	glColor3ub(255,255,255);
+    this->spriteMonstre.drawSprite(this->textMonstre, 0.7, x, y, frameIndex);
 }
 
 
@@ -148,7 +151,7 @@ void Monstre::updateIndice() {
 }
 
 
-void Monstre::updatePos(vector<int> chemin, vector<vector<int>> posNoeuds, int &finPartie) { 
+void Monstre::updatePos(vector<int> chemin, vector<vector<int>> posNoeuds, int &arrive) { 
 
 	int sens;
 	//printf("j'update la position\n");
@@ -189,7 +192,7 @@ void Monstre::updatePos(vector<int> chemin, vector<vector<int>> posNoeuds, int &
 		}
 	}
 	if (this->indiceChemin == chemin.size()) {
-		finPartie = 1;
+		arrive = 1;
 	}
 	//printf("positions apres update : x=%d, y=%d\n", this->x_position, this->y_position);
 }
@@ -284,19 +287,19 @@ void tuerAllMonstre(Carte &carte, vector<PetitMonstre> &tabPetitMonstre, vector<
 }
 
 
-void updateAllMonstre(vector<PetitMonstre> &tabPetitMonstre, vector<MoyenMonstre> &tabMoyenMonstre, vector<GrosMonstre> &tabGrosMonstre, vector<vector<int>> posNoeuds, int &finPartie) {
+void updateAllMonstre(vector<PetitMonstre> &tabPetitMonstre, vector<MoyenMonstre> &tabMoyenMonstre, vector<GrosMonstre> &tabGrosMonstre, vector<vector<int>> posNoeuds, int &arrive) {
 	//printf("update monstre begin\n");
 	for(int i=0; i<tabPetitMonstre.size(); i++) {
 		Monstre &cible = tabPetitMonstre[i]; 
-		cible.updatePos(cible.getChemin(), posNoeuds, finPartie);
+		cible.updatePos(cible.getChemin(), posNoeuds, arrive);
 	}
 	for(int i=0; i<tabMoyenMonstre.size(); i++) {
 		Monstre &cible = tabMoyenMonstre[i]; 
-		cible.updatePos(cible.getChemin(), posNoeuds, finPartie);
+		cible.updatePos(cible.getChemin(), posNoeuds, arrive);
 	}
 	for(int i=0; i<tabGrosMonstre.size(); i++) {
 		Monstre &cible = tabGrosMonstre[i]; 
-		cible.updatePos(cible.getChemin(), posNoeuds, finPartie);
+		cible.updatePos(cible.getChemin(), posNoeuds, arrive);
 	}
 }
 
@@ -313,7 +316,7 @@ void drawAllMonstres(int frameIndex, vector<PetitMonstre> &tabPetitMonstre, vect
 	MoyenMonstre monstre2;
 	for (int i=0; i<size; i++) {
 		monstre2 = tabMoyenMonstre[i];
-		monstre2.drawMoyenMonstre();
+		monstre2.drawMoyenMonstre(frameIndex);
 	}
 
 	size = tabGrosMonstre.size();
@@ -340,6 +343,7 @@ vector<vector<int>> creerTabVague() {
 	tabVagues.push_back(vector<int>(1, 150));
 	tabVagues.push_back(vector<int>(1, 180));
 	tabVagues.push_back(vector<int>(1, 210));
+	tabVagues.push_back(vector<int>(1, 10000000));	
 
 	tabVagues[0].push_back(10);
 	tabVagues[0].push_back(0);
