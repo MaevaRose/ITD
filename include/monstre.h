@@ -47,8 +47,6 @@ class Monstre {
 
 
 
-
-
 	protected:
 	//attributs
 	int pts_vie;

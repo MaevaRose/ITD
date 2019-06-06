@@ -16,8 +16,6 @@ void drawSquare(int pos_x, int pos_y, float width, float height, int full, int r
     float x = (-1 + 2. * pos_x / 1800.)*15.;
     float y = -(-1 + 2. * pos_y / 1012.)*8.4;
 
-    float width2 = (-1 + 2. * width / 1800.)*15.;
-    float height2 = -(-1 + 2. * height / 1012.)*8.4;
 
     glPushMatrix();
     glTranslatef(x, y, 0);
@@ -67,22 +65,14 @@ GLuint Sprites::initSprite(const char* imagePath){
 
 
 void Sprites::drawSprite(GLuint texture, float size, float posX, float posY, int frameIndex) {
-        //printf("Je suis dans drawSprite\n");
         float tw = float(spriteWidth) / texWidth;
         float th = float(spriteHeight) / texHeight;
         int numPerRow = texWidth / spriteWidth;
         float tx = (frameIndex % numPerRow) * tw;
         float ty = (frameIndex / numPerRow + 1) * th;
 
-        float sW = (-1 + 2. * float(spriteWidth) / 1800.);
-        float sH = -(-1 + 2. * float(spriteHeight) / 1012.);
-        //cout<<sW<<sH<<endl;
         float x1, x2, y1, y2, xm1, xm2, ym1, ym2;
 
-        // x1 = 0.5 ;
-        // x2 = 0 ;
-        // y1 = 0.5 ;
-        // y2 = 1 ;
         x1 = tx + tw;
         x2 = tx;
         y1 = ty;
@@ -96,12 +86,7 @@ void Sprites::drawSprite(GLuint texture, float size, float posX, float posY, int
 
         glEnable(GL_TEXTURE_2D);
         glEnableClientState (GL_VERTEX_ARRAY);
-        //glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, texture);
-
-        // glVertexPointer(2, GL_FLOAT, 0, verts);
-        // glTexCoordPointer(2, GL_FLOAT, 0, texVerts);
-        // glDrawArrays( GL_QUADS, 0, 4);
 
         glBegin(GL_QUADS);
 
@@ -140,12 +125,8 @@ GLuint setTexture(const char* imagePath) {
 
     glGenTextures(1, &texture);
     glBindTexture(GL_TEXTURE_2D, texture);
-    //glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-    // glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    // glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S,     GL_CLAMP_TO_EDGE);
-    // glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T,     GL_CLAMP_TO_EDGE);
     glTexImage2D(
         GL_TEXTURE_2D, 0, GL_RGB, image->w, image->h, 0, GL_RGB, GL_UNSIGNED_BYTE, image->pixels);
     glBindTexture(GL_TEXTURE_2D, 0);

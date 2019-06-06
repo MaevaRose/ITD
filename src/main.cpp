@@ -117,7 +117,7 @@ int main(int argc, char* argv[])
     //quelques variables 
     int mousex=500;
     int mousey=500;
-    int tourColor = 0;
+
     int temp_tour_select = -1;
     int indice = 0;
     int nbLoop=0;
@@ -383,18 +383,6 @@ int main(int argc, char* argv[])
                 case SDL_KEYDOWN:
                     //bleu1.afficherEtat();
                     printf("touche pressee (code = %d)\n", e.key.keysym.sym);
-                    if(e.key.keysym.sym == SDLK_b){
-                        tourColor = 1;
-                    }
-                    if(e.key.keysym.sym == SDLK_v){
-                        tourColor = 2;
-                    }
-                    if(e.key.keysym.sym == SDLK_j){
-                        tourColor = 3;
-                    }
-                    if(e.key.keysym.sym == SDLK_r){
-                        tourColor = 4;
-                    }
                     if(e.key.keysym.sym == SDLK_p){
                         if(play){
                             play = false;

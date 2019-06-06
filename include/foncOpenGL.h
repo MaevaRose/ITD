@@ -26,10 +26,10 @@ public:
     void drawSprite(GLuint texture, float size, float posX, float posY, int frameIndex);
 
 private:
-	int spriteWidth; 
-	int spriteHeight;
     int texWidth;
     int texHeight;
+    int spriteWidth; 
+	int spriteHeight;
 };
 
 GLuint setTexture(const char* imagePath);

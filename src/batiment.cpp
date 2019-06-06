@@ -16,9 +16,6 @@ StockMunition::StockMunition () : Batiment(25, 130, 10, 1, -1, -1) {};
 
 
 
-
-
-
 void Batiment::ameliorer(Carte &carte) {
 	if(this->level<5 && this->cout/2<=carte.argent){
 		this->level += 1;
@@ -189,7 +186,7 @@ void StockMunition::drawStockMunition() {
 
 void Radar::augmenterTour(vector<TourBleue> &tabTourBleue, vector<TourJaune> &tabTourJaune, vector<TourRouge> &tabTourRouge, vector<TourVerte> &tabTourVerte){
 	if (tabTourBleue.size()>0) {
-		for (int i=0; i<tabTourBleue.size(); i++) {
+		for (uint i=0; i<tabTourBleue.size(); i++) {
 			if(aPortee(tabTourBleue[i].getPositionX(), tabTourBleue[i].getPositionY())){
 				//printf("Tour bleue %d est à portée\n", i);
 				tabTourBleue[i].augmenterPortee(10.);
@@ -197,21 +194,21 @@ void Radar::augmenterTour(vector<TourBleue> &tabTourBleue, vector<TourJaune> &ta
 		}
 	}
 	if (tabTourJaune.size()>0) {
-		for (int i=0; i<tabTourJaune.size(); i++) {
+		for (uint i=0; i<tabTourJaune.size(); i++) {
 			if(aPortee(tabTourJaune[i].getPositionX(), tabTourJaune[i].getPositionY())){
 				tabTourJaune[i].augmenterPortee(10.);
 			}		
 		}
 	}
 	if (tabTourRouge.size()>0) {
-		for (int i=0; i<tabTourRouge.size(); i++) {
+		for (uint i=0; i<tabTourRouge.size(); i++) {
 			if(aPortee(tabTourRouge[i].getPositionX(), tabTourRouge[i].getPositionY())){
 				tabTourRouge[i].augmenterPortee(10.);
 			}
 		}
 	}
 	if (tabTourVerte.size()>0) {
-		for (int i=0; i<tabTourVerte.size(); i++) {
+		for (uint i=0; i<tabTourVerte.size(); i++) {
 			if(aPortee(tabTourVerte[i].getPositionX(), tabTourVerte[i].getPositionY())){
 				tabTourVerte[i].augmenterPortee(10.);
 			}
@@ -221,7 +218,7 @@ void Radar::augmenterTour(vector<TourBleue> &tabTourBleue, vector<TourJaune> &ta
 
 void UsineArmement::augmenterTour(vector<TourBleue> &tabTourBleue, vector<TourJaune> &tabTourJaune, vector<TourRouge> &tabTourRouge, vector<TourVerte> &tabTourVerte){
 	if (tabTourBleue.size()>0) {
-		for (int i=0; i<tabTourBleue.size(); i++) {
+		for (uint i=0; i<tabTourBleue.size(); i++) {
 			if(aPortee(tabTourBleue[i].getPositionX(), tabTourBleue[i].getPositionY())){
 				//printf("Tour bleue %d est à portée\n", i);
 				tabTourBleue[i].augmenterPuissance(10);
@@ -229,21 +226,21 @@ void UsineArmement::augmenterTour(vector<TourBleue> &tabTourBleue, vector<TourJa
 		}
 	}
 	if (tabTourJaune.size()>0) {
-		for (int i=0; i<tabTourJaune.size(); i++) {
+		for (uint i=0; i<tabTourJaune.size(); i++) {
 			if(aPortee(tabTourJaune[i].getPositionX(), tabTourJaune[i].getPositionY())){
 				tabTourJaune[i].augmenterPuissance(10);
 			}		
 		}
 	}
 	if (tabTourRouge.size()>0) {
-		for (int i=0; i<tabTourRouge.size(); i++) {
+		for (uint i=0; i<tabTourRouge.size(); i++) {
 			if(aPortee(tabTourRouge[i].getPositionX(), tabTourRouge[i].getPositionY())){
 				tabTourRouge[i].augmenterPuissance(10);
 			}
 		}
 	}
 	if (tabTourVerte.size()>0) {
-		for (int i=0; i<tabTourVerte.size(); i++) {
+		for (uint i=0; i<tabTourVerte.size(); i++) {
 			if(aPortee(tabTourVerte[i].getPositionX(), tabTourVerte[i].getPositionY())){
 				tabTourVerte[i].augmenterPuissance(10);
 			}
@@ -254,7 +251,7 @@ void UsineArmement::augmenterTour(vector<TourBleue> &tabTourBleue, vector<TourJa
 
 void StockMunition::augmenterTour(vector<TourBleue> &tabTourBleue, vector<TourJaune> &tabTourJaune, vector<TourRouge> &tabTourRouge, vector<TourVerte> &tabTourVerte){
 	if (tabTourBleue.size()>0) {
-		for (int i=0; i<tabTourBleue.size(); i++) {
+		for (uint i=0; i<tabTourBleue.size(); i++) {
 			if(aPortee(tabTourBleue[i].getPositionX(), tabTourBleue[i].getPositionY())){
 				//printf("Tour bleue %d est à portée\n", i);
 				tabTourBleue[i].augmenterVitesse(10);
@@ -262,21 +259,21 @@ void StockMunition::augmenterTour(vector<TourBleue> &tabTourBleue, vector<TourJa
 		}
 	}
 	if (tabTourJaune.size()>0) {
-		for (int i=0; i<tabTourJaune.size(); i++) {
+		for (uint i=0; i<tabTourJaune.size(); i++) {
 			if(aPortee(tabTourJaune[i].getPositionX(), tabTourJaune[i].getPositionY())){
 				tabTourJaune[i].augmenterVitesse(10);
 			}		
 		}
 	}
 	if (tabTourRouge.size()>0) {
-		for (int i=0; i<tabTourRouge.size(); i++) {
+		for (uint i=0; i<tabTourRouge.size(); i++) {
 			if(aPortee(tabTourRouge[i].getPositionX(), tabTourRouge[i].getPositionY())){
 				tabTourRouge[i].augmenterVitesse(10);
 			}
 		}
 	}
 	if (tabTourVerte.size()>0) {
-		for (int i=0; i<tabTourVerte.size(); i++) {
+		for (uint i=0; i<tabTourVerte.size(); i++) {
 			if(aPortee(tabTourVerte[i].getPositionX(), tabTourVerte[i].getPositionY())){
 				tabTourVerte[i].augmenterVitesse(10);
 			}
@@ -328,17 +325,17 @@ void drawAllBatiments(vector<Radar> &tabRadar, vector<UsineArmement> &tabUsineAr
 
 void augmenteAllTours(vector<Radar> &tabRadar, vector<UsineArmement> &tabUsineArmement, vector<StockMunition> &tabStockMunition, vector<TourBleue> &tabTourBleue, vector<TourJaune> &tabTourJaune, vector<TourRouge> &tabTourRouge, vector<TourVerte> &tabTourVerte) {
 	if (tabRadar.size()>0) {
-		for (int i=0; i<tabRadar.size(); i++) {
+		for (uint i=0; i<tabRadar.size(); i++) {
 			tabRadar[i].augmenterTour(tabTourBleue, tabTourJaune, tabTourRouge, tabTourVerte);
 		}
 	}
 	if (tabUsineArmement.size()>0) {
-		for (int i=0; i<tabUsineArmement.size(); i++) {
+		for (uint i=0; i<tabUsineArmement.size(); i++) {
 			tabUsineArmement[i].augmenterTour(tabTourBleue, tabTourJaune, tabTourRouge, tabTourVerte);
 		}
 	}
 	if (tabStockMunition.size()>0) {
-		for (int i=0; i<tabStockMunition.size(); i++) {
+		for (uint i=0; i<tabStockMunition.size(); i++) {
 			tabStockMunition[i].augmenterTour(tabTourBleue, tabTourJaune, tabTourRouge, tabTourVerte);
 		}
 	}
