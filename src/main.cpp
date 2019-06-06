@@ -370,6 +370,9 @@ int main(int argc, char* argv[])
                                  if(interface.tour_select == 4){
                                     interface.indice_tour = getTourRouge(mousex, mousey, tabTourRouge);
                                 }
+                                if(interface.tour_select == 5){
+                                    printf("coucou tu es dans main.cpp\n");
+                                }
                             }
                             
 

@@ -146,11 +146,11 @@ void TourBleue::poser(int x, int y, Carte &carte, vector<TourBleue> &tabTourBleu
 		this->x_position = x;
 		this->y_position = y;
 		carte.argent -= this->cout;
+		this->level = 1;
 
 		this->degatsPlus = this->degats;
 		this->cadencePlus = this->cadence;
 		this->porteePlus = this->portee;
-		this->level = 1;
 
 
 		//changer le ppm pour rendre la zone plus constructible
@@ -224,7 +224,7 @@ void TourJaune::draw(const unsigned int WINDOW_WIDTH, const unsigned int WINDOW_
 
 	float x = (-1 + 2. * this->x_position / 1800.)*15.;
 	float y = -(-1 + 2. * this->y_position / 1012.)*8.4;
-	float portee = (this->portee * 16.8) / 1012.;
+	float portee = (this->porteePlus * 16.8) / 1012.;
 
 
 	glPushMatrix();
@@ -274,7 +274,7 @@ void TourRouge::draw(const unsigned int WINDOW_WIDTH, const unsigned int WINDOW_
 
 	float x = (-1 + 2. * this->x_position / WINDOW_WIDTH)*15.;
 	float y = -(-1 + 2. * this->y_position / WINDOW_HEIGHT)*8.4;
-	float portee = (this->portee * 16.8) / 1012.;
+	float portee = (this->porteePlus * 16.8) / 1012.;
 
 	glColor3ub(255, 0, 0);
 	glPushMatrix();
@@ -318,7 +318,7 @@ void TourVerte::draw(const unsigned int WINDOW_WIDTH, const unsigned int WINDOW_
 
 	float x = (-1 + 2. * this->x_position / 1800.)*15.;
 	float y = -(-1 + 2. * this->y_position / 1012.)*8.4;
-	float portee = (this->portee * 16.8) / 1012.;
+	float portee = (this->porteePlus * 16.8) / 1012.;
 
 	glPushMatrix();
 	
@@ -453,6 +453,9 @@ int clickOnTowers(int x, int y, Carte &carte){
 		}
 		if(carte.data[position+2] == 150){
 			return 4;
+		}
+		if(carte.data[position+2] == 200){
+			return 5;
 		}
 	}
 	return -1;

@@ -31,6 +31,13 @@ void constructGraphes (vector<Noeud> noeuds, vector<vector<int>> &grapheNoeuds, 
 }
 
 
+// 	ajoutePoidsChemin(this->portee, this->x_position, this->y_position, -30, tabPoids, grapheNoeud, posNoeuds);
+
+// 	tabTourBleue.erase(ptr);
+// 	//void popOfListTour
+// }
+
+
 // void visit(vector<vector<int>> &grapheNoeuds, int idNoeud, vector<bool> &seen, vector<int> &distances, vector<vector<int>> &tabPoids) {
 // 	printf("Je visite\n");
 // 	seen[idNoeud]=true;

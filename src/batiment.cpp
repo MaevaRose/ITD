@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <vector>
 #include "../include/batiment.h"
 
 
@@ -212,21 +213,21 @@ void Radar::augmenterTour(vector<TourBleue> &tabTourBleue, vector<TourJaune> &ta
 	if (tabTourJaune.size()>0) {
 		for (int i=0; i<tabTourJaune.size(); i++) {
 			if(aPortee(tabTourJaune[i].getPositionX(), tabTourJaune[i].getPositionY())){
-				tabTourJaune[i].augmenterPortee(10);
+				tabTourJaune[i].augmenterPortee(10.);
 			}		
 		}
 	}
 	if (tabTourRouge.size()>0) {
 		for (int i=0; i<tabTourRouge.size(); i++) {
 			if(aPortee(tabTourRouge[i].getPositionX(), tabTourRouge[i].getPositionY())){
-				tabTourRouge[i].augmenterPortee(10);
+				tabTourRouge[i].augmenterPortee(10.);
 			}
 		}
 	}
 	if (tabTourVerte.size()>0) {
 		for (int i=0; i<tabTourVerte.size(); i++) {
 			if(aPortee(tabTourVerte[i].getPositionX(), tabTourVerte[i].getPositionY())){
-				tabTourVerte[i].augmenterPortee(10);
+				tabTourVerte[i].augmenterPortee(10.);
 			}
 		}
 	}
