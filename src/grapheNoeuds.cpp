@@ -316,7 +316,8 @@ vector<int> calculCheminMonstre (vector<vector<int>> &grapheNoeuds, vector<vecto
 			}
 		}
 	}
-
+	afficheChemin(chemin);
+	printf("\n\n\n");
 	return chemin;
 }
 

@@ -153,7 +153,8 @@ void Monstre::updatePos(vector<int> chemin, vector<vector<int>> posNoeuds, int &
 	int sens;
 	//printf("j'update la position\n");
 	//printf("positions avant update : x=%d, y=%d\n", this->x_position, this->y_position);
-	//printf("taille chemin = %d et indice = %d\n",  chemin.size(), this->indiceChemin);
+	//sprintf("indice = %d\n", this->indiceChemin);
+	
 	if (this->indiceChemin == chemin.size()-1) {
 		arrive = 1;
 		//printf("arrive = %d\n", arrive);

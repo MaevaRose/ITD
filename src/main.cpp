@@ -258,7 +258,7 @@ int main(int argc, char* argv[])
     //vector<vector<int>> tabPoids = creerTabTest2();
     //printf("il y a %d poids et le deuxieme poids est %d\n", tabPoids.size(), tabPoids[0][0]);
     int start = 0;
-    int end = 3;
+    int end = 13;
 
     // vector<int> chemin = calculCheminMonstre(grapheNoeuds, tabPoids, start, end);
     // afficheChemin(chemin);
