@@ -285,10 +285,11 @@ vector<int> calculCheminMonstre (vector<vector<int>> &grapheNoeuds, vector<vecto
 		histoVisite.push_back(i);
 		if(grapheNoeuds[i].size() == 1) {
 			if (utilise[grapheNoeuds[i][0]] == 1) {
-				
+				utilise[i] = 1;
 				histoVisite.pop_back();
 				i = histoVisite[histoVisite.size()-1];
 				histoVisite.pop_back();
+				chemin.pop_back();
 				
 				printf("LE NOEUD SOLO EST UTILISE \n");
 			} 
@@ -303,9 +304,11 @@ vector<int> calculCheminMonstre (vector<vector<int>> &grapheNoeuds, vector<vecto
 			int meilleurChoix = meilleurChemin(grapheNoeuds, tabPoids, utilise, i, end);
 			if (meilleurChoix == -1) {
 				//printf("boucle entre %d \n", histoVisite[histoVisite.size()-1]);
+				utilise[i] = 1;
 				histoVisite.pop_back();
 				i = histoVisite[histoVisite.size()-1];
 				histoVisite.pop_back();
+				chemin.pop_back();
 			}
 
 			else {
